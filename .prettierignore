@@ -1,0 +1,10 @@
+# Generated
+dist/
+.astro/
+package-lock.json
+
+# Content is written by the import script and, later, by the CMS; formatting it
+# by hand would only create noise in every diff.
+src/content/
+src/data/*.ics
+scripts/import-overrides.json
