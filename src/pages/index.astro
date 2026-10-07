@@ -1,0 +1,139 @@
+---
+/**
+ * Temporary front door while two homepage designs are being compared.
+ * Becomes the real homepage once one of them is chosen.
+ */
+import { localizedUrl } from '@/i18n/urls';
+
+const drafts = [
+  {
+    id: 'a',
+    name: 'A · Nakts',
+    summary:
+      'Tumšs, fotogrāfisks virziens pēc jūsu norādītajām lapām: pilnekrāna foto, nakts zils un zelts, serifa virsraksti ar kursīvu akcentu, mēneša kalendārs.',
+  },
+  {
+    id: 'b',
+    name: 'B · Krāsas',
+    summary:
+      'Gaišs, tipogrāfisks virziens: papīra fons, 1919. gada emblēma, un vienīgā spilgtā krāsa nāk no pašu korporāciju krāsām — lente un vairogi.',
+  },
+];
+---
+
+<!doctype html>
+<html lang="lv">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>P!K! — dizaina melnraksti</title>
+    <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
+  </head>
+  <body>
+    <main>
+      <p class="kicker">pk.lv · jaunā mājaslapa</p>
+      <h1>Divi sākumlapas melnraksti</h1>
+      <p class="lead">
+        Saturs abos ir vienāds un īsts; atšķiras tikai izskats. Katrs ir pieejams latviski un angliski.
+      </p>
+      <ul>
+        {drafts.map((draft) => (
+          <li>
+            <h2>{draft.name}</h2>
+            <p>{draft.summary}</p>
+            <p class="links">
+              <a href={localizedUrl('lv', `drafts/${draft.id}`)}>Latviski →</a>
+              <a href={localizedUrl('en', `drafts/${draft.id}`)}>English →</a>
+            </p>
+          </li>
+        ))}
+      </ul>
+    </main>
+  </body>
+</html>
+
+<style>
+  body {
+    margin: 0;
+    background: #f4f2ee;
+    color: #17150f;
+    font:
+      1rem/1.6 ui-sans-serif,
+      system-ui,
+      sans-serif;
+  }
+
+  main {
+    max-width: 58rem;
+    margin: 0 auto;
+    padding: 12vh 1.5rem 6rem;
+  }
+
+  .kicker {
+    margin: 0;
+    color: #6b665c;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    margin: 0.75rem 0 0;
+    font:
+      400 clamp(2.2rem, 6vw, 3.6rem) / 1.05 Georgia,
+      serif;
+  }
+
+  .lead {
+    max-width: 38rem;
+    margin: 1.25rem 0 0;
+    color: #4d483f;
+    font-size: 1.1rem;
+  }
+
+  ul {
+    display: grid;
+    gap: 1.25rem;
+    margin: 3rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 44rem) {
+    ul {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  li {
+    border: 1px solid #d2cbbb;
+    background: #fff;
+    padding: 1.75rem;
+  }
+
+  h2 {
+    margin: 0;
+    font:
+      400 1.6rem/1.2 Georgia,
+      serif;
+  }
+
+  li p {
+    margin: 0.75rem 0 0;
+    color: #4d483f;
+  }
+
+  .links {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    font-weight: 600;
+  }
+
+  a {
+    color: #7a1620;
+    text-underline-offset: 0.25em;
+  }
+</style>

@@ -1,0 +1,420 @@
+---
+import { Image } from 'astro:assets';
+import candles from '@/assets/site/candles.webp';
+import crest from '@/assets/site/crest-ink.png';
+import parade from '@/assets/site/hero-parade.webp';
+import { Shield } from '@/components/Shield';
+import type { Locale } from '@/i18n/config';
+import { todayInRiga } from '@/lib/calendar/dates';
+import { loadHomepage } from '@/lib/site';
+import { Agenda } from './Agenda';
+import Layout from './Layout.astro';
+
+interface Props {
+  locale: Locale;
+  path: string;
+}
+
+const { locale, path } = Astro.props;
+const page = await loadHomepage(locale);
+const { t, members, outside, presiding } = page;
+
+const [firstWord, ...otherWords] = page.name.split(' ');
+
+const copy = {
+  lv: {
+    seal: 'Prezidiju Konvents · Latvijas studentu korporācijas · Rīga · 1919 · ',
+    crestAlt: 'P!K! vēsturiskā emblēma: karogu vēdeklis virs studenta deķeļa un ozollapu vainaga',
+    paradeAlt: 'Studenti krāsu deķeļos nes karogus pāri tiltam; fonā Vecrīgas torņi',
+    candlesAlt: 'Sveces svečturos un atvērta grāmata uz galda',
+  },
+  en: {
+    seal: 'Presidium Convent · Latvia’s student fraternities · Riga · 1919 · ',
+    crestAlt: 'Historic emblem of P!K!: a fan of flags above a student cap and a wreath of oak leaves',
+    paradeAlt: 'Students in coloured caps carry flags across a bridge, with the towers of Old Riga behind',
+    candlesAlt: 'Candles in candlesticks and an open book on a table',
+  },
+}[locale];
+
+const foundedYear = (date: Date) => date.getUTCFullYear();
+---
+
+<Layout locale={locale} path={path}>
+  <!-- Hero -->
+  <section class="shell grid items-center gap-12 pt-12 pb-14 lg:grid-cols-12 lg:gap-6 lg:pt-16 lg:pb-20">
+    <div class="lg:col-span-7">
+      <p class="kicker" data-reveal>
+        {page.tagline}
+      </p>
+      <h1
+        class="font-display mt-7 text-[clamp(3.6rem,11.5vw,10.5rem)] leading-[0.84] font-normal tracking-[-0.035em]"
+        data-reveal
+        style="--reveal-order:1"
+      >
+        <span class="block">{firstWord}</span> <em class="text-wine block">{otherWords.join(' ')}</em>
+      </h1>
+      <p class="mt-9 max-w-xl text-[1.3rem] leading-relaxed" data-reveal style="--reveal-order:2">
+        {page.lead}
+      </p>
+      <p
+        class="mt-9 flex flex-wrap gap-x-9 gap-y-3 text-[0.95rem] font-semibold"
+        data-reveal
+        style="--reveal-order:3"
+      >
+        <a href="#korporacijas" class="link">
+          {t('hero.fraternities')} ↓
+        </a>
+        <a href="#kalendars" class="link">
+          {t('hero.calendar')} ↓
+        </a>
+      </p>
+    </div>
+
+    <div class="lg:col-span-5" data-reveal style="--reveal-order:2">
+      <div class="relative mx-auto aspect-square w-full max-w-[34rem]">
+        <svg viewBox="0 0 400 400" class="text-ink/55 absolute inset-0 h-full w-full" aria-hidden="true">
+          <defs>
+            <path id="seal-path" d="M200 200m-181 0a181 181 0 1 1 362 0a181 181 0 1 1-362 0"></path>
+          </defs>
+          <circle cx="200" cy="200" r="197" fill="none" stroke="currentColor" stroke-width="0.6"></circle>
+          <circle cx="200" cy="200" r="166" fill="none" stroke="currentColor" stroke-width="0.6"></circle>
+          <text
+            class="seal"
+            font-size="12.5"
+            font-weight="600"
+            fill="currentColor"
+            style="text-transform:uppercase"
+          >
+            <textPath href="#seal-path" textLength="1130" lengthAdjust="spacing">
+              {copy.seal}
+            </textPath>
+          </text>
+        </svg>
+        <Image
+          src={crest}
+          alt={copy.crestAlt}
+          widths={[360, 560, 800]}
+          sizes="(min-width: 64rem) 26rem, 70vw"
+          loading="eager"
+          class="absolute inset-[14%] h-[72%] w-[72%] object-contain"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Every member fraternity's tricolour, senior to junior -->
+  <div class="ribbon" data-animate role="list" aria-label={t('fraternities.title')}>
+    {members.map((fraternity, i) => (
+      <a
+        href="#korporacijas"
+        role="listitem"
+        class="ribbon-item"
+        style={`--i:${i}`}
+        data-edge={i < 3 ? 'start' : i > members.length - 4 ? 'end' : undefined}
+      >
+        {fraternity.data.colors.map((color) => (
+          <i style={`background:${color}`}></i>
+        ))}
+        <span class="ribbon-label">{fraternity.data.name}</span>
+      </a>
+    ))}
+  </div>
+
+  <!-- Three facts -->
+  <section class="shell">
+    <dl class="border-rule grid border-b sm:grid-cols-3">
+      <div class="border-rule flex flex-col-reverse justify-end py-10 sm:border-r sm:pr-8" data-reveal>
+        <dt class="text-ink-soft mt-3 max-w-[17rem] text-sm leading-snug">{t('stats.fraternities')}</dt>
+        <dd
+          class="font-display text-[clamp(3.5rem,7vw,6rem)] leading-none tabular-nums"
+          data-count={members.length}
+        >
+          {members.length}
+        </dd>
+      </div>
+      <div
+        class="border-rule flex flex-col-reverse justify-end border-t py-10 sm:border-t-0 sm:border-r sm:px-8"
+        data-reveal
+        style="--reveal-order:1"
+      >
+        <dt class="text-ink-soft mt-3 max-w-[17rem] text-sm leading-snug">{t('stats.founded')}</dt>
+        <dd
+          class="font-display text-[clamp(3.5rem,7vw,6rem)] leading-none tabular-nums"
+          data-count={page.foundedYear}
+        >
+          {page.foundedYear}
+        </dd>
+      </div>
+      <div
+        class="border-rule flex flex-col-reverse justify-end border-t py-10 sm:border-t-0 sm:pl-8"
+        data-reveal
+        style="--reveal-order:2"
+      >
+        <dt class="text-ink-soft mt-3 max-w-[17rem] text-sm leading-snug">
+          {t('stats.presiding', { term: page.term })}
+        </dt>
+        <dd class="font-display flex items-center gap-4 text-[clamp(3.5rem,7vw,6rem)] leading-none">
+          {presiding.data.name}
+          <Shield
+            colors={presiding.data.colors}
+            band={presiding.data.band}
+            className="text-ink/65 h-[0.72em] w-auto"
+          />
+        </dd>
+      </div>
+    </dl>
+  </section>
+
+  <!-- Photograph -->
+  <section class="shell pt-16 lg:pt-24">
+    <figure class="aspect-[4/3] overflow-hidden sm:aspect-[21/9]" data-reveal="clip">
+      <Image
+        src={parade}
+        alt={copy.paradeAlt}
+        widths={[640, 1024, 1600, 2400]}
+        sizes="(min-width: 88rem) 83rem, 100vw"
+        class="relative -top-[10%] h-[120%] w-full object-cover"
+        data-parallax="24"
+      />
+    </figure>
+  </section>
+
+  <!-- About -->
+  <section class="shell grid gap-10 py-20 lg:grid-cols-12 lg:py-32">
+    <div class="lg:col-span-4">
+      <p class="kicker" data-reveal>
+        {t('about.kicker')}
+      </p>
+      <h2 class="section-title mt-6" data-reveal>
+        {t('about.title')}
+      </h2>
+    </div>
+    <div class="lg:col-span-7 lg:col-start-6">
+      <p class="font-display text-[1.5rem] leading-[1.45] sm:text-[1.8rem]" data-reveal>
+        {page.intro}
+      </p>
+      <p class="mt-9 text-[0.95rem] font-semibold" data-reveal>
+        <a href="#" class="link">
+          {t('about.aims')} →
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <!-- Armorial -->
+  <section id="korporacijas" class="border-rule bg-paper-deep/55 border-y py-20 lg:py-28">
+    <div class="shell">
+      <div class="flex flex-wrap items-end justify-between gap-6">
+        <div>
+          <p class="kicker" data-reveal>
+            {t('fraternities.kicker')}
+          </p>
+          <h2 class="section-title mt-6" data-reveal>
+            {t('fraternities.title')}
+          </h2>
+        </div>
+        <p class="text-ink-soft max-w-sm" data-reveal>
+          {t('fraternities.intro')}
+        </p>
+      </div>
+
+      <ol class="mt-14 grid grid-cols-2 gap-x-6 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 xl:gap-x-10">
+        {members.map((fraternity, i) => (
+          <li data-reveal style={`--reveal-order:${i % 5}`}>
+            <a href="#" class="group border-rule block border-t pt-5 pb-10">
+              <span class="text-ink-soft flex justify-between text-[0.7rem] font-semibold tracking-[0.18em] tabular-nums">
+                <span>{String(i + 1).padStart(2, '0')}</span>
+                <span>{foundedYear(fraternity.data.founded)}</span>
+              </span>
+              <Shield
+                colors={fraternity.data.colors}
+                band={fraternity.data.band}
+                className="text-ink/65 mt-6 h-[5.5rem] w-auto transition-transform duration-500 ease-out group-hover:-translate-y-1.5 group-hover:-rotate-3"
+              />
+              <h3 class="font-display mt-6 text-[1.45rem] leading-[1.1]">{fraternity.data.name}</h3>
+              <span
+                class="mt-4 flex h-[3px] w-9 transition-[width] duration-500 ease-out group-hover:w-full"
+                aria-hidden="true"
+              >
+                {fraternity.data.colors.map((color) => (
+                  <i class="flex-1" style={`background:${color}`}></i>
+                ))}
+              </span>
+            </a>
+          </li>
+        ))}
+      </ol>
+
+      <div class="border-rule flex flex-wrap items-center gap-x-10 gap-y-5 border-t pt-8">
+        <p class="kicker">{t('fraternities.outside')}</p>
+        {outside.map((fraternity) => (
+          <a href="#" class="group flex items-center gap-3">
+            <Shield
+              colors={fraternity.data.colors}
+              band={fraternity.data.band}
+              className="text-ink/65 h-9 w-auto transition-transform duration-500 group-hover:-rotate-3"
+            />
+            <span class="font-display text-lg">{fraternity.data.name}</span>
+          </a>
+        ))}
+      </div>
+
+      <p class="mt-12 text-[0.95rem] font-semibold">
+        <a href="#" class="link">
+          {t('fraternities.all')} →
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <!-- Officers -->
+  <section class="shell grid gap-12 py-20 lg:grid-cols-12 lg:py-32">
+    <div class="lg:col-span-4">
+      <p class="kicker" data-reveal>
+        {t('officers.kicker', { term: page.term })}
+      </p>
+      <h2 class="section-title mt-6" data-reveal>
+        {t('officers.title')}
+      </h2>
+      <p class="mt-9 flex items-center gap-4" data-reveal>
+        <Shield
+          colors={presiding.data.colors}
+          band={presiding.data.band}
+          className="text-ink/65 h-14 w-auto shrink-0"
+        />
+        <span>
+          <span class="font-display block text-2xl leading-tight">{presiding.data.name}</span>
+          <span class="text-ink-soft block text-sm leading-snug">
+            {t('stats.presiding', { term: page.term })}
+          </span>
+        </span>
+      </p>
+    </div>
+
+    <ul class="grid gap-x-8 gap-y-12 sm:grid-cols-3 lg:col-span-8">
+      {page.officers.map((officer, i) => (
+        <li class="group" data-reveal style={`--reveal-order:${i}`}>
+          <div class="bg-paper-deep aspect-[4/5] overflow-hidden">
+            <Image
+              src={officer.photo}
+              alt={`${officer.role}: ${officer.name}`}
+              widths={[320, 480, 720]}
+              sizes="(min-width: 64rem) 22vw, (min-width: 40rem) 30vw, 100vw"
+              class="h-full w-full object-cover saturate-[0.8] transition duration-700 ease-out group-hover:scale-[1.04] group-hover:saturate-100"
+            />
+          </div>
+          <p class="text-wine mt-5 text-[0.72rem] font-semibold tracking-[0.22em] uppercase">
+            {officer.role}
+          </p>
+          <h3 class="font-display mt-1.5 text-2xl leading-tight">
+            <span class="text-ink-soft italic">{officer.honorific}</span> {officer.name}
+          </h3>
+          <a href={`mailto:${officer.email}`} class="link mt-2 inline-block text-sm">
+            {officer.email}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <!-- History -->
+  <section class="bg-ink text-paper relative overflow-hidden py-24 lg:py-36">
+    <p
+      class="font-display text-paper/[0.07] pointer-events-none absolute top-1/2 -right-[2vw] -translate-y-1/2 text-[38vw] leading-none tracking-[-0.04em] select-none"
+      aria-hidden="true"
+      data-parallax="60"
+    >
+      {page.foundedYear}
+    </p>
+    <div class="shell relative grid gap-10 lg:grid-cols-12">
+      <div class="lg:col-span-5">
+        <p class="kicker text-paper/60" data-reveal>
+          {t('history.kicker')}
+        </p>
+        <h2 class="section-title mt-6" data-reveal>
+          {t('history.title')}
+        </h2>
+      </div>
+      <div class="lg:col-span-6 lg:col-start-7">
+        <p class="text-paper/85 text-lg leading-relaxed" data-reveal>
+          {page.historyTeaser}
+        </p>
+        <p class="mt-9 text-[0.95rem] font-semibold" data-reveal>
+          <a href="#" class="link">
+            {t('history.more')} →
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Calendar -->
+  <section id="kalendars" class="shell py-20 lg:py-32">
+    <p class="kicker" data-reveal>
+      {t('calendar.kicker')}
+    </p>
+    <h2 class="section-title mt-6" data-reveal>
+      {t('calendar.title')}
+    </h2>
+    <div class="mt-12" data-reveal>
+      <Agenda
+        client:visible
+        events={page.calendar.events}
+        colors={page.calendar.colors}
+        locale={locale}
+        strings={page.strings}
+        builtOn={todayInRiga()}
+        subscribeUrl={page.calendar.subscribeUrl}
+      />
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="kontakti" class="bg-ink text-paper">
+    <div class="ribbon" aria-hidden="true">
+      {members.map((fraternity) => (
+        <span class="ribbon-item">
+          {fraternity.data.colors.map((color) => (
+            <i style={`background:${color}`}></i>
+          ))}
+        </span>
+      ))}
+    </div>
+    <div class="shell grid gap-12 py-20 lg:grid-cols-12 lg:py-28">
+      <div class="lg:col-span-7">
+        <p class="kicker text-paper/60" data-reveal>
+          {t('contact.kicker')}
+        </p>
+        <h2 class="section-title mt-6" data-reveal>
+          {t('contact.title')}
+        </h2>
+        <p class="mt-10" data-reveal>
+          <a
+            href={`mailto:${page.contact.email}`}
+            class="link font-display text-[clamp(1.35rem,3.4vw,2.75rem)] break-all"
+          >
+            {page.contact.email}
+          </a>
+        </p>
+        <address class="text-paper/70 mt-10 space-y-1 not-italic" data-reveal>
+          <p class="text-paper">{page.contact.legalName}</p>
+          <p>
+            {t('contact.registration')} {page.contact.registrationNumber}
+          </p>
+          <p>{page.contact.address}</p>
+        </address>
+      </div>
+      <div class="lg:col-span-4 lg:col-start-9" data-reveal="clip">
+        <div class="aspect-[3/4] overflow-hidden">
+          <Image
+            src={candles}
+            alt={copy.candlesAlt}
+            widths={[400, 640, 960]}
+            sizes="(min-width: 64rem) 28vw, 100vw"
+            class="h-full w-full object-cover"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

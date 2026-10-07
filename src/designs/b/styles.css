@@ -1,0 +1,284 @@
+/*
+ * Design B, "Krāsas": a paper-and-ink editorial page where the only strong
+ * colour comes from the fraternities' own tricolours.
+ */
+@import 'tailwindcss';
+@import '@fontsource-variable/newsreader/opsz.css';
+@import '@fontsource-variable/newsreader/opsz-italic.css';
+@import '@fontsource-variable/instrument-sans';
+@import '../../styles/motion.css';
+
+@theme {
+  --font-display: 'Newsreader Variable', 'Iowan Old Style', Georgia, serif;
+  --font-sans: 'Instrument Sans Variable', ui-sans-serif, system-ui, sans-serif;
+
+  --color-paper: #f5f1e8;
+  --color-paper-deep: #ebe5d7;
+  --color-ink: #17150f;
+  --color-ink-soft: #5b564c;
+  --color-rule: #cdc5b3;
+  --color-wine: #7a1620;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    overflow-x: clip;
+    font-feature-settings: 'kern', 'liga';
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: var(--color-wine);
+    color: var(--color-paper);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-wine);
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  .shell {
+    margin-inline: auto;
+    max-width: 88rem;
+    padding-inline: 1.25rem;
+
+    @media (width >= 64rem) {
+      padding-inline: 2.5rem;
+    }
+  }
+
+  /* Small capitals line that introduces a section. */
+  .kicker {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    color: var(--color-ink-soft);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+
+    &::before {
+      content: '';
+      width: 2.25rem;
+      height: 1px;
+      background: currentColor;
+    }
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 5.2vw, 4.5rem);
+    font-weight: 400;
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+  }
+
+  /* Text link with a rule that redraws itself on hover. */
+  .link {
+    background: linear-gradient(currentColor, currentColor) 0 100% / 100% 1px no-repeat;
+    padding-bottom: 0.15em;
+    transition: background-size 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+
+    &:hover {
+      animation: link-redraw 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+    }
+  }
+
+  .skip-link {
+    position: absolute;
+    top: -4rem;
+    left: 1rem;
+    z-index: 60;
+    background: var(--color-ink);
+    color: var(--color-paper);
+    padding: 0.6rem 1rem;
+
+    &:focus {
+      top: 1rem;
+    }
+  }
+
+  /*
+   * The ribbon: every fraternity's tricolour, senior to junior, as one band.
+   * Each segment is a small flag of three stripes read top to bottom.
+   */
+  .ribbon {
+    display: flex;
+    gap: 2px;
+    height: 1.35rem;
+  }
+
+  .ribbon-item {
+    position: relative;
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    transition: flex-grow 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+
+    & > i {
+      flex: 1;
+    }
+
+    /* Widening on hover is for pointers; on touch the band stays still. */
+    @media (hover: hover) and (width >= 48rem) {
+      &:hover,
+      &:focus-visible {
+        flex-grow: 3.4;
+      }
+    }
+  }
+
+  .ribbon-label {
+    display: none;
+    position: absolute;
+    top: calc(100% + 0.6rem);
+    left: 50%;
+    translate: -50% 0;
+    color: var(--color-ink);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.25s;
+    pointer-events: none;
+
+    @media (hover: hover) and (width >= 48rem) {
+      display: block;
+    }
+
+    .ribbon-item:hover &,
+    .ribbon-item:focus-visible & {
+      opacity: 1;
+    }
+
+    /* Keep the names at either end inside the page. */
+    .ribbon-item[data-edge='start'] & {
+      left: 0;
+      translate: 0 0;
+    }
+
+    .ribbon-item[data-edge='end'] & {
+      right: 0;
+      left: auto;
+      translate: 0 0;
+    }
+  }
+
+  .js .ribbon[data-animate] .ribbon-item {
+    animation: ribbon-in 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation-delay: calc(var(--i) * 45ms + 350ms);
+  }
+
+  /*
+   * The lettering that circles the crest. Only the text turns, inside the
+   * fixed SVG frame, so the rotation can never widen the page.
+   */
+  .seal {
+    animation: seal-turn 90s linear infinite;
+    transform-box: view-box;
+    transform-origin: center;
+  }
+
+  /* Calendar pieces rendered by the Agenda component. */
+  .month-step {
+    display: grid;
+    width: 2.25rem;
+    height: 2.25rem;
+    place-items: center;
+    border: 1px solid var(--color-rule);
+    border-radius: 999px;
+    transition:
+      background-color 0.2s,
+      color 0.2s;
+
+    &:hover:not(:disabled) {
+      background: var(--color-ink);
+      color: var(--color-paper);
+    }
+
+    &:disabled {
+      opacity: 0.3;
+    }
+  }
+
+  .day {
+    position: relative;
+    display: grid;
+    width: 100%;
+    aspect-ratio: 1;
+    place-items: center;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    font-variant-numeric: tabular-nums;
+    transition:
+      background-color 0.2s,
+      color 0.2s;
+
+    &:hover {
+      background: var(--color-paper-deep);
+    }
+
+    &[data-outside] {
+      color: color-mix(in srgb, var(--color-ink) 32%, transparent);
+    }
+
+    &[data-state='today'] {
+      box-shadow: inset 0 0 0 1px var(--color-ink);
+    }
+
+    &[data-state='selected'] {
+      background: var(--color-ink);
+      color: var(--color-paper);
+    }
+  }
+
+  .day-dot {
+    position: absolute;
+    bottom: 14%;
+    width: 0.3rem;
+    height: 0.3rem;
+    border-radius: 999px;
+  }
+}
+
+@keyframes link-redraw {
+  0% {
+    background-position: 100% 100%;
+    background-size: 100% 1px;
+  }
+  45% {
+    background-position: 100% 100%;
+    background-size: 0 1px;
+  }
+  46% {
+    background-position: 0 100%;
+    background-size: 0 1px;
+  }
+  100% {
+    background-position: 0 100%;
+    background-size: 100% 1px;
+  }
+}
+
+@keyframes ribbon-in {
+  from {
+    opacity: 0;
+    transform: scaleY(0);
+  }
+}
+
+@keyframes seal-turn {
+  to {
+    rotate: 360deg;
+  }
+}

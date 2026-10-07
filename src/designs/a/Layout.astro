@@ -1,0 +1,209 @@
+---
+import './styles.css';
+import { Image } from 'astro:assets';
+import crest from '@/assets/site/crest-ink.png';
+import DraftBar from '@/components/DraftBar.astro';
+import { navigation } from '@/data/navigation';
+import { locales, type Locale } from '@/i18n/config';
+import { useTranslations } from '@/i18n/ui';
+import { localizedUrl } from '@/i18n/urls';
+
+interface Props {
+  locale: Locale;
+  /** Route of this page without the language prefix, e.g. `drafts/a`. */
+  path: string;
+}
+
+const { locale, path } = Astro.props;
+const t = useTranslations(locale);
+const home = localizedUrl(locale, path);
+
+// Draft: the inner pages are not built yet, so menu entries lead nowhere.
+const pageUrl = (_page: string) => '#';
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{t('site.title')}</title>
+    <meta name="description" content={t('site.description')} />
+    <meta name="robots" content="noindex" />
+    {locales.map((code) => (
+      <link rel="alternate" hreflang={code} href={new URL(localizedUrl(code, path), Astro.site)} />
+    ))}
+    <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
+  </head>
+
+  <body class="bg-night text-ink font-sans antialiased">
+    <a href="#saturs" class="skip-link">
+      {t('nav.skip')}
+    </a>
+
+    <header class="site-header fixed inset-x-0 top-0 z-40 text-white" data-header>
+      <div class="shell flex items-center justify-between gap-6 py-3">
+        <a href={home} class="flex items-center gap-3" aria-label={t('site.title')}>
+          <Image src={crest} alt="" width={44} class="h-11 w-auto invert" loading="eager" />
+          <span class="font-display text-2xl leading-none font-semibold tracking-wide">P!K!</span>
+        </a>
+
+        <nav aria-label={t('nav.menu')} class="hidden lg:block">
+          <ul class="flex items-center gap-8 text-[0.84rem] font-medium">
+            {navigation.map((group) => (
+              <li class="group relative">
+                <button
+                  type="button"
+                  class="hover:text-gold flex items-center gap-1.5 py-3 transition-colors"
+                  aria-haspopup="true"
+                >
+                  {group.label[locale]}
+                  <svg
+                    viewBox="0 0 10 6"
+                    class="h-1.5 w-2.5 transition-transform group-hover:rotate-180"
+                    aria-hidden="true"
+                  >
+                    <path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4" />
+                  </svg>
+                </button>
+                <ul class="bg-night-soft border-gold invisible absolute top-full left-1/2 w-64 -translate-x-1/2 translate-y-1 rounded-xs border-t-2 p-2 opacity-0 shadow-2xl transition duration-200 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+                  {group.links.map((link) => (
+                    <li>
+                      <a
+                        href={pageUrl(link.page)}
+                        class="hover:text-gold block rounded-xs px-3 py-2.5 text-white/85 hover:bg-white/5"
+                      >
+                        {link.label[locale]}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div class="flex items-center gap-4">
+          <p
+            class="flex overflow-hidden rounded-xs border border-white/25 text-[0.74rem] font-semibold tracking-[0.12em]"
+            aria-label={t('nav.language')}
+          >
+            {locales.map((code) => (
+              <a
+                href={localizedUrl(code, path)}
+                hreflang={code}
+                lang={code}
+                aria-current={code === locale ? 'true' : undefined}
+                class:list={[
+                  'px-2.5 py-1.5 transition-colors',
+                  code === locale ? 'bg-gold text-night' : 'hover:text-gold text-white/80',
+                ]}
+              >
+                {code.toUpperCase()}
+              </a>
+            ))}
+          </p>
+          <button
+            type="button"
+            class="grid h-10 w-10 place-items-center rounded-xs border border-white/25 lg:hidden"
+            aria-label={t('nav.menu')}
+            data-menu-open
+          >
+            <svg viewBox="0 0 20 14" class="h-3.5 w-5" aria-hidden="true">
+              <path d="M0 1h20M0 7h20M0 13h20" stroke="currentColor" stroke-width="1.6" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <dialog
+      id="site-menu"
+      class="bg-night m-0 h-dvh max-h-none w-screen max-w-none overflow-y-auto p-0 text-white backdrop:bg-transparent"
+    >
+      <div class="shell flex items-center justify-between py-3">
+        <span class="font-display text-2xl leading-none font-semibold tracking-wide">P!K!</span>
+        <button
+          type="button"
+          class="grid h-10 w-10 place-items-center rounded-xs border border-white/25"
+          aria-label={t('nav.close')}
+          data-menu-close
+        >
+          <svg viewBox="0 0 16 16" class="h-4 w-4" aria-hidden="true">
+            <path d="M1 1l14 14M15 1L1 15" stroke="currentColor" stroke-width="1.6" />
+          </svg>
+        </button>
+      </div>
+      <nav aria-label={t('nav.menu')} class="shell on-night pt-6 pb-16">
+        {navigation.map((group) => (
+          <section class="border-t border-white/10 py-6">
+            <h2 class="kicker">{group.label[locale]}</h2>
+            <ul class="mt-4 space-y-3">
+              {group.links.map((link) => (
+                <li>
+                  <a href={pageUrl(link.page)} class="font-display hover:text-gold text-2xl">
+                    {link.label[locale]}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+      </nav>
+    </dialog>
+
+    <main id="saturs">
+      <slot />
+    </main>
+
+    <footer class="bg-night text-white/65">
+      <div class="shell grid gap-10 border-t border-white/10 py-14 sm:grid-cols-2 lg:grid-cols-[1.4fr_repeat(4,1fr)]">
+        <div>
+          <Image src={crest} alt="" width={96} class="h-24 w-auto opacity-90 invert" />
+          <p class="font-display mt-4 text-xl text-white">Prezidiju Konvents</p>
+        </div>
+        {navigation.map((group) => (
+          <div>
+            <h2 class="text-gold text-[0.7rem] font-semibold tracking-[0.22em] uppercase">
+              {group.label[locale]}
+            </h2>
+            <ul class="mt-4 space-y-2.5 text-sm">
+              {group.links.map((link) => (
+                <li>
+                  <a href={pageUrl(link.page)} class="hover:text-white">
+                    {link.label[locale]}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+      <div class="shell border-t border-white/10 py-6 text-sm">
+        <p>
+          Prezidiju Konvents © 1919–{new Date().getFullYear()}. {t('footer.rights')}
+        </p>
+      </div>
+    </footer>
+
+    <DraftBar locale={locale} design="a" />
+
+    <script>
+      import '@/scripts/motion';
+
+      const header = document.querySelector<HTMLElement>('[data-header]');
+      const markScrolled = () => header?.toggleAttribute('data-scrolled', window.scrollY > 24);
+      markScrolled();
+      window.addEventListener('scroll', markScrolled, { passive: true });
+
+      const menu = document.querySelector<HTMLDialogElement>('#site-menu');
+      document.querySelector('[data-menu-open]')?.addEventListener('click', () => menu?.showModal());
+      menu?.addEventListener('click', (event) => {
+        if ((event.target as HTMLElement).closest('[data-menu-close], a')) menu.close();
+      });
+    </script>
+  </body>
+</html>

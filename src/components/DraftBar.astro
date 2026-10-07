@@ -1,0 +1,82 @@
+---
+/**
+ * Temporary switcher shown while two homepage designs are being compared.
+ * Delete together with src/pages/drafts once one design is chosen.
+ */
+import { locales, type Locale } from '@/i18n/config';
+import { localizedUrl } from '@/i18n/urls';
+
+interface Props {
+  locale: Locale;
+  design: 'a' | 'b';
+}
+
+const { locale, design } = Astro.props;
+const designs = ['a', 'b'] as const;
+---
+
+<aside class="draft-bar" aria-label={locale === 'lv' ? 'Dizaina melnraksti' : 'Design drafts'}>
+  <span>{locale === 'lv' ? 'Melnraksts' : 'Draft'}</span>
+  {designs.map((id) => (
+    <a href={localizedUrl(locale, `drafts/${id}`)} aria-current={id === design ? 'page' : undefined}>
+      {id.toUpperCase()}
+    </a>
+  ))}
+  <i></i>
+  {locales.map((code) => (
+    <a href={localizedUrl(code, `drafts/${design}`)} aria-current={code === locale ? 'page' : undefined}>
+      {code.toUpperCase()}
+    </a>
+  ))}
+</aside>
+
+<style>
+  .draft-bar {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    border-radius: 999px;
+    background: rgb(17 17 17 / 0.92);
+    padding: 0.35rem 0.5rem 0.35rem 1rem;
+    color: #fff;
+    font:
+      500 0.75rem/1 ui-sans-serif,
+      system-ui,
+      sans-serif;
+    letter-spacing: 0.06em;
+    box-shadow: 0 8px 30px rgb(0 0 0 / 0.35);
+  }
+
+  span {
+    margin-right: 0.4rem;
+    opacity: 0.6;
+    text-transform: uppercase;
+  }
+
+  a {
+    border-radius: 999px;
+    padding: 0.45rem 0.7rem;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  a:hover {
+    background: rgb(255 255 255 / 0.14);
+  }
+
+  a[aria-current] {
+    background: #fff;
+    color: #111;
+  }
+
+  i {
+    width: 1px;
+    height: 1rem;
+    margin-inline: 0.3rem;
+    background: rgb(255 255 255 / 0.25);
+  }
+</style>
