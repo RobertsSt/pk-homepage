@@ -8,15 +8,16 @@ website: http://www.academica.lv/
 address: Rīga, Baznīcas iela 45–37, LV–1010
 phone: +371-67484146
 email: fraternitas@academica.lv
-heraldry:
-  shield: ../../assets/fraternities/fraternitas-academica/shield.jpg
-  arms: ../../assets/fraternities/fraternitas-academica/arms.jpg
-  zirkel: ../../assets/fraternities/fraternitas-academica/zirkel.jpg
-  cap: ../../assets/fraternities/fraternitas-academica/cap.jpg
-  star: ../../assets/fraternities/fraternitas-academica/star.jpg
 founded: 1925-02-04
 band: rising
 colors:
   - "#1c1c22"
   - "#9cbe12"
   - "#c9a348"
+cover: ../../assets/fraternities/fraternitas-academica/cover.jpg
+heraldry:
+  shield: ../../assets/fraternities/fraternitas-academica/shield.jpg
+  arms: ../../assets/fraternities/fraternitas-academica/arms.jpg
+  zirkel: ../../assets/fraternities/fraternitas-academica/zirkel.jpg
+  cap: ../../assets/fraternities/fraternitas-academica/cap.jpg
+  star: ../../assets/fraternities/fraternitas-academica/star.jpg

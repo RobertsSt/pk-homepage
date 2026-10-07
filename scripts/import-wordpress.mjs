@@ -9,8 +9,9 @@
  *
  * Rules that keep re-runs safe:
  *  - Latvian text always comes from WordPress and is overwritten on every run.
- *  - Facts WordPress does not hold (colours, founding dates, corrections) live
- *    in scripts/import-overrides.json and are merged in on every run.
+ *  - Facts WordPress does not hold (colours, founding dates, larger heraldry,
+ *    chosen photographs, corrections) live in scripts/import-overrides.json and
+ *    are merged in on every run.
  *  - English files (src/content/**\/en/) are never touched.
  *
  * The script is retired at cutover, once WordPress stops being the source.
@@ -90,7 +91,14 @@ async function download(url, dest) {
   await writeFile(dest, Buffer.from(await res.arrayBuffer()));
 }
 
+/** Corrections to imported text, keyed by file path below src/content. */
+let textFixes = {};
+
 async function writeText(file, text) {
+  for (const [from, to] of textFixes[path.relative(CONTENT, file)] ?? []) {
+    if (text.includes(from)) text = text.replaceAll(from, to);
+    else warn(`${path.relative(CONTENT, file)}: correction no longer applies, "${from}" was not found`);
+  }
   await mkdir(path.dirname(file), { recursive: true });
   await writeFile(file, text.endsWith('\n') ? text : `${text}\n`);
 }
@@ -284,7 +292,9 @@ async function importFraternities(pages, resolveImage, overrides) {
     if (!parts.length) warn(`${item.name}: page has no body text`);
 
     const { images: _images, id, ...facts } = item;
-    const data = { ...facts, heraldry, ...overrides.fraternities?.[id] };
+    const extra = overrides.fraternities?.[id] ?? {};
+    // An override may replace single heraldry images, e.g. with a larger file.
+    const data = { ...facts, ...extra, heraldry: { ...heraldry, ...extra.heraldry } };
     for (const key of ['website', 'address', 'phone', 'email']) if (!data[key]) delete data[key];
     await writeText(path.join(CONTENT, 'fraternities', `${id}.yaml`), stringify(data, { lineWidth: 0 }));
     await writeText(
@@ -350,6 +360,7 @@ async function deriveCrest() {
 
 async function main() {
   const overrides = JSON.parse(await readFile(path.join(ROOT, 'scripts/import-overrides.json'), 'utf8'));
+  textFixes = overrides.textFixes ?? {};
   const [pageList, media] = await Promise.all([
     fetchAll('pages', 'id,slug,title,content,modified'),
     fetchAll('media', 'id,source_url'),

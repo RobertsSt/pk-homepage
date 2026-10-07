@@ -8,15 +8,15 @@ website: http://www.selonija.lv/
 address: Rīga, Stabu iela 17, LV-1011
 phone: +371-67273303
 email: prezidijs@selonija.lv
-heraldry:
-  shield: ../../assets/fraternities/selonija/shield.jpg
-  arms: ../../assets/fraternities/selonija/arms.jpg
-  zirkel: ../../assets/fraternities/selonija/zirkel.jpg
-  cap: ../../assets/fraternities/selonija/cap.jpg
-  star: ../../assets/fraternities/selonija/star.jpg
 founded: 1880-11-24
 band: rising
 colors:
   - "#add08e"
   - "#ffffff"
   - "#e8615c"
+heraldry:
+  shield: ../../assets/fraternities/selonija/shield.jpg
+  arms: ../../assets/fraternities/selonija/arms-large.png
+  zirkel: ../../assets/fraternities/selonija/zirkel.jpg
+  cap: ../../assets/fraternities/selonija/cap.jpg
+  star: ../../assets/fraternities/selonija/star.jpg

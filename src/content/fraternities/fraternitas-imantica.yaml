@@ -7,15 +7,16 @@ mottos:
   - Lai zobens nesarūs!
 website: http://www.imantica.lv/
 address: Jelgava, Kungu iela 8, LV-3001
-heraldry:
-  shield: ../../assets/fraternities/fraternitas-imantica/shield.jpg
-  arms: ../../assets/fraternities/fraternitas-imantica/arms.jpg
-  zirkel: ../../assets/fraternities/fraternitas-imantica/zirkel.jpg
-  cap: ../../assets/fraternities/fraternitas-imantica/cap.jpg
-  star: ../../assets/fraternities/fraternitas-imantica/star.jpg
 founded: 1947-02-18
 band: falling
 colors:
   - "#7d3c43"
   - "#c9a348"
   - "#ffffff"
+heraldry:
+  shield: ../../assets/fraternities/fraternitas-imantica/shield.jpg
+  arms: ../../assets/fraternities/fraternitas-imantica/arms.jpg
+  zirkel: ../../assets/fraternities/fraternitas-imantica/zirkel-large.png
+  cap: ../../assets/fraternities/fraternitas-imantica/cap.jpg
+  star: ../../assets/fraternities/fraternitas-imantica/star.jpg
+cover: ../../assets/fraternities/fraternitas-imantica/cover.jpg

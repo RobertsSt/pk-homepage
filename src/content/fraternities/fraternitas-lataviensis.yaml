@@ -5,15 +5,15 @@ mottos:
   - Pro patria, lustitia, honore!
 website: http://www.lataviensis.lv/
 address: Rīga, Aldaru iela 7, LV-1050
-heraldry:
-  shield: ../../assets/fraternities/fraternitas-lataviensis/shield.jpg
-  arms: ../../assets/fraternities/fraternitas-lataviensis/arms.jpg
-  zirkel: ../../assets/fraternities/fraternitas-lataviensis/zirkel.jpg
-  cap: ../../assets/fraternities/fraternitas-lataviensis/cap.jpg
-  star: ../../assets/fraternities/fraternitas-lataviensis/star.jpg
 founded: 1926-09-16
 band: falling
 colors:
   - "#515458"
   - "#ffffff"
   - "#c9a348"
+heraldry:
+  shield: ../../assets/fraternities/fraternitas-lataviensis/shield.jpg
+  arms: ../../assets/fraternities/fraternitas-lataviensis/arms-large.jpg
+  zirkel: ../../assets/fraternities/fraternitas-lataviensis/zirkel.jpg
+  cap: ../../assets/fraternities/fraternitas-lataviensis/cap.jpg
+  star: ../../assets/fraternities/fraternitas-lataviensis/star.jpg

@@ -6,15 +6,15 @@ mottos:
   - Ver sirdi draugam, klusē svešiniekam, kalpo zinātnei, lej asinis tēvzemei
 website: http://www.gersicania.lv/
 address: Rīga, Blaumaņa iela 5, LV-1011
-heraldry:
-  shield: ../../assets/fraternities/gersicania/shield.jpg
-  arms: ../../assets/fraternities/gersicania/arms.jpg
-  zirkel: ../../assets/fraternities/gersicania/zirkel.jpg
-  cap: ../../assets/fraternities/gersicania/cap.jpg
-  star: ../../assets/fraternities/gersicania/star.jpg
 founded: 1947-03-14
 band: rising
 colors:
   - "#ffffff"
   - "#522874"
   - "#036242"
+heraldry:
+  shield: ../../assets/fraternities/gersicania/shield.jpg
+  arms: ../../assets/fraternities/gersicania/arms-large.jpg
+  zirkel: ../../assets/fraternities/gersicania/zirkel.jpg
+  cap: ../../assets/fraternities/gersicania/cap.jpg
+  star: ../../assets/fraternities/gersicania/star.jpg

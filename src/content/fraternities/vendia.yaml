@@ -6,15 +6,15 @@ mottos:
   - Virtute et exemplo
 address: Ausekļa iela 3, Rīga
 email: vendiaprezidijs@gmail.com
-heraldry:
-  shield: ../../assets/fraternities/vendia/shield.jpg
-  arms: ../../assets/fraternities/vendia/arms.jpg
-  zirkel: ../../assets/fraternities/vendia/zirkel.jpg
-  cap: ../../assets/fraternities/vendia/cap.jpg
-  star: ../../assets/fraternities/vendia/star.jpg
 founded: 1927-03-20
 band: rising
 colors:
   - "#c0d997"
   - "#a63f46"
   - "#c9a348"
+heraldry:
+  shield: ../../assets/fraternities/vendia/shield.jpg
+  arms: ../../assets/fraternities/vendia/arms-large.jpg
+  zirkel: ../../assets/fraternities/vendia/zirkel.jpg
+  cap: ../../assets/fraternities/vendia/cap.jpg
+  star: ../../assets/fraternities/vendia/star.jpg

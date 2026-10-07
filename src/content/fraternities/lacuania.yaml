@@ -5,15 +5,15 @@ mottos:
   - Vires unitae agunt
 website: http://www.lacuania.lv/
 address: Rīga, Lejas iela 7, LV-1013
-heraldry:
-  shield: ../../assets/fraternities/lacuania/shield.jpg
-  arms: ../../assets/fraternities/lacuania/arms.jpg
-  zirkel: ../../assets/fraternities/lacuania/zirkel.jpg
-  cap: ../../assets/fraternities/lacuania/cap.jpg
-  star: ../../assets/fraternities/lacuania/star.jpg
 founded: 1927-12-07
 band: falling
 colors:
   - "#76aed7"
   - "#1c1c22"
   - "#c9a348"
+heraldry:
+  shield: ../../assets/fraternities/lacuania/shield.jpg
+  arms: ../../assets/fraternities/lacuania/arms-large.jpg
+  zirkel: ../../assets/fraternities/lacuania/zirkel.jpg
+  cap: ../../assets/fraternities/lacuania/cap.jpg
+  star: ../../assets/fraternities/lacuania/star.jpg

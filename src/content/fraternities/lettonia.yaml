@@ -7,15 +7,19 @@ mottos:
 website: http://www.lettonia.lv/
 address: Rīga, Rūpniecības iela 4a, LV-1010
 phone: +371-67323000
-heraldry:
-  shield: ../../assets/fraternities/lettonia/shield.jpg
-  arms: ../../assets/fraternities/lettonia/arms.gif
-  zirkel: ../../assets/fraternities/lettonia/zirkel.jpg
-  cap: ../../assets/fraternities/lettonia/cap.jpg
-  star: ../../assets/fraternities/lettonia/star.jpg
 founded: 1870-02-19
 band: rising
 colors:
   - "#3f6117"
   - "#0e1b77"
   - "#c9a348"
+cover: ../../assets/fraternities/lettonia/cover.jpg
+photos:
+  - ../../assets/fraternities/lettonia/extra-1.jpg
+  - ../../assets/fraternities/lettonia/extra-2.jpg
+heraldry:
+  shield: ../../assets/fraternities/lettonia/shield.jpg
+  arms: ../../assets/fraternities/lettonia/arms.gif
+  zirkel: ../../assets/fraternities/lettonia/zirkel.jpg
+  cap: ../../assets/fraternities/lettonia/cap.jpg
+  star: ../../assets/fraternities/lettonia/star.jpg

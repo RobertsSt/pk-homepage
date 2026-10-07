@@ -7,15 +7,15 @@ mottos:
 website: http://www.patria.lv/
 address: Rīga, Stabu iela 32, LV-1011
 phone: +371-67273008
-heraldry:
-  shield: ../../assets/fraternities/patria/shield.jpg
-  arms: ../../assets/fraternities/patria/arms.jpg
-  zirkel: ../../assets/fraternities/patria/zirkel.jpg
-  cap: ../../assets/fraternities/patria/cap.jpg
-  star: ../../assets/fraternities/patria/star.jpg
 founded: 1926-09-20
 band: falling
 colors:
   - "#f4864e"
   - "#63a78c"
   - "#c9a348"
+heraldry:
+  shield: ../../assets/fraternities/patria/shield.jpg
+  arms: ../../assets/fraternities/patria/arms.jpg
+  zirkel: ../../assets/fraternities/patria/zirkel-large.png
+  cap: ../../assets/fraternities/patria/cap.jpg
+  star: ../../assets/fraternities/patria/star.jpg

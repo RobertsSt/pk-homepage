@@ -4,7 +4,7 @@ wpModified: 2026-04-13T16:43:57
 
 ## Par Ventonia
 
-Dibināšanas datums – 1997. gada 21. novembris\
+Dibināšanas datums – 1917. gada 21. novembris\
 Aktīvo biedru skaits – 152
 
 Studentu korporācijas ir akadēmiskas mūža organizācijas, kurās uzņem tikai studējošus studentus. Vēsturiski izveidojies ir tā, ka visas korporācijas ir slēgta tipa organizācijas, to skaitā arī Ventonia. To saista ar studentisko dzīvi un tās neatkarīgumu no jebkāda politiskā režīma. Līdz ar to korporācijas būtiski atšķiras no citām akadēmiskām mūža organizācijām.

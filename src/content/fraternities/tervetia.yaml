@@ -6,15 +6,15 @@ mottos:
 website: http://www.tervetia.lv/
 address: Rīga, Tērbatas iela 28-7
 phone: +371-67281373
-heraldry:
-  shield: ../../assets/fraternities/tervetia/shield.jpg
-  arms: ../../assets/fraternities/tervetia/arms.jpg
-  zirkel: ../../assets/fraternities/tervetia/zirkel.jpg
-  cap: ../../assets/fraternities/tervetia/cap.jpg
-  star: ../../assets/fraternities/tervetia/star.jpg
 founded: 1922-04-30
 band: rising
 colors:
   - "#ee4f02"
   - "#788597"
   - "#000191"
+heraldry:
+  shield: ../../assets/fraternities/tervetia/shield.jpg
+  arms: ../../assets/fraternities/tervetia/arms-large.jpg
+  zirkel: ../../assets/fraternities/tervetia/zirkel.jpg
+  cap: ../../assets/fraternities/tervetia/cap.jpg
+  star: ../../assets/fraternities/tervetia/star.jpg

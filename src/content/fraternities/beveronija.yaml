@@ -7,15 +7,15 @@ mottos:
 website: http://www.beveronija.lv/
 address: Rīga, Ģertrūdes iela 30-20, LV-1011
 email: seniors@beveronija.lv
-heraldry:
-  shield: ../../assets/fraternities/beveronija/shield.jpg
-  arms: ../../assets/fraternities/beveronija/arms.jpg
-  zirkel: ../../assets/fraternities/beveronija/zirkel.jpg
-  cap: ../../assets/fraternities/beveronija/cap.jpg
-  star: ../../assets/fraternities/beveronija/star.jpg
 founded: 1922-05-04
 band: rising
 colors:
   - "#854b6c"
   - "#c9a348"
   - "#8ec6e4"
+heraldry:
+  shield: ../../assets/fraternities/beveronija/shield.jpg
+  arms: ../../assets/fraternities/beveronija/arms-large.png
+  zirkel: ../../assets/fraternities/beveronija/zirkel.jpg
+  cap: ../../assets/fraternities/beveronija/cap.jpg
+  star: ../../assets/fraternities/beveronija/star.jpg

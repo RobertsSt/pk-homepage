@@ -35,6 +35,10 @@ const fraternities = defineCollection({
         cap: image(),
         star: image(),
       }),
+      /** The photograph that leads the fraternity's page, if there is one. */
+      cover: image().optional(),
+      /** Further photographs, shown after the text. */
+      photos: z.array(image()).default([]),
     }),
 });
 
