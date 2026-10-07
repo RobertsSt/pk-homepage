@@ -1,0 +1,80 @@
+# Homepage content. Update `presiding` and `officers` when the presidium changes.
+
+name:
+  lv: Prezidiju Konvents
+  en: Presidium Convent
+tagline:
+  lv: Latvijas studentu korporāciju apvienība
+  en: The union of Latvia's student fraternities
+lead:
+  lv: P!K! jeb Prezidiju Konvents ir organizācija, kas apvieno visas Latvijas studentu korporācijas.
+  en: P!K!, the Presidium Convent, is the organisation that unites all of Latvia's student fraternities.
+intro:
+  lv: >-
+    Tās uzdevums ir pieņemt korporācijām saistošus lēmumus, izšķirt strīdus situācijas starp
+    korporāciju biedriem vadoties no buršu tradīcijām un vadīt korporāciju savstarpējo dzīvi kopumā.
+    P!K! lēmumi tiek pieņemti balsojot, kur katrai korporācijai ir viena balss. Katru semestri P!K!
+    vada prezidijs, kas tiek ievēlēts no vienas korporācijas, rotācijas kārtībā. P!K! ir oficiāli
+    reģistrēta biedrība Latvijā.
+  en: >-
+    Its task is to adopt decisions that bind the fraternities, to settle disputes between their
+    members in keeping with fraternity tradition, and to guide the fraternities' common life as a
+    whole. P!K! decides by vote, and each fraternity has one vote. Every semester P!K! is led by a
+    presidium elected from a single fraternity, in rotation. P!K! is an officially registered
+    association in Latvia.
+
+foundedYear: 1919
+
+presiding:
+  fraternity: latvia
+  term: 2025/2026
+
+officers:
+  - name: Niks Gurtiņš
+    honorific: taut!
+    role:
+      lv: Seniors
+      en: Senior
+    email: prezidijs@latvus.lv
+    photo: ../../assets/site/officers/senior.jpg
+  - name: Rūdolfs Rubenis
+    honorific: fil!
+    role:
+      lv: Viceseniors
+      en: Vice-Senior
+    email: prezidijs@latvus.lv
+    photo: ../../assets/site/officers/vice-senior.jpg
+  - name: Agnis Salmiņš
+    honorific: taut!
+    role:
+      lv: Sekretārs
+      en: Secretary
+    email: prezidijs@latvus.lv
+    photo: ../../assets/site/officers/secretary.jpg
+
+history:
+  teaser:
+    lv: >-
+      1919. g. 27. septembrī Rīgā, pie Latvijas Universitātes nodibinājās studentu korporāciju
+      apvienība – Latvijas Universitātes Prezidiju Konvents – P!K! Prezidiju Konvents ar savām
+      institūcijām: Prezidiju Konventu (visu P!K! ieejošo studentu korporāciju prezidiju locekļu
+      kopsapulce), G!T! un P!K!T!, pieņemot lēmumus un izdodot noteikumus, vadīja un regulēja visu
+      korporāciju savstarpējo sadzīvi un attiecības. P!K! tā tad bija Latvijas Universitātes studentu
+      korporāciju augstākais pārvaldes orgāns.
+    en: >-
+      On 27 September 1919 in Riga, a union of student fraternities was founded at the University of
+      Latvia: the Presidium Convent of the University of Latvia, P!K!. Through its institutions,
+      namely the Presidium Convent (the general assembly of the presidium members of all member
+      fraternities), G!T! and P!K!T!, it adopted decisions and issued rules that guided and
+      regulated relations among all the fraternities. P!K! was thus the highest governing body of
+      the student fraternities of the University of Latvia.
+
+contact:
+  email: prezidijukonvents@gmail.com
+  legalName:
+    lv: Biedrība «Latvijas Studentu korporāciju prezidiju Konvents»
+    en: Association “Latvijas Studentu korporāciju prezidiju Konvents”
+  registrationNumber: '40008012741'
+  address: Aldaru iela 7, Rīga, LV-1050
+
+calendarId: 5179paohb7suoju0euasu738o0@group.calendar.google.com

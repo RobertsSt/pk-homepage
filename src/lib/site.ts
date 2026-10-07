@@ -1,0 +1,61 @@
+import { getCollection, getEntry, type CollectionEntry } from 'astro:content';
+import type { Locale } from '@/i18n/config';
+import { getUiStrings, useTranslations } from '@/i18n/ui';
+import { getCalendarEvents, subscribeUrl } from './calendar/feed';
+import type { Band } from './shield';
+
+export type Fraternity = CollectionEntry<'fraternities'>;
+
+/** What a client-side component needs to draw a fraternity's colours. */
+export interface FraternityColors {
+  name: string;
+  colors: readonly [string, string, string];
+  band: Band;
+}
+
+/** All fraternities in seniority order. */
+export async function getFraternities(): Promise<Fraternity[]> {
+  const all = await getCollection('fraternities');
+  return all.sort((a, b) => a.data.order - b.data.order);
+}
+
+/** Everything the homepage shows, with text already resolved to one language. */
+export async function loadHomepage(locale: Locale) {
+  const [homeEntry, fraternities] = await Promise.all([getEntry('home', 'home'), getFraternities()]);
+  if (!homeEntry) throw new Error('src/content/site/home.yaml is missing');
+  const home = homeEntry.data;
+
+  const presiding = fraternities.find((f) => f.id === home.presiding.fraternity.id);
+  if (!presiding)
+    throw new Error(`home.yaml names an unknown presiding fraternity: ${home.presiding.fraternity.id}`);
+
+  const events = await getCalendarEvents({
+    calendarId: home.calendarId,
+    fraternities: fraternities.map((f) => ({ id: f.id, name: f.data.name })),
+  });
+
+  const colors: Record<string, FraternityColors> = Object.fromEntries(
+    fraternities.map((f) => [f.id, { name: f.data.name, colors: f.data.colors, band: f.data.band }]),
+  );
+
+  return {
+    locale,
+    t: useTranslations(locale),
+    strings: getUiStrings(locale),
+    name: home.name[locale],
+    tagline: home.tagline[locale],
+    lead: home.lead[locale],
+    intro: home.intro[locale],
+    foundedYear: home.foundedYear,
+    term: home.presiding.term,
+    presiding,
+    members: fraternities.filter((f) => f.data.membership === 'pk'),
+    outside: fraternities.filter((f) => f.data.membership === 'outside'),
+    officers: home.officers.map((officer) => ({ ...officer, role: officer.role[locale] })),
+    historyTeaser: home.history.teaser[locale],
+    contact: { ...home.contact, legalName: home.contact.legalName[locale] },
+    calendar: { events, colors, subscribeUrl: subscribeUrl(home.calendarId) },
+  };
+}
+
+export type Homepage = Awaited<ReturnType<typeof loadHomepage>>;
