@@ -18,6 +18,7 @@ npm run dev        # http://localhost:4321
 | `npm run build`            | Builds the site into `dist/`                                       |
 | `npm run preview`          | Serves `dist/` locally, as the host would                          |
 | `npm run verify`           | Format check, lint, type check and build; CI runs the same         |
+| `npm test`                 | Runs the unit tests                                                |
 | `npm run format`           | Formats the code with Prettier                                     |
 | `npm run import:wordpress` | Re-imports Latvian content and images from the live WordPress site |
 
@@ -25,17 +26,21 @@ npm run dev        # http://localhost:4321
 
 ```text
 src/
-  content/         Text and facts: Markdown and YAML, one folder per kind of content
+  content/           Text and facts: Markdown and YAML, one folder per kind of content
   content.config.ts  The shape each content file must have; a mistake fails the build
-  assets/          Images, optimised at build time
-  designs/a, b/    The two homepage design drafts (temporary)
-  components/      Pieces shared by every design, e.g. the vector shield
-  lib/             Logic without markup: calendar feed, shield geometry, data loading
-  i18n/            Languages: interface text and link helper
-  data/            Menu structure; saved copy of the calendar feed
-  pages/           One file per address on the site
-scripts/           WordPress import and its overrides
-docs/spec.md       Decisions, milestones, open questions
+  assets/            Images, optimised at build time
+  pages/             One file per address on the site; each only picks a language
+  components/
+    home/            The sections of the homepage, in the order they appear
+    pages/           The inner pages: text page, fraternity list, fraternity page, credits
+    calendar/        The calendar, the one part that runs in the browser as React
+  layouts/           Header, footer and <head> shared by every page
+  lib/               Logic without markup: calendar feed, shield geometry, links, data loading
+  i18n/              Languages: interface text and link helper
+  data/              Menu, image credits, saved copy of the calendar feed
+  styles/            The stylesheet and the scroll-reveal states
+scripts/             WordPress import and its overrides
+docs/spec.md         Decisions, milestones, open questions
 ```
 
 ## Content rules
@@ -43,6 +48,7 @@ docs/spec.md       Decisions, milestones, open questions
 - Until launch, Latvian text is edited in WordPress and brought over with `npm run import:wordpress`.
   Hand edits to imported Latvian files are overwritten by the next import.
 - English text and `src/content/site/home.yaml` are edited here.
+- An image that does not come from WordPress needs an entry in `src/data/image-credits.json`.
 - Build internal links with `localizedUrl()` from `src/i18n/urls.ts`, so they also work on the preview,
   which is served from a sub-path.
 

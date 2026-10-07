@@ -1,6 +1,7 @@
 ---
 import '@/styles/global.css';
-import { Image } from 'astro:assets';
+import { getImage, Image } from 'astro:assets';
+import sharePhoto from '@/assets/site/btk-2023.jpg';
 import crest from '@/assets/site/crest-ink.png';
 import { navigation } from '@/data/navigation';
 import { locales, type Locale } from '@/i18n/config';
@@ -22,6 +23,10 @@ const t = useTranslations(locale);
 
 const fullTitle = title ? `${title} — P!K!` : t('site.title');
 const canonical = new URL(localizedUrl(locale, path), Astro.site);
+const summary = description ?? t('site.description');
+
+// The picture shown when a link to the site is shared.
+const share = await getImage({ src: sharePhoto, width: 1200, height: 630, format: 'jpg' });
 
 // The preview is served from a sub-path and must stay out of search results.
 const isPreview = import.meta.env.BASE_URL !== '/';
@@ -33,7 +38,15 @@ const isPreview = import.meta.env.BASE_URL !== '/';
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
-    <meta name="description" content={description ?? t('site.description')} />
+    <meta name="description" content={summary} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="P!K!" />
+    <meta property="og:locale" content={locale === 'lv' ? 'lv_LV' : 'en_GB'} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={summary} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(share.src, Astro.site)} />
+    <meta name="twitter:card" content="summary_large_image" />
     {isPreview && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonical} />
     {locales.map((code) => (
