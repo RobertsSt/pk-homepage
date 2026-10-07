@@ -6,7 +6,7 @@ import { navigation } from '@/data/navigation';
 import { locales, type Locale } from '@/i18n/config';
 import { useTranslations } from '@/i18n/ui';
 import { localizedUrl } from '@/i18n/urls';
-import { homeUrl, pageUrl } from '@/lib/routes';
+import { creditsUrl, homeUrl, pageUrl } from '@/lib/routes';
 
 interface Props {
   locale: Locale;
@@ -41,7 +41,13 @@ const isPreview = import.meta.env.BASE_URL !== '/';
     ))}
     <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
     <script is:inline>
+      // `js` lets the stylesheet hide content that will animate in. If the page
+      // script then never starts (it failed to load), take the class away again
+      // so nothing stays hidden.
       document.documentElement.classList.add('js');
+      setTimeout(() => {
+        if (!document.documentElement.dataset.motion) document.documentElement.classList.remove('js');
+      }, 3000);
     </script>
   </head>
 
@@ -183,9 +189,14 @@ const isPreview = import.meta.env.BASE_URL !== '/';
           </div>
         ))}
       </div>
-      <div class="shell border-paper/15 text-paper/60 border-t py-6 text-sm">
+      <div class="shell border-paper/15 text-paper/60 flex flex-wrap justify-between gap-x-8 gap-y-2 border-t py-6 text-sm">
         <p>
           Prezidiju Konvents © 1919–{new Date().getFullYear()}. {t('footer.rights')}
+        </p>
+        <p>
+          <a href={creditsUrl(locale)} class="hover:text-paper">
+            {t('credits.title')}
+          </a>
         </p>
       </div>
     </footer>

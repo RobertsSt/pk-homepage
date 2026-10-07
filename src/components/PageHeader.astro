@@ -1,0 +1,29 @@
+---
+/**
+ * The top of an inner page: a small line saying where the page belongs, the
+ * page title, and optionally an introduction passed as children.
+ */
+interface Props {
+  title: string;
+  kicker?: string;
+}
+
+const { title, kicker } = Astro.props;
+---
+
+<header class="shell pt-14 pb-12 lg:pt-20 lg:pb-16">
+  {kicker && (
+    <p class="kicker" data-reveal>
+      {kicker}
+    </p>
+  )}
+  <h1
+    class="font-display mt-6 max-w-5xl text-[clamp(2.8rem,7.2vw,6.25rem)] leading-[0.95] font-normal tracking-[-0.028em]"
+    data-reveal="lines"
+  >
+    <span class="line-mask">
+      <span>{title}</span>
+    </span>
+  </h1>
+  <slot />
+</header>

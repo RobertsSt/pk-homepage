@@ -19,6 +19,21 @@ export async function getFraternities(): Promise<Fraternity[]> {
   return all.sort((a, b) => a.data.order - b.data.order);
 }
 
+/**
+ * One route per fraternity. Seniority numbers and the previous/next links run
+ * within a group: the members of P!K! first, then the fraternities outside it.
+ */
+export async function getFraternityPaths() {
+  const all = await getFraternities();
+  return (['pk', 'outside'] as const).flatMap((membership) => {
+    const group = all.filter((f) => f.data.membership === membership);
+    return group.map((fraternity, index) => ({
+      params: { id: fraternity.id },
+      props: { fraternity, position: index + 1, previous: group[index - 1], next: group[index + 1] },
+    }));
+  });
+}
+
 /** Everything the homepage shows, with text already resolved to one language. */
 export async function loadHomepage(locale: Locale) {
   const [homeEntry, fraternities] = await Promise.all([getEntry('home', 'home'), getFraternities()]);

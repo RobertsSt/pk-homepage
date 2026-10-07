@@ -1,0 +1,69 @@
+---
+import PageHeader from '@/components/PageHeader.astro';
+import credits from '@/data/image-credits.json';
+import type { Locale } from '@/i18n/config';
+import { useTranslations } from '@/i18n/ui';
+import Layout from '@/layouts/Layout.astro';
+import { displayHost } from '@/lib/format';
+import { CREDITS_SLUG } from '@/lib/routes';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const kind = (image: string) =>
+  image === 'photo' ? t('credits.photo') : t(`heraldry.${image as 'arms' | 'zirkel'}`);
+const cell = 'border-rule border-b py-3.5 pr-6 align-top';
+---
+
+<Layout locale={locale} path={CREDITS_SLUG} title={t('credits.title')} description={t('credits.intro')}>
+  <PageHeader title={t('credits.title')} kicker={t('site.name')}>
+    <p class="text-ink-soft mt-8 max-w-2xl text-lg leading-relaxed" data-reveal>
+      {t('credits.intro')}
+    </p>
+  </PageHeader>
+
+  <div class="shell overflow-x-auto pb-24 lg:pb-36" data-reveal>
+    <table class="w-full min-w-[44rem] border-collapse text-left text-[0.95rem]">
+      <thead>
+        <tr class="text-ink-soft text-[0.7rem] tracking-[0.2em] uppercase">
+          <th scope="col" class={cell}>
+            {t('fraternities.title')}
+          </th>
+          <th scope="col" class={cell}>
+            {t('credits.image')}
+          </th>
+          <th scope="col" class={cell}>
+            {t('credits.author')}
+          </th>
+          <th scope="col" class={cell}>
+            {t('credits.license')}
+          </th>
+          <th scope="col" class={cell}>
+            {t('credits.source')}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {credits.map((credit) => (
+          <tr>
+            <th scope="row" class:list={[cell, 'font-display text-[1.15rem] font-normal']}>
+              {credit.fraternity}
+            </th>
+            <td class={cell}>{kind(credit.image)}</td>
+            <td class={cell}>{credit.author ?? t('credits.unknown')}</td>
+            <td class={cell}>{credit.license ?? t('credits.unknown')}</td>
+            <td class={cell}>
+              <a href={credit.source} class="link" target="_blank" rel="noreferrer">
+                {credit.host ?? displayHost(credit.source)}
+              </a>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</Layout>

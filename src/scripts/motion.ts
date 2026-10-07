@@ -12,6 +12,9 @@ import { animate, scroll } from 'motion';
 
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+// Tells the watchdog in <head> that this script arrived and will reveal the content.
+document.documentElement.dataset.motion = 'on';
+
 function onceVisible(elements: Iterable<Element>, callback: (element: Element) => void, rootMargin = '0px') {
   const observer = new IntersectionObserver(
     (entries) => {

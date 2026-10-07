@@ -1,7 +1,7 @@
 ---
 import SectionTitle from '@/components/SectionTitle.astro';
 import { Shield } from '@/components/Shield';
-import { fraternitiesUrl, fraternityUrl } from '@/lib/routes';
+import { fraternitiesUrl, fraternityUrl, shieldTransitionName } from '@/lib/routes';
 import type { Homepage } from '@/lib/site';
 
 interface Props {
@@ -38,6 +38,7 @@ const { t, locale, members, outside } = page;
               colors={fraternity.data.colors}
               band={fraternity.data.band}
               className="text-ink/65 mt-6 h-[5.5rem] w-auto transition-transform duration-500 ease-out group-hover:-translate-y-1.5 group-hover:-rotate-3"
+              style={{ viewTransitionName: shieldTransitionName(fraternity.id) }}
             />
             <h3 class="font-display mt-6 text-[1.45rem] leading-[1.1]">{fraternity.data.name}</h3>
             <span
@@ -61,6 +62,7 @@ const { t, locale, members, outside } = page;
             colors={fraternity.data.colors}
             band={fraternity.data.band}
             className="text-ink/65 h-9 w-auto transition-transform duration-500 group-hover:-rotate-3"
+            style={{ viewTransitionName: shieldTransitionName(fraternity.id) }}
           />
           <span class="font-display text-lg">{fraternity.data.name}</span>
         </a>

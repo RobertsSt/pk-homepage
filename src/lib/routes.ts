@@ -13,3 +13,13 @@ export const fraternitiesUrl = (locale: Locale) => localizedUrl(locale, FRATERNI
 
 export const fraternityUrl = (locale: Locale, id: string) =>
   localizedUrl(locale, `${FRATERNITIES_SLUG}/${id}`);
+
+/**
+ * Give a fraternity's shield this view-transition-name on two pages and the
+ * browser moves it from one to the other. Use it once per page at most.
+ */
+export const shieldTransitionName = (id: string) => `shield-${id}`;
+
+export const CREDITS_SLUG = 'attelu-avoti';
+
+export const creditsUrl = (locale: Locale) => localizedUrl(locale, CREDITS_SLUG);

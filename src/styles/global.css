@@ -491,6 +491,110 @@
     }
   }
 
+  /* Long-form text rendered from Markdown. */
+  .prose {
+    font-family: var(--font-display);
+    font-size: 1.22rem;
+    line-height: 1.68;
+
+    & > * + * {
+      margin-top: 1.35em;
+    }
+
+    & > p:first-child {
+      font-size: 1.45rem;
+      line-height: 1.5;
+    }
+
+    & h2 {
+      margin-top: 2.2em;
+      font-size: 2.1rem;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+    }
+
+    & h3 {
+      margin-top: 1.8em;
+      font-size: 1.55rem;
+      line-height: 1.2;
+    }
+
+    & strong {
+      font-weight: 600;
+    }
+
+    & a {
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.2em;
+
+      &:hover {
+        color: var(--color-wine);
+      }
+    }
+
+    & ul,
+    & ol {
+      padding-left: 1.3em;
+    }
+
+    & ul {
+      list-style: disc;
+    }
+
+    & ol {
+      list-style: decimal;
+    }
+
+    & li + li {
+      margin-top: 0.4em;
+    }
+
+    & hr {
+      margin-block: 2.5em;
+      border-color: var(--color-rule);
+    }
+
+    & blockquote {
+      border-left: 2px solid var(--color-wine);
+      padding-left: 1.2em;
+      font-style: italic;
+    }
+
+    & img {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  /* A thin bar under the header that fills as a long page is read. */
+  .reading-progress {
+    display: none;
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 50;
+    height: 2px;
+    background: var(--color-wine);
+    transform-origin: 0 50%;
+    scale: 0 1;
+
+    @supports (animation-timeline: scroll()) {
+      display: block;
+      animation: reading-progress linear both;
+      animation-timeline: scroll(root);
+    }
+  }
+
+  /* A fraternity's three colours as one bar; set --c1 to --c3 on an ancestor. */
+  .tricolour {
+    background: linear-gradient(to right, var(--c1) 0 33.34%, var(--c2) 33.34% 66.67%, var(--c3) 66.67%);
+  }
+
+  /* Heraldry is scanned on white; multiply lets the paper show through. */
+  .on-paper {
+    mix-blend-mode: multiply;
+  }
+
   .timeline-line {
     position: absolute;
     top: 0.6rem;
@@ -539,5 +643,36 @@
 @keyframes seal-turn {
   to {
     rotate: 360deg;
+  }
+}
+
+@keyframes reading-progress {
+  to {
+    scale: 1 1;
+  }
+}
+
+/*
+ * Moving between pages: the browser cross-fades, and an element that carries
+ * the same view-transition-name on both pages (a fraternity's shield) travels
+ * from its old place to its new one. Browsers without this simply navigate.
+ */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.3s;
+}
+
+::view-transition-group(*) {
+  animation-duration: 0.5s;
+  animation-timing-function: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
   }
 }
