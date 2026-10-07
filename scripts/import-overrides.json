@@ -1,0 +1,211 @@
+{
+  "fraternities": {
+    "fraternitas-arctica": {
+      "founded": "1880-11-07",
+      "band": "falling",
+      "colors": [
+        "#c9a348",
+        "#1c1c22",
+        "#e05c57"
+      ]
+    },
+    "selonija": {
+      "founded": "1880-11-24",
+      "band": "rising",
+      "colors": [
+        "#add08e",
+        "#ffffff",
+        "#e8615c"
+      ]
+    },
+    "lettgallia": {
+      "founded": "1899-02-20",
+      "band": "rising",
+      "colors": [
+        "#bedb83",
+        "#1c1c22",
+        "#ffffff"
+      ]
+    },
+    "fraternitas-lettica": {
+      "founded": "1902-10-20",
+      "band": "falling",
+      "colors": [
+        "#2c4590",
+        "#92c847",
+        "#c9a348"
+      ]
+    },
+    "latvia": {
+      "founded": "1917-02-17",
+      "band": "rising",
+      "colors": [
+        "#c84c51",
+        "#566f9f",
+        "#c9a348"
+      ]
+    },
+    "ventonia": {
+      "founded": "1917-11-21",
+      "band": "falling",
+      "colors": [
+        "#2e3880",
+        "#ffffff",
+        "#98c070"
+      ]
+    },
+    "tervetia": {
+      "founded": "1922-04-30",
+      "band": "rising",
+      "colors": [
+        "#ee4f02",
+        "#788597",
+        "#000191"
+      ]
+    },
+    "beveronija": {
+      "founded": "1922-05-04",
+      "band": "rising",
+      "colors": [
+        "#854b6c",
+        "#c9a348",
+        "#8ec6e4"
+      ]
+    },
+    "philyronia": {
+      "founded": "1924-07-07",
+      "band": "rising",
+      "colors": [
+        "#8b595a",
+        "#90c6a7",
+        "#c9a348"
+      ]
+    },
+    "fraternitas-metropolitana": {
+      "founded": "1924-10-06",
+      "band": "rising",
+      "colors": [
+        "#c9a348",
+        "#756383",
+        "#82bb90"
+      ]
+    },
+    "fraternitas-vesthardiana": {
+      "founded": "1924-10-08",
+      "band": "falling",
+      "colors": [
+        "#adb1b0",
+        "#e24260",
+        "#c9a348"
+      ]
+    },
+    "fraternitas-academica": {
+      "founded": "1925-02-04",
+      "band": "rising",
+      "colors": [
+        "#1c1c22",
+        "#9cbe12",
+        "#c9a348"
+      ]
+    },
+    "fraternitas-lataviensis": {
+      "founded": "1926-09-16",
+      "band": "falling",
+      "colors": [
+        "#515458",
+        "#ffffff",
+        "#c9a348"
+      ]
+    },
+    "patria": {
+      "founded": "1926-09-20",
+      "band": "falling",
+      "colors": [
+        "#f4864e",
+        "#63a78c",
+        "#c9a348"
+      ]
+    },
+    "fraternitas-livonica": {
+      "founded": "1926-10-29",
+      "band": "rising",
+      "colors": [
+        "#6fbae4",
+        "#7e4471",
+        "#c9a348"
+      ]
+    },
+    "vendia": {
+      "founded": "1927-03-20",
+      "band": "rising",
+      "colors": [
+        "#c0d997",
+        "#a63f46",
+        "#c9a348"
+      ]
+    },
+    "fraternitas-imantica": {
+      "founded": "1947-02-18",
+      "band": "falling",
+      "colors": [
+        "#7d3c43",
+        "#c9a348",
+        "#ffffff"
+      ]
+    },
+    "gersicania": {
+      "founded": "1947-03-14",
+      "band": "rising",
+      "colors": [
+        "#ffffff",
+        "#522874",
+        "#036242"
+      ]
+    },
+    "fraternitas-cursica": {
+      "founded": "1947-05-07",
+      "band": "falling",
+      "colors": [
+        "#1c1c22",
+        "#c9a348",
+        "#5b6e9b"
+      ]
+    },
+    "fraternitas-vanenica": {
+      "founded": "1947-06-20",
+      "band": "falling",
+      "colors": [
+        "#647067",
+        "#8e3f55",
+        "#a0a8a9"
+      ]
+    },
+    "lettonia": {
+      "founded": "1870-02-19",
+      "band": "rising",
+      "colors": [
+        "#3f6117",
+        "#0e1b77",
+        "#c9a348"
+      ]
+    },
+    "talavija": {
+      "founded": "1900-12-14",
+      "band": "falling",
+      "colors": [
+        "#ffffff",
+        "#7aa277",
+        "#c9a348"
+      ]
+    },
+    "lacuania": {
+      "founded": "1927-12-07",
+      "band": "falling",
+      "colors": [
+        "#76aed7",
+        "#1c1c22",
+        "#c9a348"
+      ]
+    }
+  }
+}

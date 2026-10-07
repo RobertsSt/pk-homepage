@@ -1,0 +1,20 @@
+order: 20
+membership: pk
+name: Fraternitas Vanenica
+mottos:
+  - Tēvijai, pienākumam, draudzībai
+  - Veritati, humanitāti, virtuti
+website: http://www.vanenica.lv/
+address: Rīga, Artilērijas iela 54, LV-1009
+heraldry:
+  shield: ../../assets/fraternities/fraternitas-vanenica/shield.jpg
+  arms: ../../assets/fraternities/fraternitas-vanenica/arms.jpg
+  zirkel: ../../assets/fraternities/fraternitas-vanenica/zirkel.jpg
+  cap: ../../assets/fraternities/fraternitas-vanenica/cap.jpg
+  star: ../../assets/fraternities/fraternitas-vanenica/star.jpg
+founded: 1947-06-20
+band: falling
+colors:
+  - "#647067"
+  - "#8e3f55"
+  - "#a0a8a9"

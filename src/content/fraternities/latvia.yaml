@@ -1,0 +1,21 @@
+order: 5
+membership: pk
+name: Latvia
+mottos:
+  - Pro Latvia
+  - Virtutes Bonos Dies Viventi Faciunt
+website: http://www.latvus.lv/
+address: Rīga, Šarlotes iela 3, LV-1001
+phone: +371-67362189
+heraldry:
+  shield: ../../assets/fraternities/latvia/shield.jpg
+  arms: ../../assets/fraternities/latvia/arms.jpg
+  zirkel: ../../assets/fraternities/latvia/zirkel.jpg
+  cap: ../../assets/fraternities/latvia/cap.jpg
+  star: ../../assets/fraternities/latvia/star.jpg
+founded: 1917-02-17
+band: rising
+colors:
+  - "#c84c51"
+  - "#566f9f"
+  - "#c9a348"
