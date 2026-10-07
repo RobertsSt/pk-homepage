@@ -56,7 +56,7 @@ const pages = defineCollection({
   }),
 });
 
-/** The homepage content that changes with each presidium. */
+/** Homepage content: what changes with each presidium, plus the About photo and history milestones. */
 const home = defineCollection({
   loader: glob({ base: './src/content/site', pattern: 'home.yaml' }),
   schema: ({ image }) =>
@@ -66,6 +66,7 @@ const home = defineCollection({
       lead: localized,
       intro: localized,
       foundedYear: z.number().int(),
+      about: z.object({ photo: image(), alt: localized, caption: localized }),
       presiding: z.object({
         fraternity: reference('fraternities'),
         term: z.string(),
@@ -79,7 +80,10 @@ const home = defineCollection({
           photo: image(),
         }),
       ),
-      history: z.object({ teaser: localized }),
+      history: z.object({
+        teaser: localized,
+        milestones: z.array(z.object({ year: z.string(), text: localized })),
+      }),
       contact: z.object({
         email: z.email(),
         legalName: localized,

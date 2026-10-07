@@ -1,0 +1,63 @@
+---
+import SectionTitle from '@/components/SectionTitle.astro';
+import { pageUrl } from '@/lib/routes';
+import type { Homepage } from '@/lib/site';
+
+interface Props {
+  page: Homepage;
+}
+
+const { page } = Astro.props;
+const { t, locale, members } = page;
+
+// The recorded milestones, then where things stand now.
+const milestones = [
+  ...page.milestones,
+  { year: t('history.today'), text: t('history.todayText', { count: members.length }) },
+];
+---
+
+<section class="on-ink relative overflow-hidden py-24 lg:py-36">
+  <p
+    class="font-display text-paper/[0.06] pointer-events-none absolute top-[38%] -right-[2vw] -translate-y-1/2 text-[38vw] leading-none tracking-[-0.04em] select-none"
+    aria-hidden="true"
+    data-parallax="70"
+  >
+    {page.foundedYear}
+  </p>
+
+  <div class="shell relative">
+    <div class="grid gap-10 lg:grid-cols-12">
+      <div class="lg:col-span-5">
+        <p class="kicker" data-reveal>
+          {t('history.kicker')}
+        </p>
+        <SectionTitle text={t('history.title')} class="mt-6" />
+      </div>
+      <div class="lg:col-span-6 lg:col-start-7">
+        <p class="text-paper/85 text-lg leading-relaxed" data-reveal>
+          {page.historyTeaser}
+        </p>
+        <p class="mt-10" data-reveal>
+          <a href={pageUrl(locale, 'pk-vesture')} class="btn btn-light">
+            {t('history.more')} →
+          </a>
+        </p>
+      </div>
+    </div>
+
+    <div class="relative mt-20 lg:mt-28">
+      <span class="timeline-line" data-reveal="line" aria-hidden="true"></span>
+      <ol class="timeline">
+        {milestones.map((milestone, index) => (
+          <li data-reveal style={`--reveal-order:${index * 3 + 2}`}>
+            <p class="font-display text-brass text-[2.6rem] leading-none tabular-nums lg:text-5xl">
+              {milestone.year}
+            </p>
+            <p class="text-paper/75 mt-3 max-w-[17rem] text-[0.95rem] leading-relaxed">{milestone.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>

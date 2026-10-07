@@ -3,12 +3,14 @@ import type { Locale } from './config';
 /** Interface text. Page content lives in src/content, not here. */
 const ui = {
   lv: {
+    'site.name': 'Prezidiju Konvents',
     'site.title': 'P!K! — Prezidiju Konvents',
     'site.description':
       'Prezidiju Konvents (P!K!) apvieno Latvijas studentu korporācijas. Korporācijas, vēsture, kalendārs un kontakti.',
     'nav.menu': 'Izvēlne',
     'nav.close': 'Aizvērt',
     'nav.skip': 'Pāriet uz saturu',
+    'nav.home': 'Sākums',
     'nav.language': 'Valoda',
     'hero.since': 'Dibināts {year}. gadā',
     'hero.fraternities': 'Korporācijas',
@@ -30,6 +32,8 @@ const ui = {
     'history.kicker': 'Kopš 1919',
     'history.title': 'Vēsture',
     'history.more': 'Lasīt vairāk',
+    'history.today': 'Šodien',
+    'history.todayText': '{count} korporācijas P!K! sastāvā.',
     'calendar.kicker': 'Notikumi',
     'calendar.title': 'Kalendārs',
     'calendar.upcoming': 'Tuvākie notikumi',
@@ -47,15 +51,16 @@ const ui = {
     'contact.email': 'E-pasts',
     'contact.registration': 'Reģ. Nr.',
     'footer.rights': 'Visas tiesības aizsargātas.',
-    'draft.label': 'Dizaina melnraksts',
   },
   en: {
+    'site.name': 'Presidium Convent',
     'site.title': 'P!K! — Presidium Convent',
     'site.description':
       "The Presidium Convent (P!K!) unites Latvia's student fraternities. Fraternities, history, calendar and contacts.",
     'nav.menu': 'Menu',
     'nav.close': 'Close',
     'nav.skip': 'Skip to content',
+    'nav.home': 'Home',
     'nav.language': 'Language',
     'hero.since': 'Founded in {year}',
     'hero.fraternities': 'Fraternities',
@@ -77,6 +82,8 @@ const ui = {
     'history.kicker': 'Since 1919',
     'history.title': 'History',
     'history.more': 'Read more',
+    'history.today': 'Today',
+    'history.todayText': '{count} fraternities in P!K!.',
     'calendar.kicker': 'Events',
     'calendar.title': 'Calendar',
     'calendar.upcoming': 'Upcoming events',
@@ -94,7 +101,6 @@ const ui = {
     'contact.email': 'Email',
     'contact.registration': 'Reg. No.',
     'footer.rights': 'All rights reserved.',
-    'draft.label': 'Design draft',
   },
 } as const satisfies Record<Locale, Record<string, string>>;
 

@@ -52,7 +52,16 @@ export async function loadHomepage(locale: Locale) {
     members: fraternities.filter((f) => f.data.membership === 'pk'),
     outside: fraternities.filter((f) => f.data.membership === 'outside'),
     officers: home.officers.map((officer) => ({ ...officer, role: officer.role[locale] })),
+    about: {
+      photo: home.about.photo,
+      alt: home.about.alt[locale],
+      caption: home.about.caption[locale],
+    },
     historyTeaser: home.history.teaser[locale],
+    milestones: home.history.milestones.map((milestone) => ({
+      year: milestone.year,
+      text: milestone.text[locale],
+    })),
     contact: { ...home.contact, legalName: home.contact.legalName[locale] },
     calendar: { events, colors, subscribeUrl: subscribeUrl(home.calendarId) },
   };

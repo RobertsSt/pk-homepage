@@ -1,25 +1,30 @@
 ---
-import './styles.css';
+import '@/styles/global.css';
 import { Image } from 'astro:assets';
 import crest from '@/assets/site/crest-ink.png';
-import DraftBar from '@/components/DraftBar.astro';
 import { navigation } from '@/data/navigation';
 import { locales, type Locale } from '@/i18n/config';
 import { useTranslations } from '@/i18n/ui';
 import { localizedUrl } from '@/i18n/urls';
+import { homeUrl, pageUrl } from '@/lib/routes';
 
 interface Props {
   locale: Locale;
-  /** Route of this page without the language prefix, e.g. `drafts/b`. */
-  path: string;
+  /** Route of this page without the language prefix; empty for the homepage. */
+  path?: string;
+  /** Page title; the site name is appended. Omit on the homepage. */
+  title?: string;
+  description?: string;
 }
 
-const { locale, path } = Astro.props;
+const { locale, path = '', title, description } = Astro.props;
 const t = useTranslations(locale);
-const home = localizedUrl(locale, path);
 
-// Draft: the inner pages are not built yet, so menu entries lead nowhere.
-const pageUrl = (_page: string) => '#';
+const fullTitle = title ? `${title} — P!K!` : t('site.title');
+const canonical = new URL(localizedUrl(locale, path), Astro.site);
+
+// The preview is served from a sub-path and must stay out of search results.
+const isPreview = import.meta.env.BASE_URL !== '/';
 ---
 
 <!doctype html>
@@ -27,9 +32,10 @@ const pageUrl = (_page: string) => '#';
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{t('site.title')}</title>
-    <meta name="description" content={t('site.description')} />
-    <meta name="robots" content="noindex" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description ?? t('site.description')} />
+    {isPreview && <meta name="robots" content="noindex" />}
+    <link rel="canonical" href={canonical} />
     {locales.map((code) => (
       <link rel="alternate" hreflang={code} href={new URL(localizedUrl(code, path), Astro.site)} />
     ))}
@@ -46,7 +52,7 @@ const pageUrl = (_page: string) => '#';
 
     <header class="border-rule/70 bg-paper/90 sticky top-0 z-40 border-b backdrop-blur-md">
       <div class="shell flex items-center justify-between gap-6 py-2.5">
-        <a href={home} class="flex items-center gap-3" aria-label={t('site.title')}>
+        <a href={homeUrl(locale)} class="flex items-center gap-3" aria-label={t('site.title')}>
           <Image src={crest} alt="" width={44} class="h-11 w-auto" loading="eager" />
           <span class="font-display text-[1.7rem] leading-none tracking-tight">P!K!</span>
         </a>
@@ -59,7 +65,7 @@ const pageUrl = (_page: string) => '#';
                   {group.label[locale]}
                   <svg
                     viewBox="0 0 10 6"
-                    class="h-1.5 w-2.5 transition-transform group-hover:rotate-180"
+                    class="h-1.5 w-2.5 transition-transform group-focus-within:rotate-180 group-hover:rotate-180"
                     aria-hidden="true"
                   >
                     <path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4" />
@@ -68,7 +74,7 @@ const pageUrl = (_page: string) => '#';
                 <ul class="border-rule bg-paper invisible absolute top-full left-1/2 w-64 -translate-x-1/2 translate-y-1 border p-2 opacity-0 shadow-[0_18px_40px_-18px_rgb(23_21_15/0.35)] transition duration-200 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
                   {group.links.map((link) => (
                     <li>
-                      <a href={pageUrl(link.page)} class="hover:bg-paper-deep block px-3 py-2.5">
+                      <a href={pageUrl(locale, link.page)} class="hover:bg-paper-deep block px-3 py-2.5">
                         {link.label[locale]}
                       </a>
                     </li>
@@ -119,7 +125,9 @@ const pageUrl = (_page: string) => '#';
       class="bg-paper text-ink m-0 h-dvh max-h-none w-screen max-w-none overflow-y-auto p-0 backdrop:bg-transparent"
     >
       <div class="shell flex items-center justify-between py-2.5">
-        <span class="font-display text-[1.7rem] leading-none tracking-tight">P!K!</span>
+        <a href={homeUrl(locale)} class="font-display text-[1.7rem] leading-none tracking-tight">
+          P!K!
+        </a>
         <button
           type="button"
           class="border-rule border px-3.5 py-2 text-[0.78rem] font-semibold tracking-[0.14em] uppercase"
@@ -137,7 +145,7 @@ const pageUrl = (_page: string) => '#';
             <ul class="mt-3 space-y-2">
               {group.links.map((link) => (
                 <li>
-                  <a href={pageUrl(link.page)} class="font-display text-3xl leading-tight">
+                  <a href={pageUrl(locale, link.page)} class="font-display text-3xl leading-tight">
                     {link.label[locale]}
                   </a>
                 </li>
@@ -152,24 +160,35 @@ const pageUrl = (_page: string) => '#';
       <slot />
     </main>
 
-    <footer class="bg-ink text-paper/70">
-      <div class="shell border-paper/15 flex flex-col gap-6 border-t py-8 text-sm sm:flex-row sm:items-center sm:justify-between">
+    <footer class="on-ink">
+      <div class="shell border-paper/15 grid gap-10 border-t py-14 sm:grid-cols-2 lg:grid-cols-[1.4fr_repeat(4,1fr)]">
+        <div>
+          <Image src={crest} alt="" width={96} class="h-24 w-auto opacity-90 invert" />
+          <p class="font-display mt-4 text-xl">{t('site.name')}</p>
+        </div>
+        {navigation.map((group) => (
+          <div>
+            <h2 class="text-brass text-[0.7rem] font-semibold tracking-[0.22em] uppercase">
+              {group.label[locale]}
+            </h2>
+            <ul class="text-paper/70 mt-4 space-y-2.5 text-sm">
+              {group.links.map((link) => (
+                <li>
+                  <a href={pageUrl(locale, link.page)} class="hover:text-paper">
+                    {link.label[locale]}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+      <div class="shell border-paper/15 text-paper/60 border-t py-6 text-sm">
         <p>
           Prezidiju Konvents © 1919–{new Date().getFullYear()}. {t('footer.rights')}
         </p>
-        <ul class="flex flex-wrap gap-x-6 gap-y-2">
-          {navigation.map((group) => (
-            <li>
-              <a href={pageUrl(group.links[0]!.page)} class="hover:text-paper">
-                {group.label[locale]}
-              </a>
-            </li>
-          ))}
-        </ul>
       </div>
     </footer>
-
-    <DraftBar locale={locale} design="b" />
 
     <script>
       import '@/scripts/motion';

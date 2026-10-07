@@ -1,0 +1,31 @@
+---
+import type { Locale } from '@/i18n/config';
+import Layout from '@/layouts/Layout.astro';
+import { loadHomepage } from '@/lib/site';
+import About from './About.astro';
+import CalendarSection from './CalendarSection.astro';
+import Contact from './Contact.astro';
+import Facts from './Facts.astro';
+import Fraternities from './Fraternities.astro';
+import Hero from './Hero.astro';
+import History from './History.astro';
+import Officers from './Officers.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const page = await loadHomepage(locale);
+---
+
+<Layout locale={locale}>
+  <Hero page={page} />
+  <Facts page={page} />
+  <About page={page} />
+  <Officers page={page} />
+  <CalendarSection page={page} />
+  <Fraternities page={page} />
+  <History page={page} />
+  <Contact page={page} />
+</Layout>

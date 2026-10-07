@@ -1,0 +1,54 @@
+---
+import { Image } from 'astro:assets';
+import SectionTitle from '@/components/SectionTitle.astro';
+import type { Homepage } from '@/lib/site';
+
+interface Props {
+  page: Homepage;
+}
+
+const { page } = Astro.props;
+const { t } = page;
+---
+
+<section class="border-rule bg-paper-deep/55 border-y py-20 lg:py-28">
+  <div class="shell">
+    <div class="mx-auto max-w-3xl text-center">
+      <p class="kicker justify-center" data-reveal>
+        {t('officers.kicker', { term: page.term })}
+      </p>
+      <SectionTitle text={t('officers.title')} class="mt-6" />
+    </div>
+
+    <ul class="mx-auto mt-14 grid max-w-5xl gap-8 sm:grid-cols-3">
+      {page.officers.map((officer, index) => (
+        <li
+          class="group border-rule bg-paper overflow-hidden border shadow-[0_26px_60px_-42px_rgb(23_21_15/0.55)]"
+          data-reveal
+          style={`--reveal-order:${index}`}
+        >
+          <div class="aspect-square overflow-hidden">
+            <Image
+              src={officer.photo}
+              alt={`${officer.role}: ${officer.name}`}
+              widths={[320, 480, 720]}
+              sizes="(min-width: 64rem) 20rem, (min-width: 40rem) 30vw, 92vw"
+              class="h-full w-full object-cover transition duration-700 ease-out group-hover:scale-105"
+            />
+          </div>
+          <div class="px-6 pt-6 pb-8 text-center">
+            <p class="bg-wine/10 text-wine inline-block rounded-full px-3.5 py-1 text-[0.68rem] font-semibold tracking-[0.18em] uppercase">
+              {officer.role}
+            </p>
+            <h3 class="font-display mt-4 text-[1.55rem] leading-tight">
+              <span class="text-ink-soft italic">{officer.honorific}</span> {officer.name}
+            </h3>
+            <a href={`mailto:${officer.email}`} class="link text-ink-soft mt-2 inline-block text-sm">
+              {officer.email}
+            </a>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

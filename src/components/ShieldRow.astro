@@ -1,0 +1,38 @@
+---
+/**
+ * Every fraternity's colour shield in one row, in seniority order. Under a
+ * pointer a shield grows and shows its name; each one links to its page.
+ */
+import { Shield } from '@/components/Shield';
+import type { Locale } from '@/i18n/config';
+import { fraternityUrl } from '@/lib/routes';
+import type { Fraternity } from '@/lib/site';
+
+interface Props {
+  fraternities: Fraternity[];
+  locale: Locale;
+  /** Accessible name of the row. */
+  label: string;
+}
+
+const { fraternities, locale, label } = Astro.props;
+
+/** Names at either end are aligned to the page edge so they stay inside it. */
+const edge = (index: number) => (index < 2 ? 'start' : index > fraternities.length - 3 ? 'end' : undefined);
+---
+
+<nav aria-label={label}>
+  <ul class="shield-row">
+    {fraternities.map((fraternity, index) => (
+      <li style={`--i:${index}`} data-edge={edge(index)}>
+        <a href={fraternityUrl(locale, fraternity.id)} aria-label={fraternity.data.name}>
+          <Shield colors={fraternity.data.colors} band={fraternity.data.band} />
+          <span class="shield-row-label" aria-hidden="true">
+            {fraternity.data.name}
+            <small>{fraternity.data.founded.getUTCFullYear()}</small>
+          </span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>

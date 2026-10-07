@@ -1,7 +1,7 @@
 ---
 /**
- * A section heading in the style of the reference sites: the closing words
- * are set in italic and picked out in gold. One-word titles stay plain.
+ * A section heading. Everything after the first word is set in italic and
+ * coloured, echoing the homepage headline; a one-word title stays plain.
  */
 interface Props {
   text: string;
@@ -12,7 +12,7 @@ const { text, class: className } = Astro.props;
 const [first, ...rest] = text.split(' ');
 ---
 
-<h2 class:list={['title', className]} data-reveal>
+<h2 class:list={['section-title', className]} data-reveal>
   {first}
   {rest.length > 0 && ' '}
   {rest.length > 0 && <em>{rest.join(' ')}</em>}

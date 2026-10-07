@@ -1,0 +1,45 @@
+---
+import { Image } from 'astro:assets';
+import SectionTitle from '@/components/SectionTitle.astro';
+import { pageUrl } from '@/lib/routes';
+import type { Homepage } from '@/lib/site';
+
+interface Props {
+  page: Homepage;
+}
+
+const { page } = Astro.props;
+const { t, locale, about } = page;
+---
+
+<section class="shell grid items-center gap-14 py-20 lg:grid-cols-2 lg:gap-24 lg:py-32">
+  <figure data-reveal>
+    <div class="framed mr-4">
+      <div class="overflow-hidden">
+        <Image
+          src={about.photo}
+          alt={about.alt}
+          widths={[480, 800, 1200, 1600]}
+          sizes="(min-width: 64rem) 40rem, 92vw"
+          class="aspect-[3/2] w-full object-cover transition duration-[1.2s] ease-out hover:scale-[1.03]"
+        />
+      </div>
+    </div>
+    <figcaption class="text-ink-soft mt-8 text-[0.8rem] tracking-wide">{about.caption}</figcaption>
+  </figure>
+
+  <div>
+    <p class="kicker" data-reveal>
+      {t('about.kicker')}
+    </p>
+    <SectionTitle text={t('about.title')} class="mt-6" />
+    <p class="text-ink-soft mt-8 text-[1.1rem] leading-[1.75]" data-reveal>
+      {page.intro}
+    </p>
+    <p class="mt-10" data-reveal>
+      <a href={pageUrl(locale, 'pk-merki')} class="btn">
+        {t('about.aims')} →
+      </a>
+    </p>
+  </div>
+</section>

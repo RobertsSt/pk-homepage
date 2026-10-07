@@ -1,4 +1,4 @@
-# Homepage content. Update `presiding` and `officers` when the presidium changes.
+# Homepage content. When the presidium changes, update `presiding` and `officers`.
 
 name:
   lv: Prezidiju Konvents
@@ -24,6 +24,15 @@ intro:
     association in Latvia.
 
 foundedYear: 1919
+
+about:
+  photo: ../../assets/site/btk-2023.jpg
+  alt:
+    lv: Vairāki simti studentu un studenšu korporāciju biedru ar karogiem pie Latvijas Nacionālās bibliotēkas
+    en: Several hundred fraternity and sorority members with flags in front of the National Library of Latvia
+  caption:
+    lv: 58. Baltijas tautu komeršs, Rīga, 2023
+    en: 58th Baltic Nations’ Commers, Riga, 2023
 
 presiding:
   fraternity: latvia
@@ -68,6 +77,24 @@ history:
       fraternities), G!T! and P!K!T!, it adopted decisions and issued rules that guided and
       regulated relations among all the fraternities. P!K! was thus the highest governing body of
       the student fraternities of the University of Latvia.
+  # Each line is taken from the history page (pk-vesture); keep the two in step.
+  milestones:
+    - year: '1919'
+      text:
+        lv: 27. septembrī piecas latviešu korporācijas Rīgā dibina kopēju apvienību.
+        en: On 27 September five Latvian fraternities found a common union in Riga.
+    - year: '1920'
+      text:
+        lv: Apvienība pieņem nosaukumu Prezidiju Konvents — P!K!
+        en: The union takes the name Prezidiju Konvents, P!K!
+    - year: '1940'
+      text:
+        lv: 13. jūlijā padomju okupācijas vara slēdz korporācijas. P!K! bija darbojies 42 semestrus.
+        en: On 13 July the Soviet occupation authorities close the fraternities. P!K! had been active for 42 semesters.
+    - year: '1990'
+      text:
+        lv: 15. martā piecpadsmit korporācijas atjauno P!K! darbību.
+        en: On 15 March fifteen fraternities restore P!K!.
 
 contact:
   email: prezidijukonvents@gmail.com
