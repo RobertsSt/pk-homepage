@@ -1,0 +1,22 @@
+order: 1
+membership: pk
+name: Fraternitas Arctica
+mottos:
+  - P.C.T. (Рцы Слово Твёрдо)
+  - Turi doto vārdu
+  - Vīrs un vārds
+website: http://www.arctica.lv/
+address: Rīga, Darba iela 4 – 2, LV-1046
+phone: +371-29206021
+founded: 1880-11-07
+band: falling
+colors:
+  - "#c9a348"
+  - "#1c1c22"
+  - "#e05c57"
+heraldry:
+  shield: ../../assets/fraternities/fraternitas-arctica/shield.jpg
+  arms: ../../assets/fraternities/fraternitas-arctica/arms-large.jpg
+  zirkel: ../../assets/fraternities/fraternitas-arctica/zirkel.jpg
+  cap: ../../assets/fraternities/fraternitas-arctica/cap.jpg
+  star: ../../assets/fraternities/fraternitas-arctica/star.jpg

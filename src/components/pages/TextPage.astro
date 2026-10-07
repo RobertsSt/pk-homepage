@@ -1,0 +1,72 @@
+---
+import { render } from 'astro:content';
+import PageHeader from '@/components/PageHeader.astro';
+import type { Locale } from '@/i18n/config';
+import { useTranslations } from '@/i18n/ui';
+import Layout from '@/layouts/Layout.astro';
+import { findInNavigation, getTextPage } from '@/lib/content';
+import { excerpt } from '@/lib/format';
+import { pageUrl } from '@/lib/routes';
+
+interface Props {
+  locale: Locale;
+  slug: string;
+}
+
+const { locale, slug } = Astro.props;
+const t = useTranslations(locale);
+
+const { entry, translated } = await getTextPage(locale, slug);
+const { Content } = await render(entry);
+
+const place = findInNavigation(slug);
+// While a page awaits translation its title still comes from the menu, which is translated.
+const title = translated ? entry.data.title : (place?.link.label[locale] ?? entry.data.title);
+---
+
+<Layout
+  locale={locale}
+  path={slug}
+  title={title}
+  description={entry.data.description ?? excerpt(entry.body ?? '')}
+>
+  <div class="reading-progress" aria-hidden="true"></div>
+  <PageHeader title={title} kicker={place?.group.label[locale] ?? t('site.name')} />
+
+  <div class="shell grid gap-x-10 gap-y-16 pb-24 lg:grid-cols-12 lg:pb-36">
+    <article class="lg:col-span-8">
+      {!translated && (
+        <p class="border-rule bg-paper-deep/60 text-ink-soft mb-10 max-w-[42rem] border-l-2 px-5 py-4 text-[0.95rem]">
+          {t('page.untranslated')}
+        </p>
+      )}
+      <div class="prose max-w-[42rem]" lang={translated ? undefined : 'lv'} data-reveal>
+        <Content />
+      </div>
+    </article>
+
+    {place && (
+      <aside class="lg:col-span-3 lg:col-start-10">
+        <nav class="lg:sticky lg:top-28" aria-label={t('page.inSection')}>
+          <p class="kicker">{t('page.inSection')}</p>
+          <ul class="border-rule mt-5 border-t">
+            {place.group.links.map((link) => (
+              <li class="border-rule border-b">
+                <a
+                  href={pageUrl(locale, link.page)}
+                  aria-current={link.page === slug ? 'page' : undefined}
+                  class:list={[
+                    'font-display block py-3 text-[1.2rem] leading-snug transition-colors',
+                    link.page === slug ? 'text-wine' : 'hover:text-wine',
+                  ]}
+                >
+                  {link.label[locale]}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </aside>
+    )}
+  </div>
+</Layout>

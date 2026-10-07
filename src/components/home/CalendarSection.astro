@@ -1,0 +1,31 @@
+---
+import { Calendar } from '@/components/calendar/Calendar';
+import SectionTitle from '@/components/SectionTitle.astro';
+import { todayInRiga } from '@/lib/calendar/dates';
+import type { Homepage } from '@/lib/site';
+
+interface Props {
+  page: Homepage;
+}
+
+const { page } = Astro.props;
+const { t, locale, calendar } = page;
+---
+
+<section id="kalendars" class="shell py-20 lg:py-32">
+  <p class="kicker" data-reveal>
+    {t('calendar.kicker')}
+  </p>
+  <SectionTitle text={t('calendar.title')} class="mt-6" />
+  <div class="mt-12" data-reveal>
+    <Calendar
+      client:visible
+      events={calendar.events}
+      colors={calendar.colors}
+      locale={locale}
+      strings={page.strings}
+      builtOn={todayInRiga()}
+      subscribeUrl={calendar.subscribeUrl}
+    />
+  </div>
+</section>

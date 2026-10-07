@@ -1,0 +1,17 @@
+---
+wpModified: 2024-07-01T09:56:51
+---
+
+Rīgas politehniskā institūta studenti 1900. gada 14. decembri bija aicināti pulcēties Rīgas latviešu biedrībā, lai tur lemtu par jaunu latviešu studentu organizāciju. Lielo sanāksmi vadīja Lettonias filistrs Vilis Olavs un kad pēc debatēm viņš pateica, ka var būt runa tikai par jaunas korporācijas dibināšanu Rīgā, zālē palika tikai 25 studenti, kuri parakstīja Talavijas dibināšanas protokolu. Tās principus noteica: tautība, izglītība, atturība un par devīzēm pieņēma Roku rokā un Darbs ceļ vīru.
+
+No šīs dienas tagad pagājuši 89 gadi, un Talavijas biedru grāmatā pirmajam ierakstam – Vilis Olavs, seko tuvu pie 1500 citi vārdi. Viņi visi mēģinājuši kalpot Talavijas principiem un devīzēm un daudziem tas ari izdevies līdz brīdim, kad viņu vārdam pielikts krustiņš. Kam zvaigznīte – tie mēģinājuši, bet nav spējuši.
+
+Sākums ir sevišķi grūts un līdz 1907. g. 7. maijam, kad Talaviju uzņem Rīgas C!C!, talaviešu kopskaits ir tikai 106. C!C! ari nosaka, ka Talavijas izvēlētās krāsas balts, zils, zelts jāmaina uz balts, zaļš, zelts. Krīze ir 1915. gadā, kad kara dēļ Rīgas politehnisko institūtu pārceļ uz Maskavu. Tikai nedaudzi var turpināt studijas un daudzus mobilizē. Talavijas 15. gada svētkos Maskavā no 244 talaviešiem piedalās tikai 56.
+
+Latviešiem un reizē ar to talaviešiem zvaigznēs rakstīts ir 1918. gads. Šī gada liktenīgajā novembri Talavijas karogs ir atkal Rīgā, un 1918. gada II coetā Talavijā ir 38 zēni. Aicināti, oldermaņa vadībā, viņi rūpējas par kārtību Latvijas neatkarības proklamēšanas aktā, un decembri Talavijas Vispārējā Sapulce nolemj, ka visiem jāiestājas neatkarīgās Latvijas armijā. Selonijā lemj tāpat, un reizē ar to Latvijas aizsardzības ministrs 20. decembri nodibina Atsevišķo studentu rotu. Tajā iestājas 47 seloņi un 43 talavieši, tāpat letoņi, letgaļi un frāteri. Viņu konventi tajā laikā vēl nebija atjaunojuši darbību Rīgā.
+
+Nākošais izšķirīgais notikums latviešu buršu dzīvē ir Prezidiju Konventa nodibināšana 1919. gada septembrī. Par to vienojās Lettonia, Selonijā, Lettgallia, Talavijā un Fr. Lettica. P!K! pilnīgi darboties gan sāk tikai gadu vēlāk, pēc Bermonta uzbrukuma. Par pirmo P!K! senioru izrauga T! filistri Visvaldu Dūmu.
+
+Lai kādas būtu bijušas atšķirības konventu starpā pirms Latvijas nodibināšanās, P!K! tam pārvelk strīpu, īstajam buršu garam pamati ir likti pie Skrundas, Airītēm, Slampes un Kalnciema un ne ar līguma pantiem, bet ar ieroču brālību un asinīm. Šādā garā darbojas ari citi konventi, kas vēlāk pievienojās P!K! un jaunie, kuri nodibinājās neatkarīgajā Latvijā. Visi kopā viņi pašaizliedzīgā darbā divdesmit gados radīja to Latviju, par kuru saule nenorietētu, ja nebūtu pienācis 1940. gads, kad komunisti visu iznicināja.
+
+Talavijā šajā laikā uzņēma 592, un 1939. g. decembri aktīvajā konventā bija 162 un Filistru biedrībā 301. Latvijas celšanas darbā neviens sevi netaupīja, sevišķi filistri. Trīs bija ministru prezidenti, un nebija nozīmīgas pilsoniskās partijas, kurā nepiedalītos talavieši. Komunistiem ienākot, atmaksa bija neticami smaga. Vairākus talaviešus apcietināja tūlīt un nogalināja cietumos. Deportēja 77 kopā ar ģimenēm. Tikai pieci pēc gadiem atgriezās, lai nomirtu dzimtenē.Trimdā Talavijā ir ilgāk pastāvējusi nekā Latvijā. Kopskaits pašlaik ir 436, bet tas izkaisīts 25 kopās piecos kontinentos. Pasaules vēji ir stipri un dažādi. Tautība – zelta krāsa Talavijas karogā. Tai joprojām pieder visu talaviešu sirdis. Talavijā atjaunoja darbību Latvijā 1989. gada 23. maijā.

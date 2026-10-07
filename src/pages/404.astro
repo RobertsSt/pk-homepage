@@ -1,0 +1,35 @@
+---
+import { Image } from 'astro:assets';
+import crest from '@/assets/site/crest-ink.png';
+import { useTranslations } from '@/i18n/ui';
+import Layout from '@/layouts/Layout.astro';
+import { homeUrl } from '@/lib/routes';
+
+// The host serves this one file for every missing address, so it speaks both languages.
+const lv = useTranslations('lv');
+const en = useTranslations('en');
+---
+
+<Layout locale="lv" path="404" title={lv('notFound.title')}>
+  <section class="shell grid min-h-[70vh] place-items-center py-20 text-center">
+    <div>
+      <Image src={crest} alt="" width={160} class="mx-auto h-40 w-auto opacity-80" />
+      <p class="kicker mt-10 justify-center">404</p>
+      <h1 class="font-display mt-6 text-[clamp(2.6rem,6vw,5rem)] leading-none tracking-[-0.02em]">
+        {lv('notFound.title')}
+      </h1>
+      <p class="text-ink-soft mx-auto mt-6 max-w-md text-lg">{lv('notFound.text')}</p>
+      <p class="text-ink-soft mx-auto mt-2 max-w-md" lang="en">
+        {en('notFound.title')}. {en('notFound.text')}
+      </p>
+      <p class="mt-10 flex flex-wrap justify-center gap-4">
+        <a href={homeUrl('lv')} class="btn">
+          {lv('notFound.home')}
+        </a>
+        <a href={homeUrl('en')} class="btn" lang="en">
+          {en('notFound.home')}
+        </a>
+      </p>
+    </div>
+  </section>
+</Layout>

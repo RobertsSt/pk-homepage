@@ -1,0 +1,20 @@
+order: 22
+membership: outside
+name: Talavija
+mottos:
+  - Roku rokā un Darbs ceļ vīru
+website: http://www.talavija.lv/
+address: Rīga, Lāčplēša iela 28, LV-1011
+phone: +371-67286872
+founded: 1900-12-14
+band: falling
+colors:
+  - "#ffffff"
+  - "#7aa277"
+  - "#c9a348"
+heraldry:
+  shield: ../../assets/fraternities/talavija/shield.jpg
+  arms: ../../assets/fraternities/talavija/arms-large.jpg
+  zirkel: ../../assets/fraternities/talavija/zirkel.jpg
+  cap: ../../assets/fraternities/talavija/cap.jpg
+  star: ../../assets/fraternities/talavija/star.jpg

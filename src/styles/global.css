@@ -1,0 +1,678 @@
+/*
+ * The site's one stylesheet: a paper-and-ink editorial look in which the only
+ * strong colour comes from the fraternities' own tricolours.
+ */
+@import 'tailwindcss';
+@import '@fontsource-variable/newsreader/opsz.css';
+@import '@fontsource-variable/newsreader/opsz-italic.css';
+@import '@fontsource-variable/instrument-sans';
+@import './motion.css';
+
+@theme {
+  --font-display: 'Newsreader Variable', 'Iowan Old Style', Georgia, serif;
+  --font-sans: 'Instrument Sans Variable', ui-sans-serif, system-ui, sans-serif;
+
+  --color-paper: #f5f1e8;
+  --color-paper-deep: #ebe5d7;
+  --color-ink: #17150f;
+  --color-ink-soft: #5b564c;
+  --color-rule: #cdc5b3;
+  --color-wine: #7a1620;
+  /* The heraldic gold of the shields; the accent on dark sections. */
+  --color-brass: #c9a348;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    overflow-x: clip;
+    font-feature-settings: 'kern', 'liga';
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: var(--color-wine);
+    color: var(--color-paper);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-wine);
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  .shell {
+    margin-inline: auto;
+    max-width: 88rem;
+    padding-inline: 1.25rem;
+
+    @media (width >= 64rem) {
+      padding-inline: 2.5rem;
+    }
+  }
+
+  /* Small capitals line that introduces a section. */
+  .kicker {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    color: var(--color-ink-soft);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+
+    &::before {
+      content: '';
+      width: 2.25rem;
+      height: 1px;
+      background: currentColor;
+    }
+  }
+
+  /* Section heading; its closing words are set in italic and coloured. */
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 5.2vw, 4.5rem);
+    font-weight: 400;
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+
+    & em {
+      color: var(--color-wine);
+    }
+  }
+
+  /* Dark sections: text is paper-coloured and the accent turns to brass. */
+  .on-ink {
+    background: var(--color-ink);
+    color: var(--color-paper);
+
+    & .kicker {
+      color: color-mix(in srgb, var(--color-paper) 62%, transparent);
+    }
+
+    & .section-title em {
+      color: var(--color-brass);
+    }
+
+    & :focus-visible {
+      outline-color: var(--color-brass);
+    }
+  }
+
+  /* Text link with a rule that redraws itself on hover. */
+  .link {
+    background: linear-gradient(currentColor, currentColor) 0 100% / 100% 1px no-repeat;
+    padding-bottom: 0.15em;
+
+    &:hover {
+      animation: link-redraw 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+    }
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    border: 1px solid var(--color-ink);
+    padding: 0.85rem 1.5rem;
+    font-size: 0.86rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    transition:
+      background-color 0.25s,
+      border-color 0.25s,
+      color 0.25s;
+
+    &:hover {
+      background: var(--color-ink);
+      color: var(--color-paper);
+    }
+  }
+
+  .btn-light {
+    border-color: color-mix(in srgb, var(--color-paper) 45%, transparent);
+    color: var(--color-paper);
+
+    &:hover {
+      border-color: var(--color-paper);
+      background: var(--color-paper);
+      color: var(--color-ink);
+    }
+  }
+
+  .btn-brass {
+    border-color: var(--color-brass);
+    background: var(--color-brass);
+    color: var(--color-ink);
+
+    &:hover {
+      border-color: var(--color-paper);
+      background: var(--color-paper);
+      color: var(--color-ink);
+    }
+  }
+
+  .skip-link {
+    position: absolute;
+    top: -4rem;
+    left: 1rem;
+    z-index: 60;
+    background: var(--color-ink);
+    color: var(--color-paper);
+    padding: 0.6rem 1rem;
+
+    &:focus {
+      top: 1rem;
+    }
+  }
+
+  /* A thin outline set off behind a picture, down and to the right. */
+  .framed {
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      translate: 1rem 1rem;
+      border: 1px solid color-mix(in srgb, var(--color-wine) 55%, transparent);
+    }
+
+    & > * {
+      position: relative;
+    }
+  }
+
+  /*
+   * Hero headline: each line rises out of its own mask. The padding keeps tall
+   * and slanted letters from being cut by the mask.
+   */
+  .line-mask {
+    display: block;
+    overflow: hidden;
+    margin: -0.14em -0.1em;
+    padding: 0.14em 0.1em;
+
+    & > span {
+      display: block;
+    }
+  }
+
+  /*
+   * The lettering that circles the crest. The whole ring turns as one layer,
+   * clipped to a circle by its wrapper, so the turning square never widens
+   * the page and the browser can animate it without repainting.
+   */
+  .seal {
+    overflow: hidden;
+    border-radius: 999px;
+
+    & svg {
+      animation: seal-turn 90s linear infinite;
+      will-change: transform;
+    }
+  }
+
+  /*
+   * The row of colour shields under the hero. A shield under the pointer
+   * grows, its neighbours grow a little, and its name appears below.
+   */
+  .shield-row {
+    display: grid;
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+    row-gap: 1.1rem;
+
+    @media (width >= 64rem) {
+      grid-template-columns: repeat(20, minmax(0, 1fr));
+    }
+
+    & a {
+      position: relative;
+      display: grid;
+      place-items: center;
+      padding-block: 0.4rem;
+    }
+
+    & svg {
+      width: auto;
+      height: clamp(1.75rem, 3.3vw, 3rem);
+      color: color-mix(in srgb, var(--color-ink) 65%, transparent);
+      transform-origin: 50% 100%;
+      transition:
+        scale 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.25),
+        opacity 0.3s;
+    }
+  }
+
+  .shield-row-label {
+    display: none;
+    position: absolute;
+    top: calc(100% + 0.55rem);
+    left: 50%;
+    translate: -50% 0.35rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-align: center;
+    text-transform: uppercase;
+    white-space: nowrap;
+    opacity: 0;
+    transition:
+      opacity 0.25s,
+      translate 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+    pointer-events: none;
+
+    & small {
+      display: block;
+      margin-top: 0.15rem;
+      color: var(--color-ink-soft);
+      font-size: inherit;
+      font-weight: 500;
+    }
+
+    /* Keep the names at either end inside the page. */
+    li[data-edge='start'] & {
+      left: 0;
+      translate: 0 0.35rem;
+      text-align: left;
+    }
+
+    li[data-edge='end'] & {
+      right: 0;
+      left: auto;
+      translate: 0 0.35rem;
+      text-align: right;
+    }
+  }
+
+  @media (hover: hover) and (width >= 64rem) {
+    .shield-row-label {
+      display: block;
+    }
+
+    .shield-row:has(a:hover, a:focus-visible) svg {
+      opacity: 0.45;
+    }
+
+    .shield-row li:is(:hover, :focus-within) svg {
+      scale: 1.8;
+      opacity: 1;
+    }
+
+    .shield-row li:has(+ li:is(:hover, :focus-within)) svg,
+    .shield-row li:is(:hover, :focus-within) + li svg {
+      scale: 1.3;
+      opacity: 0.8;
+    }
+
+    .shield-row li:is(:hover, :focus-within) .shield-row-label {
+      translate: -50% 0;
+      opacity: 1;
+    }
+
+    .shield-row li[data-edge]:is(:hover, :focus-within) .shield-row-label {
+      translate: 0 0;
+    }
+  }
+
+  .js .shield-row li {
+    animation: shield-in 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation-delay: calc(var(--i) * 40ms + 450ms);
+  }
+
+  /* Calendar pieces rendered by the Calendar component. */
+  .cal-step {
+    display: grid;
+    width: 2.25rem;
+    height: 2.25rem;
+    place-items: center;
+    border: 1px solid var(--color-rule);
+    border-radius: 999px;
+    transition:
+      background-color 0.2s,
+      color 0.2s;
+
+    &:hover:not(:disabled) {
+      background: var(--color-ink);
+      color: var(--color-paper);
+    }
+
+    &:disabled {
+      opacity: 0.3;
+    }
+  }
+
+  .cal-cell {
+    display: flex;
+    width: 100%;
+    min-height: 3.1rem;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    border-top: 1px solid var(--color-rule);
+    padding: 0.35rem 0.15rem 0.45rem;
+    text-align: left;
+    transition: background-color 0.2s;
+
+    @media (width >= 48rem) {
+      min-height: 6rem;
+      align-items: stretch;
+      padding: 0.45rem 0.4rem 0.6rem;
+    }
+
+    &:hover {
+      background: color-mix(in srgb, var(--color-paper-deep) 65%, transparent);
+    }
+
+    &[data-outside] {
+      color: color-mix(in srgb, var(--color-ink) 32%, transparent);
+    }
+
+    &[data-selected] {
+      background: var(--color-paper-deep);
+      box-shadow: inset 0 2px 0 var(--color-ink);
+    }
+  }
+
+  .cal-number {
+    display: grid;
+    width: 1.7rem;
+    height: 1.7rem;
+    flex: none;
+    place-items: center;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-variant-numeric: tabular-nums;
+
+    [data-today] > & {
+      background: var(--color-ink);
+      color: var(--color-paper);
+    }
+  }
+
+  /*
+   * An event inside a day cell. `--marker` is the bar on its left: a
+   * fraternity's three colours for an anniversary, wine for a meeting.
+   */
+  .cal-event {
+    display: none;
+    position: relative;
+    overflow: hidden;
+    padding-left: 0.5rem;
+    color: var(--color-ink);
+    font-size: 0.69rem;
+    line-height: 1.25;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+
+    @media (width >= 48rem) {
+      display: -webkit-box;
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0.12em;
+      bottom: 0.12em;
+      left: 0;
+      width: 3px;
+      background: var(--marker, var(--color-ink-soft));
+    }
+
+    &[data-kind='meeting'] {
+      --marker: var(--color-wine);
+      font-weight: 600;
+    }
+  }
+
+  /* On narrow screens there is no room for names, so each event is a dot. */
+  .cal-dots {
+    display: flex;
+    gap: 3px;
+
+    @media (width >= 48rem) {
+      display: none;
+    }
+
+    & i {
+      width: 5px;
+      height: 5px;
+      border-radius: 999px;
+      background: var(--marker, var(--color-ink-soft));
+    }
+
+    & i[data-kind='meeting'] {
+      --marker: var(--color-wine);
+    }
+  }
+
+  /* History milestones: a line with a dot per entry; upright on small screens. */
+  .timeline {
+    position: relative;
+    display: grid;
+    gap: 2.25rem;
+
+    @media (width >= 64rem) {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 2.5rem;
+    }
+
+    & li {
+      position: relative;
+      padding-left: 1.9rem;
+
+      @media (width >= 64rem) {
+        padding-top: 2.4rem;
+        padding-left: 0;
+      }
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0.55rem;
+        left: 0;
+        width: 0.7rem;
+        height: 0.7rem;
+        border-radius: 999px;
+        background: var(--color-brass);
+        box-shadow: 0 0 0 5px var(--color-ink);
+
+        @media (width >= 64rem) {
+          top: 0;
+        }
+      }
+    }
+  }
+
+  /* Long-form text rendered from Markdown. */
+  .prose {
+    font-family: var(--font-display);
+    font-size: 1.22rem;
+    line-height: 1.68;
+
+    & > * + * {
+      margin-top: 1.35em;
+    }
+
+    & > p:first-child {
+      font-size: 1.45rem;
+      line-height: 1.5;
+    }
+
+    & h2 {
+      margin-top: 2.2em;
+      font-size: 2.1rem;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+    }
+
+    & h3 {
+      margin-top: 1.8em;
+      font-size: 1.55rem;
+      line-height: 1.2;
+    }
+
+    & strong {
+      font-weight: 600;
+    }
+
+    & a {
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.2em;
+
+      &:hover {
+        color: var(--color-wine);
+      }
+    }
+
+    & ul,
+    & ol {
+      padding-left: 1.3em;
+    }
+
+    & ul {
+      list-style: disc;
+    }
+
+    & ol {
+      list-style: decimal;
+    }
+
+    & li + li {
+      margin-top: 0.4em;
+    }
+
+    & hr {
+      margin-block: 2.5em;
+      border-color: var(--color-rule);
+    }
+
+    & blockquote {
+      border-left: 2px solid var(--color-wine);
+      padding-left: 1.2em;
+      font-style: italic;
+    }
+
+    & img {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  /* A thin bar under the header that fills as a long page is read. */
+  .reading-progress {
+    display: none;
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 50;
+    height: 2px;
+    background: var(--color-wine);
+    transform-origin: 0 50%;
+    scale: 0 1;
+
+    @supports (animation-timeline: scroll()) {
+      display: block;
+      animation: reading-progress linear both;
+      animation-timeline: scroll(root);
+    }
+  }
+
+  /* A fraternity's three colours as one bar; set --c1 to --c3 on an ancestor. */
+  .tricolour {
+    background: linear-gradient(to right, var(--c1) 0 33.34%, var(--c2) 33.34% 66.67%, var(--c3) 66.67%);
+  }
+
+  /* Heraldry is scanned on white; multiply lets the paper show through. */
+  .on-paper {
+    mix-blend-mode: multiply;
+  }
+
+  .timeline-line {
+    position: absolute;
+    top: 0.6rem;
+    bottom: 0.6rem;
+    left: 0.32rem;
+    width: 1px;
+    background: color-mix(in srgb, var(--color-paper) 32%, transparent);
+
+    @media (width >= 64rem) {
+      top: 0.32rem;
+      right: 0;
+      bottom: auto;
+      left: 0;
+      width: auto;
+      height: 1px;
+    }
+  }
+}
+
+@keyframes link-redraw {
+  0% {
+    background-position: 100% 100%;
+    background-size: 100% 1px;
+  }
+  45% {
+    background-position: 100% 100%;
+    background-size: 0 1px;
+  }
+  46% {
+    background-position: 0 100%;
+    background-size: 0 1px;
+  }
+  100% {
+    background-position: 0 100%;
+    background-size: 100% 1px;
+  }
+}
+
+@keyframes shield-in {
+  from {
+    opacity: 0;
+    translate: 0 0.9rem;
+  }
+}
+
+@keyframes seal-turn {
+  to {
+    rotate: 360deg;
+  }
+}
+
+@keyframes reading-progress {
+  to {
+    scale: 1 1;
+  }
+}
+
+/*
+ * Moving between pages: the browser cross-fades, and an element that carries
+ * the same view-transition-name on both pages (a fraternity's shield) travels
+ * from its old place to its new one. Browsers without this simply navigate.
+ */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.3s;
+}
+
+::view-transition-group(*) {
+  animation-duration: 0.5s;
+  animation-timing-function: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+}

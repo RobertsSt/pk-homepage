@@ -1,0 +1,18 @@
+order: 11
+membership: pk
+name: Fraternitas Vesthardiana
+mottos:
+  - Tautas slava – paša gods
+  - Būt vai nebūt
+founded: 1924-10-08
+band: falling
+colors:
+  - "#adb1b0"
+  - "#e24260"
+  - "#c9a348"
+heraldry:
+  shield: ../../assets/fraternities/fraternitas-vesthardiana/shield.jpg
+  arms: ../../assets/fraternities/fraternitas-vesthardiana/arms.jpg
+  zirkel: ../../assets/fraternities/fraternitas-vesthardiana/zirkel.jpg
+  cap: ../../assets/fraternities/fraternitas-vesthardiana/cap.jpg
+  star: ../../assets/fraternities/fraternitas-vesthardiana/star.jpg

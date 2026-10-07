@@ -1,0 +1,10 @@
+---
+import FraternityPage from '@/components/pages/FraternityPage.astro';
+import { getFraternityPaths } from '@/lib/site';
+
+export const getStaticPaths = getFraternityPaths;
+
+const { fraternity, position, previous, next } = Astro.props;
+---
+
+<FraternityPage locale="lv" fraternity={fraternity} position={position} previous={previous} next={next} />

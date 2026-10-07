@@ -1,0 +1,227 @@
+---
+import '@/styles/global.css';
+import { getImage, Image } from 'astro:assets';
+import sharePhoto from '@/assets/site/btk-2023.jpg';
+import crest from '@/assets/site/crest-ink.png';
+import { navigation } from '@/data/navigation';
+import { locales, type Locale } from '@/i18n/config';
+import { useTranslations } from '@/i18n/ui';
+import { localizedUrl } from '@/i18n/urls';
+import { creditsUrl, homeUrl, pageUrl } from '@/lib/routes';
+
+interface Props {
+  locale: Locale;
+  /** Route of this page without the language prefix; empty for the homepage. */
+  path?: string;
+  /** Page title; the site name is appended. Omit on the homepage. */
+  title?: string;
+  description?: string;
+}
+
+const { locale, path = '', title, description } = Astro.props;
+const t = useTranslations(locale);
+
+const fullTitle = title ? `${title} — P!K!` : t('site.title');
+const canonical = new URL(localizedUrl(locale, path), Astro.site);
+const summary = description ?? t('site.description');
+
+// The picture shown when a link to the site is shared.
+const share = await getImage({ src: sharePhoto, width: 1200, height: 630, format: 'jpg' });
+
+// The preview is served from a sub-path and must stay out of search results.
+const isPreview = import.meta.env.BASE_URL !== '/';
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={summary} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="P!K!" />
+    <meta property="og:locale" content={locale === 'lv' ? 'lv_LV' : 'en_GB'} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={summary} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(share.src, Astro.site)} />
+    <meta name="twitter:card" content="summary_large_image" />
+    {isPreview && <meta name="robots" content="noindex" />}
+    <link rel="canonical" href={canonical} />
+    {locales.map((code) => (
+      <link rel="alternate" hreflang={code} href={new URL(localizedUrl(code, path), Astro.site)} />
+    ))}
+    <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
+    <script is:inline>
+      // `js` lets the stylesheet hide content that will animate in. If the page
+      // script then never starts (it failed to load), take the class away again
+      // so nothing stays hidden.
+      document.documentElement.classList.add('js');
+      setTimeout(() => {
+        if (!document.documentElement.dataset.motion) document.documentElement.classList.remove('js');
+      }, 3000);
+    </script>
+  </head>
+
+  <body class="bg-paper text-ink font-sans antialiased">
+    <a href="#saturs" class="skip-link">
+      {t('nav.skip')}
+    </a>
+
+    <header class="border-rule/70 bg-paper/90 sticky top-0 z-40 border-b backdrop-blur-md">
+      <div class="shell flex items-center justify-between gap-6 py-2.5">
+        <a href={homeUrl(locale)} class="flex items-center gap-3" aria-label={t('site.title')}>
+          <Image src={crest} alt="" width={44} class="h-11 w-auto" loading="eager" />
+          <span class="font-display text-[1.7rem] leading-none tracking-tight">P!K!</span>
+        </a>
+
+        <nav aria-label={t('nav.menu')} class="hidden lg:block">
+          <ul class="flex items-center gap-9 text-[0.84rem] font-medium tracking-[0.03em]">
+            {navigation.map((group) => (
+              <li class="group relative">
+                <button type="button" class="flex items-center gap-1.5 py-3" aria-haspopup="true">
+                  {group.label[locale]}
+                  <svg
+                    viewBox="0 0 10 6"
+                    class="h-1.5 w-2.5 transition-transform group-focus-within:rotate-180 group-hover:rotate-180"
+                    aria-hidden="true"
+                  >
+                    <path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4" />
+                  </svg>
+                </button>
+                <ul class="border-rule bg-paper invisible absolute top-full left-1/2 w-64 -translate-x-1/2 translate-y-1 border p-2 opacity-0 shadow-[0_18px_40px_-18px_rgb(23_21_15/0.35)] transition duration-200 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+                  {group.links.map((link) => (
+                    <li>
+                      <a href={pageUrl(locale, link.page)} class="hover:bg-paper-deep block px-3 py-2.5">
+                        {link.label[locale]}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div class="flex items-center gap-5">
+          <p
+            class="flex items-center gap-2 text-[0.78rem] font-semibold tracking-[0.14em]"
+            aria-label={t('nav.language')}
+          >
+            {locales.map((code, index) => (
+              <>
+                {index > 0 && (
+                  <span class="text-rule" aria-hidden="true">
+                    /
+                  </span>
+                )}
+                <a
+                  href={localizedUrl(code, path)}
+                  hreflang={code}
+                  lang={code}
+                  aria-current={code === locale ? 'true' : undefined}
+                  class:list={[code === locale ? 'text-ink' : 'text-ink-soft hover:text-ink']}
+                >
+                  {code.toUpperCase()}
+                </a>
+              </>
+            ))}
+          </p>
+          <button
+            type="button"
+            class="border-rule border px-3.5 py-2 text-[0.78rem] font-semibold tracking-[0.14em] uppercase lg:hidden"
+            data-menu-open
+          >
+            {t('nav.menu')}
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <dialog
+      id="site-menu"
+      class="bg-paper text-ink m-0 h-dvh max-h-none w-screen max-w-none overflow-y-auto p-0 backdrop:bg-transparent"
+    >
+      <div class="shell flex items-center justify-between py-2.5">
+        <a href={homeUrl(locale)} class="font-display text-[1.7rem] leading-none tracking-tight">
+          P!K!
+        </a>
+        <button
+          type="button"
+          class="border-rule border px-3.5 py-2 text-[0.78rem] font-semibold tracking-[0.14em] uppercase"
+          data-menu-close
+        >
+          {t('nav.close')}
+        </button>
+      </div>
+      <nav aria-label={t('nav.menu')} class="shell pt-6 pb-16">
+        {navigation.map((group) => (
+          <section class="border-rule border-t py-6">
+            <h2 class="text-ink-soft text-[0.72rem] font-semibold tracking-[0.22em] uppercase">
+              {group.label[locale]}
+            </h2>
+            <ul class="mt-3 space-y-2">
+              {group.links.map((link) => (
+                <li>
+                  <a href={pageUrl(locale, link.page)} class="font-display text-3xl leading-tight">
+                    {link.label[locale]}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+      </nav>
+    </dialog>
+
+    <main id="saturs">
+      <slot />
+    </main>
+
+    <footer class="on-ink">
+      <div class="shell border-paper/15 grid gap-10 border-t py-14 sm:grid-cols-2 lg:grid-cols-[1.4fr_repeat(4,1fr)]">
+        <div>
+          <Image src={crest} alt="" width={96} class="h-24 w-auto opacity-90 invert" />
+          <p class="font-display mt-4 text-xl">{t('site.name')}</p>
+        </div>
+        {navigation.map((group) => (
+          <div>
+            <h2 class="text-brass text-[0.7rem] font-semibold tracking-[0.22em] uppercase">
+              {group.label[locale]}
+            </h2>
+            <ul class="text-paper/70 mt-4 space-y-2.5 text-sm">
+              {group.links.map((link) => (
+                <li>
+                  <a href={pageUrl(locale, link.page)} class="hover:text-paper">
+                    {link.label[locale]}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+      <div class="shell border-paper/15 text-paper/60 flex flex-wrap justify-between gap-x-8 gap-y-2 border-t py-6 text-sm">
+        <p>
+          Prezidiju Konvents © 1919–{new Date().getFullYear()}. {t('footer.rights')}
+        </p>
+        <p>
+          <a href={creditsUrl(locale)} class="hover:text-paper">
+            {t('credits.title')}
+          </a>
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      import '@/scripts/motion';
+
+      const menu = document.querySelector<HTMLDialogElement>('#site-menu');
+      document.querySelector('[data-menu-open]')?.addEventListener('click', () => menu?.showModal());
+      menu?.addEventListener('click', (event) => {
+        if ((event.target as HTMLElement).closest('[data-menu-close], a')) menu.close();
+      });
+    </script>
+  </body>
+</html>

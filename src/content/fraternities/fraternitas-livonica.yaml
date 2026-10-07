@@ -1,0 +1,21 @@
+order: 15
+membership: pk
+name: Fraternitas Livonica
+mottos:
+  - Lūzti, bet neliecies
+  - Vīrs un vārds
+website: http://www.frlivonica.lv/
+address: Rīga, Veru iela 6, LV-1010
+phone: +371-28381099
+founded: 1926-10-29
+band: rising
+colors:
+  - "#6fbae4"
+  - "#7e4471"
+  - "#c9a348"
+heraldry:
+  shield: ../../assets/fraternities/fraternitas-livonica/shield.jpg
+  arms: ../../assets/fraternities/fraternitas-livonica/arms-large.png
+  zirkel: ../../assets/fraternities/fraternitas-livonica/zirkel.jpg
+  cap: ../../assets/fraternities/fraternitas-livonica/cap.jpg
+  star: ../../assets/fraternities/fraternitas-livonica/star.jpg

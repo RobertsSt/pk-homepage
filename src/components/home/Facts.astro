@@ -1,0 +1,50 @@
+---
+import { Shield } from '@/components/Shield';
+import type { Homepage } from '@/lib/site';
+
+interface Props {
+  page: Homepage;
+}
+
+const { page } = Astro.props;
+const { t, members, presiding } = page;
+
+const figure = 'font-display text-[clamp(3.5rem,7vw,6rem)] leading-none';
+const caption = 'text-ink-soft mt-3 max-w-[17rem] text-sm leading-snug';
+---
+
+<section class="shell">
+  <dl class="border-rule grid border-y sm:grid-cols-3">
+    <div class="border-rule flex flex-col-reverse justify-end py-10 sm:border-r sm:pr-8" data-reveal>
+      <dt class={caption}>{t('stats.fraternities')}</dt>
+      <dd class:list={[figure, 'tabular-nums']} data-count={members.length}>
+        {members.length}
+      </dd>
+    </div>
+    <div
+      class="border-rule flex flex-col-reverse justify-end border-t py-10 sm:border-t-0 sm:border-r sm:px-8"
+      data-reveal
+      style="--reveal-order:1"
+    >
+      <dt class={caption}>{t('stats.founded')}</dt>
+      <dd class:list={[figure, 'tabular-nums']} data-count={page.foundedYear}>
+        {page.foundedYear}
+      </dd>
+    </div>
+    <div
+      class="border-rule flex flex-col-reverse justify-end border-t py-10 sm:border-t-0 sm:pl-8"
+      data-reveal
+      style="--reveal-order:2"
+    >
+      <dt class={caption}>{t('stats.presiding', { term: page.term })}</dt>
+      <dd class:list={[figure, 'flex items-center gap-4']}>
+        {presiding.data.name}
+        <Shield
+          colors={presiding.data.colors}
+          band={presiding.data.band}
+          className="text-ink/65 h-[0.72em] w-auto"
+        />
+      </dd>
+    </div>
+  </dl>
+</section>

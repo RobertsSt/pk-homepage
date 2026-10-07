@@ -1,0 +1,20 @@
+order: 10
+membership: pk
+name: Fraternitas Metropolitana
+mottos:
+  - Vienotiem spēkiem par godu, draugu, tēvzemi
+website: http://www.metropolitana.lv/
+address: Rīga, Kalpaka bulvāris 11, LV-1010
+phone: +371-67333187
+founded: 1924-10-06
+band: rising
+colors:
+  - "#c9a348"
+  - "#756383"
+  - "#82bb90"
+heraldry:
+  shield: ../../assets/fraternities/fraternitas-metropolitana/shield.jpg
+  arms: ../../assets/fraternities/fraternitas-metropolitana/arms-large.jpg
+  zirkel: ../../assets/fraternities/fraternitas-metropolitana/zirkel.jpg
+  cap: ../../assets/fraternities/fraternitas-metropolitana/cap.jpg
+  star: ../../assets/fraternities/fraternitas-metropolitana/star.jpg

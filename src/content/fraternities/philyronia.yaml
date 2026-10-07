@@ -1,0 +1,19 @@
+order: 9
+membership: pk
+name: Philyronia
+mottos:
+  - Vera amicitia – decus vitae
+  - Darbs, griba, pienākums
+website: http://www.philyronia.lv/
+founded: 1924-07-07
+band: rising
+colors:
+  - "#8b595a"
+  - "#90c6a7"
+  - "#c9a348"
+heraldry:
+  shield: ../../assets/fraternities/philyronia/shield.jpg
+  arms: ../../assets/fraternities/philyronia/arms.jpg
+  zirkel: ../../assets/fraternities/philyronia/zirkel-large.png
+  cap: ../../assets/fraternities/philyronia/cap.jpg
+  star: ../../assets/fraternities/philyronia/star.jpg

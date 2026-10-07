@@ -1,0 +1,12 @@
+---
+import TextPage from '@/components/pages/TextPage.astro';
+import { getTextPageSlugs } from '@/lib/content';
+
+export async function getStaticPaths() {
+  return (await getTextPageSlugs()).map((slug) => ({ params: { slug } }));
+}
+
+const { slug } = Astro.params;
+---
+
+<TextPage locale="lv" slug={slug} />

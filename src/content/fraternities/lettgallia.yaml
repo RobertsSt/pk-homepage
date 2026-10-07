@@ -1,0 +1,21 @@
+order: 3
+membership: pk
+name: Lettgallia
+mottos:
+  - Per aspera ad astra
+  - Labor et fidelitas
+website: http://www.lettgallia.org/
+address: Rīga, Dzirnavu iela 36, LV-1010
+phone: +371-67331724
+founded: 1899-02-20
+band: rising
+colors:
+  - "#bedb83"
+  - "#1c1c22"
+  - "#ffffff"
+heraldry:
+  shield: ../../assets/fraternities/lettgallia/shield.jpg
+  arms: ../../assets/fraternities/lettgallia/arms-large.png
+  zirkel: ../../assets/fraternities/lettgallia/zirkel.jpg
+  cap: ../../assets/fraternities/lettgallia/cap.jpg
+  star: ../../assets/fraternities/lettgallia/star.jpg

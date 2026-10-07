@@ -1,0 +1,235 @@
+---
+import { Image } from 'astro:assets';
+import { render } from 'astro:content';
+import { Shield } from '@/components/Shield';
+import credits from '@/data/image-credits.json';
+import type { Locale } from '@/i18n/config';
+import { useTranslations } from '@/i18n/ui';
+import Layout from '@/layouts/Layout.astro';
+import { getFraternityText } from '@/lib/content';
+import { displayHost, excerpt, formatDate } from '@/lib/format';
+import {
+  FRATERNITIES_SLUG,
+  creditsUrl,
+  fraternitiesUrl,
+  fraternityUrl,
+  shieldTransitionName,
+} from '@/lib/routes';
+import type { Fraternity } from '@/lib/site';
+
+interface Props {
+  locale: Locale;
+  fraternity: Fraternity;
+  /** Seniority number among its group, starting at 1. */
+  position: number;
+  /** Neighbours in seniority order, for the links at the foot of the page. */
+  previous?: Fraternity;
+  next?: Fraternity;
+}
+
+const { locale, fraternity, position, previous, next } = Astro.props;
+const t = useTranslations(locale);
+const { id, data } = fraternity;
+
+const text = await getFraternityText(locale, id);
+const { Content } = text.entry ? await render(text.entry) : { Content: undefined };
+
+const [c1, c2, c3] = data.colors;
+const insignia = (['arms', 'zirkel', 'cap', 'star'] as const).map((key) => ({
+  label: t(`heraldry.${key}`),
+  image: data.heraldry[key],
+}));
+const hasCreditedImages = credits.some((credit) => credit.file.startsWith(`fraternities/${id}/`));
+
+const facts = [
+  { label: t('fraternity.founded'), value: formatDate(locale, data.founded) },
+  data.address && { label: t('fraternity.address'), value: data.address },
+  data.phone && { label: t('fraternity.phone'), value: data.phone, href: `tel:${data.phone}` },
+  data.email && { label: t('fraternity.email'), value: data.email, href: `mailto:${data.email}` },
+  data.website && { label: t('fraternity.website'), value: displayHost(data.website), href: data.website },
+].filter((fact) => fact !== undefined && fact !== '');
+
+const neighbours = [
+  { fraternity: previous, label: t('fraternity.previous'), arrow: '←', align: 'text-left' },
+  { fraternity: next, label: t('fraternity.next'), arrow: '→', align: 'ml-auto text-right' },
+];
+---
+
+<Layout
+  locale={locale}
+  path={`${FRATERNITIES_SLUG}/${id}`}
+  title={data.name}
+  description={excerpt(text.entry?.body ?? data.mottos.join('. '))}
+>
+  <div style={`--c1:${c1};--c2:${c2};--c3:${c3}`}>
+    <div class="tricolour h-1.5" aria-hidden="true"></div>
+    <div class="reading-progress" aria-hidden="true"></div>
+
+    <header class="shell grid gap-10 pt-10 pb-14 lg:grid-cols-12 lg:pt-14 lg:pb-20">
+      <div class="lg:col-span-8">
+        <p class="text-sm font-semibold" data-reveal>
+          <a href={fraternitiesUrl(locale)} class="link">
+            ← {t('fraternity.all')}
+          </a>
+        </p>
+        <p class="kicker mt-12" data-reveal>
+          {data.membership === 'pk' ? t('fraternity.member') : t('fraternity.outside')}
+          {data.membership === 'pk' && <span aria-hidden="true"> · {String(position).padStart(2, '0')}</span>}
+        </p>
+        <h1
+          class="font-display mt-6 text-[clamp(2.8rem,8vw,7rem)] leading-[0.92] font-normal tracking-[-0.03em]"
+          data-reveal="lines"
+        >
+          <span class="line-mask">
+            <span>{data.name}</span>
+          </span>
+        </h1>
+        <ul class="font-display text-ink-soft mt-8 space-y-1 text-[1.45rem] leading-snug italic" data-reveal>
+          {data.mottos.map((motto) => (
+            <li>{motto}</li>
+          ))}
+        </ul>
+      </div>
+      <div class="flex items-start lg:col-span-4 lg:justify-end" data-reveal>
+        <Shield
+          colors={data.colors}
+          band={data.band}
+          className="text-ink/70 h-40 w-auto lg:h-64"
+          style={{ viewTransitionName: shieldTransitionName(id) }}
+          title={`${data.name}: ${t('heraldry.shield').toLowerCase()}`}
+        />
+      </div>
+    </header>
+
+    {data.cover && (
+      <figure class="shell pb-20 lg:pb-28" data-reveal="clip">
+        <div class="framed mr-4">
+          <div class="overflow-hidden">
+            <Image
+              src={data.cover}
+              alt=""
+              widths={[640, 1024, 1600, 2000]}
+              sizes="(min-width: 88rem) 82rem, 92vw"
+              class="aspect-[16/9] w-full object-cover lg:aspect-[2/1]"
+            />
+          </div>
+        </div>
+      </figure>
+    )}
+
+    <section class="shell pb-20 lg:pb-28" aria-labelledby="insignia">
+      <h2 id="insignia" class="kicker" data-reveal>
+        {t('fraternity.insignia')}
+      </h2>
+      <ul class="border-rule mt-6 grid grid-cols-2 border-t border-l sm:grid-cols-4">
+        {insignia.map((item, index) => (
+          <li
+            class="border-rule flex flex-col items-center border-r border-b px-4 pt-8 pb-6"
+            data-reveal
+            style={`--reveal-order:${index}`}
+          >
+            <span class="grid h-44 w-full place-items-center lg:h-56">
+              <Image
+                src={item.image}
+                alt={`${data.name}: ${item.label.toLowerCase()}`}
+                height={448}
+                class="on-paper h-auto max-h-44 w-auto max-w-full lg:max-h-56"
+              />
+            </span>
+            <span class="text-ink-soft mt-6 text-[0.7rem] font-semibold tracking-[0.2em] uppercase">
+              {item.label}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <div class="shell grid gap-x-10 gap-y-14 pb-24 lg:grid-cols-12 lg:pb-32">
+      <aside class="lg:order-2 lg:col-span-4 lg:col-start-9">
+        <dl class="border-rule lg:sticky lg:top-28 border-t" data-reveal>
+          {facts.map((fact) => (
+            <div class="border-rule border-b py-4">
+              <dt class="text-ink-soft text-[0.7rem] font-semibold tracking-[0.2em] uppercase">
+                {fact.label}
+              </dt>
+              <dd class="font-display mt-1.5 text-[1.3rem] leading-snug break-words">
+                {fact.href ? (
+                  <a
+                    href={fact.href}
+                    class="link"
+                    target={fact.href.startsWith('http') ? '_blank' : undefined}
+                    rel={fact.href.startsWith('http') ? 'noreferrer' : undefined}
+                  >
+                    {fact.value}
+                  </a>
+                ) : (
+                  fact.value
+                )}
+              </dd>
+            </div>
+          ))}
+          <div class="tricolour mt-6 h-1" aria-hidden="true"></div>
+        </dl>
+      </aside>
+
+      <article class="lg:order-1 lg:col-span-7">
+        {!text.translated && Content && (
+          <p class="border-rule bg-paper-deep/60 text-ink-soft mb-10 max-w-[42rem] border-l-2 px-5 py-4 text-[0.95rem]">
+            {t('page.untranslated')}
+          </p>
+        )}
+        {Content && (
+          <div class="prose max-w-[42rem]" lang={text.translated ? undefined : 'lv'} data-reveal>
+            <Content />
+          </div>
+        )}
+        {hasCreditedImages && (
+          <p class="text-ink-soft mt-12 text-sm">
+            <a href={creditsUrl(locale)} class="link">
+              {t('credits.title')} →
+            </a>
+          </p>
+        )}
+      </article>
+    </div>
+
+    {data.photos.length > 0 && (
+      <section class="shell grid gap-6 pb-24 sm:grid-cols-2 lg:pb-32">
+        {data.photos.map((photo) => (
+          <div class="overflow-hidden" data-reveal="clip">
+            <Image
+              src={photo}
+              alt=""
+              widths={[480, 800, 1200]}
+              sizes="(min-width: 40rem) 44vw, 92vw"
+              class="aspect-[3/2] w-full object-cover transition duration-[1.2s] ease-out hover:scale-[1.03]"
+            />
+          </div>
+        ))}
+      </section>
+    )}
+
+    <nav class="border-rule border-t" aria-label={t('fraternities.title')}>
+      <div class="shell flex gap-6 py-10">
+        {neighbours.map(
+          ({ fraternity: other, label, arrow, align }) =>
+            other && (
+              <a href={fraternityUrl(locale, other.id)} class:list={['group flex items-center gap-4', align]}>
+                <Shield
+                  colors={other.data.colors}
+                  band={other.data.band}
+                  className="text-ink/65 hidden h-12 w-auto transition-transform duration-500 group-hover:-rotate-3 sm:block"
+                />
+                <span>
+                  <span class="text-ink-soft block text-[0.7rem] font-semibold tracking-[0.2em] uppercase">
+                    {arrow === '←' ? `${arrow} ${label}` : `${label} ${arrow}`}
+                  </span>
+                  <span class="font-display mt-1 block text-[1.5rem] leading-tight">{other.data.name}</span>
+                </span>
+              </a>
+            ),
+        )}
+      </div>
+    </nav>
+  </div>
+</Layout>

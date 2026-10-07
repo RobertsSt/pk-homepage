@@ -1,0 +1,20 @@
+order: 6
+membership: pk
+name: Ventonia
+mottos:
+  - Draugam, godam, taisnībai
+website: http://www.ventonia.lv/
+address: Jelgava, Filozofu iela 9, LV-3001
+phone: +371-63080219
+founded: 1917-11-21
+band: falling
+colors:
+  - "#2e3880"
+  - "#ffffff"
+  - "#98c070"
+heraldry:
+  shield: ../../assets/fraternities/ventonia/shield.jpg
+  arms: ../../assets/fraternities/ventonia/arms-large.png
+  zirkel: ../../assets/fraternities/ventonia/zirkel.jpg
+  cap: ../../assets/fraternities/ventonia/cap.jpg
+  star: ../../assets/fraternities/ventonia/star.jpg

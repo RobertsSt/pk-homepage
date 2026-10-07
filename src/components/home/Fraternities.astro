@@ -1,0 +1,78 @@
+---
+import SectionTitle from '@/components/SectionTitle.astro';
+import { Shield } from '@/components/Shield';
+import { fraternitiesUrl, fraternityUrl, shieldTransitionName } from '@/lib/routes';
+import type { Homepage } from '@/lib/site';
+
+interface Props {
+  page: Homepage;
+}
+
+const { page } = Astro.props;
+const { t, locale, members, outside } = page;
+---
+
+<section id="korporacijas" class="border-rule bg-paper-deep/55 border-y py-20 lg:py-28">
+  <div class="shell">
+    <div class="flex flex-wrap items-end justify-between gap-6">
+      <div>
+        <p class="kicker" data-reveal>
+          {t('fraternities.kicker')}
+        </p>
+        <SectionTitle text={t('fraternities.title')} class="mt-6" />
+      </div>
+      <p class="text-ink-soft max-w-sm" data-reveal>
+        {t('fraternities.intro')}
+      </p>
+    </div>
+
+    <ol class="mt-14 grid grid-cols-2 gap-x-6 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 xl:gap-x-10">
+      {members.map((fraternity, index) => (
+        <li data-reveal style={`--reveal-order:${index % 5}`}>
+          <a href={fraternityUrl(locale, fraternity.id)} class="group border-rule block border-t pt-5 pb-10">
+            <span class="text-ink-soft flex justify-between text-[0.7rem] font-semibold tracking-[0.18em] tabular-nums">
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <span>{fraternity.data.founded.getUTCFullYear()}</span>
+            </span>
+            <Shield
+              colors={fraternity.data.colors}
+              band={fraternity.data.band}
+              className="text-ink/65 mt-6 h-[5.5rem] w-auto transition-transform duration-500 ease-out group-hover:-translate-y-1.5 group-hover:-rotate-3"
+              style={{ viewTransitionName: shieldTransitionName(fraternity.id) }}
+            />
+            <h3 class="font-display mt-6 text-[1.45rem] leading-[1.1]">{fraternity.data.name}</h3>
+            <span
+              class="mt-4 flex h-[3px] w-9 transition-[width] duration-500 ease-out group-hover:w-full"
+              aria-hidden="true"
+            >
+              {fraternity.data.colors.map((color) => (
+                <i class="flex-1" style={`background:${color}`} />
+              ))}
+            </span>
+          </a>
+        </li>
+      ))}
+    </ol>
+
+    <div class="border-rule flex flex-wrap items-center gap-x-10 gap-y-5 border-t pt-8">
+      <p class="kicker">{t('fraternities.outside')}</p>
+      {outside.map((fraternity) => (
+        <a href={fraternityUrl(locale, fraternity.id)} class="group flex items-center gap-3">
+          <Shield
+            colors={fraternity.data.colors}
+            band={fraternity.data.band}
+            className="text-ink/65 h-9 w-auto transition-transform duration-500 group-hover:-rotate-3"
+            style={{ viewTransitionName: shieldTransitionName(fraternity.id) }}
+          />
+          <span class="font-display text-lg">{fraternity.data.name}</span>
+        </a>
+      ))}
+    </div>
+
+    <p class="mt-12" data-reveal>
+      <a href={fraternitiesUrl(locale)} class="btn">
+        {t('fraternities.all')} →
+      </a>
+    </p>
+  </div>
+</section>

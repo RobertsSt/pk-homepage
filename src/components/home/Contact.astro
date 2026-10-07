@@ -1,0 +1,56 @@
+---
+import { Image } from 'astro:assets';
+import candles from '@/assets/site/candles.webp';
+import SectionTitle from '@/components/SectionTitle.astro';
+import type { Homepage } from '@/lib/site';
+
+interface Props {
+  page: Homepage;
+}
+
+const { page } = Astro.props;
+const { t, contact } = page;
+---
+
+<section
+  id="kontakti"
+  class="on-ink relative isolate overflow-hidden pt-40 pb-28 text-center lg:pt-48 lg:pb-36"
+>
+  <Image
+    src={candles}
+    alt=""
+    widths={[768, 1280, 1706]}
+    sizes="100vw"
+    class="absolute inset-x-0 -top-[10%] -z-20 h-[120%] w-full object-cover"
+    data-parallax="50"
+  />
+  <div class="bg-ink/75 absolute inset-0 -z-10"></div>
+  {/* The section above ends in a shallow arc that dips over the photograph. */}
+  <svg
+    viewBox="0 0 1440 70"
+    preserveAspectRatio="none"
+    class="text-ink absolute inset-x-0 -top-px h-12 w-full sm:h-[70px]"
+    aria-hidden="true"
+  >
+    <path d="M0 0h1440v18C1080 78 360 78 0 18z" fill="currentColor"></path>
+  </svg>
+
+  <div class="shell">
+    <p class="kicker justify-center" data-reveal>
+      {t('contact.kicker')}
+    </p>
+    <SectionTitle text={t('contact.title')} class="mt-6" />
+    <p class="mt-10" data-reveal>
+      <a href={`mailto:${contact.email}`} class="btn btn-brass break-all">
+        {contact.email}
+      </a>
+    </p>
+    <address class="text-paper/75 mt-10 space-y-1 not-italic" data-reveal>
+      <p class="text-paper">{contact.legalName}</p>
+      <p>
+        {t('contact.registration')} {contact.registrationNumber}
+      </p>
+      <p>{contact.address}</p>
+    </address>
+  </div>
+</section>

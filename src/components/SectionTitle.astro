@@ -1,0 +1,19 @@
+---
+/**
+ * A section heading. Everything after the first word is set in italic and
+ * coloured, echoing the homepage headline; a one-word title stays plain.
+ */
+interface Props {
+  text: string;
+  class?: string;
+}
+
+const { text, class: className } = Astro.props;
+const [first, ...rest] = text.split(' ');
+---
+
+<h2 class:list={['section-title', className]} data-reveal>
+  {first}
+  {rest.length > 0 && ' '}
+  {rest.length > 0 && <em>{rest.join(' ')}</em>}
+</h2>
