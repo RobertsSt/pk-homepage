@@ -32,7 +32,8 @@ concurrency:
 
 env:
   SITE_URL: https://pk.lv
-  BASE_PATH: ${{ vars.DEPLOY_BASE_PATH || '/' }}
+  # No default on purpose: a build for the wrong address must not be uploaded.
+  BASE_PATH: ${{ vars.DEPLOY_BASE_PATH }}
 
 jobs:
   deploy:
@@ -53,6 +54,10 @@ jobs:
           done
           case "$BASE_PATH" in
             /|/*/) ;;
+            "")
+              echo "::error::The variable DEPLOY_BASE_PATH is not set. Add it under Settings → Secrets and variables → Actions → Variables: /jauna/ for the trial folder, / for the site itself."
+              exit 1
+              ;;
             *)
               echo "::error::DEPLOY_BASE_PATH is \"$BASE_PATH\"; it must begin and end with a slash, like /jauna/ or /."
               exit 1
@@ -85,18 +90,21 @@ jobs:
           server-dir: ./
           dry-run: ${{ inputs.dry-run }}
 
-      # Proves that the folder the files went to is the one served at this
-      # address. A wrong folder for the FTP account shows up here.
-      - name: Check that the site answers at its address
+      # Asks the web server for the stylesheet of this very build. Its name
+      # changes with every build, so an answer proves that the folder the files
+      # went to is the one served at this address. A wrong folder for the FTP
+      # account, or a wrong DEPLOY_BASE_PATH, shows up here.
+      - name: Check that this build is what the address now serves
         if: ${{ !inputs.dry-run }}
         run: |
-          address="${SITE_URL}${BASE_PATH}"
+          stylesheet="$(grep -o '/[^"]*/_astro/[^"]*\.css\|/_astro/[^"]*\.css' dist/index.html | head -n 1)"
+          address="${SITE_URL}${stylesheet}"
           for attempt in 1 2 3; do
-            if curl --fail --silent --show-error --location --max-time 20 "$address" | grep -q 'Prezidiju Konvents'; then
-              echo "The site answers at $address"
+            if curl --fail --silent --show-error --max-time 20 --output /dev/null "$address"; then
+              echo "This build is live at ${SITE_URL}${BASE_PATH}"
               exit 0
             fi
             sleep 10
           done
-          echo "::error::Uploaded, but $address does not show the site. Check that the FTP account's folder is the folder served at that address."
+          echo "::error::Uploaded, but $address is not there. Check that the FTP account's folder is the folder served at ${SITE_URL}${BASE_PATH}"
           exit 1
