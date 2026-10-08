@@ -20,7 +20,8 @@
     "verify": "npm run format:check && npm run lint && npm run check && npm test && npm run build && npm run test:browser",
     "import:wordpress": "node scripts/import-wordpress.mjs",
     "check:translations": "node scripts/check-translations.mjs",
-    "build:fonts": "node scripts/build-fonts.mjs"
+    "build:fonts": "node scripts/build-fonts.mjs",
+    "build:icons": "node scripts/build-icons.mjs"
   },
   "dependencies": {
     "@astrojs/preact": "^6.0.6",
