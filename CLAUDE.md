@@ -9,6 +9,12 @@ Read [docs/spec.md](docs/spec.md) first: it holds the decisions, the milestones 
   calling work done. The browser tests need `npx playwright install chromium webkit` once per machine.
 - `npm run test:browser` runs only the browser tests, against `dist/`; build first. They start their own
   server on port 4173 and do not touch the dev server.
+- CI runs `npm run verify` on every push to any branch, inside the Playwright container image. The image
+  tag in `.github/workflows/ci.yml` and `@playwright/test` in `package.json` must be the same version;
+  change both together. The repository is public, so a run's result can be read without logging in:
+  `https://api.github.com/repos/RobertsSt/pk-homepage/actions/runs?branch=<branch>`.
+- Never put anything from the hosting (FTP name, password, folder listing) into the repository. The
+  `Deploy` workflow reads them from GitHub secrets; see the comment at its top.
 - Only one dev server can run per project. If Roberts already has one open (`npx astro dev status`), use
   it at http://localhost:4321 and never stop it. Otherwise `npx astro dev --background` starts one and
   `npx astro dev stop` ends it. `astro preview` also detaches; stop it with `npx astro preview stop`.
