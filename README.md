@@ -66,6 +66,11 @@ docs/spec.md         Decisions, milestones, open questions
 - English text and `src/content/site/home.yaml` are edited here. An English text names, in `translatedFrom`,
   the date (`wpModified`) of the Latvian text it was translated from; `npm run check:translations` lists
   the ones whose Latvian text has changed since.
+- People who do not work with the code edit content through Pages CMS, which is configured in
+  [.pages.yml](.pages.yml); their guide, in Latvian, is
+  [docs/redigesanas-pamaciba.md](docs/redigesanas-pamaciba.md). A field added to
+  `src/content.config.ts` needs a field in `.pages.yml` too.
+- Content refers to a picture as `@/assets/…`, which means `src/assets/…` from any file.
 - An image that does not come from WordPress needs an entry in `src/data/image-credits.json`.
 - A photograph needs a description for people who cannot see it: `alt` beside it in
   `scripts/import-overrides.json`, or in WordPress for a photograph that comes from there.

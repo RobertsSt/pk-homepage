@@ -15,8 +15,8 @@ colors:
   - "#ffffff"
   - "#e8615c"
 heraldry:
-  shield: ../../assets/fraternities/selonija/shield.jpg
-  arms: ../../assets/fraternities/selonija/arms-large.png
-  zirkel: ../../assets/fraternities/selonija/zirkel.jpg
-  cap: ../../assets/fraternities/selonija/cap.jpg
-  star: ../../assets/fraternities/selonija/star.jpg
+  shield: "@/assets/fraternities/selonija/shield.jpg"
+  arms: "@/assets/fraternities/selonija/arms-large.png"
+  zirkel: "@/assets/fraternities/selonija/zirkel.jpg"
+  cap: "@/assets/fraternities/selonija/cap.jpg"
+  star: "@/assets/fraternities/selonija/star.jpg"

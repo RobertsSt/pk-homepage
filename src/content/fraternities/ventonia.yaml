@@ -13,8 +13,8 @@ colors:
   - "#ffffff"
   - "#98c070"
 heraldry:
-  shield: ../../assets/fraternities/ventonia/shield.jpg
-  arms: ../../assets/fraternities/ventonia/arms-large.png
-  zirkel: ../../assets/fraternities/ventonia/zirkel.jpg
-  cap: ../../assets/fraternities/ventonia/cap.jpg
-  star: ../../assets/fraternities/ventonia/star.jpg
+  shield: "@/assets/fraternities/ventonia/shield.jpg"
+  arms: "@/assets/fraternities/ventonia/arms-large.png"
+  zirkel: "@/assets/fraternities/ventonia/zirkel.jpg"
+  cap: "@/assets/fraternities/ventonia/cap.jpg"
+  star: "@/assets/fraternities/ventonia/star.jpg"

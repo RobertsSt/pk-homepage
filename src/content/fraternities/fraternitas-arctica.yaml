@@ -15,8 +15,8 @@ colors:
   - "#1c1c22"
   - "#e05c57"
 heraldry:
-  shield: ../../assets/fraternities/fraternitas-arctica/shield.jpg
-  arms: ../../assets/fraternities/fraternitas-arctica/arms-large.jpg
-  zirkel: ../../assets/fraternities/fraternitas-arctica/zirkel.jpg
-  cap: ../../assets/fraternities/fraternitas-arctica/cap.jpg
-  star: ../../assets/fraternities/fraternitas-arctica/star.jpg
+  shield: "@/assets/fraternities/fraternitas-arctica/shield.jpg"
+  arms: "@/assets/fraternities/fraternitas-arctica/arms-large.jpg"
+  zirkel: "@/assets/fraternities/fraternitas-arctica/zirkel.jpg"
+  cap: "@/assets/fraternities/fraternitas-arctica/cap.jpg"
+  star: "@/assets/fraternities/fraternitas-arctica/star.jpg"

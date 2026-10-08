@@ -1,10 +1,11 @@
 ---
+title: Vendia
 translatedFrom: 2025-04-07T16:58:40
 ---
 
 ## About Vendia
 
-![Members of Vendia in coats and green caps on steps with the fraternity’s flag; in front, three members wearing colour sashes](../../../assets/fraternities/vendia/photo-1.jpg)
+![Members of Vendia in coats and green caps on steps with the fraternity’s flag; in front, three members wearing colour sashes](@/assets/fraternities/vendia/photo-1.jpg)
 
 Founded – 20 March 1927\
 Guarantor of the comment – Selonija\
@@ -13,13 +14,13 @@ Active members – 54
 
 ## Pastimes
 
-![About fifteen members of Vendia in shirts and green caps, glasses in hand, on the terrace of a brick building](../../../assets/fraternities/vendia/photo-2.jpg)
+![About fifteen members of Vendia in shirts and green caps, glasses in hand, on the terrace of a brick building](@/assets/fraternities/vendia/photo-2.jpg)
 
 The family of Vendia has members with many different interests. Some take an active part in quiz games, competing for the best results both as one team and in different teams. Others are active in sport and win medals at the Latvian championships, in traditional and in extreme sports alike. Members of Vendia are also well represented in team sports competitions. Every year they hold an internal bowling tournament, and in spring most of them take the physical fitness tests of the National Guard.
 
 ## History
 
-![A historical sheet headed “1927. g. 20. martā. Vendias dibinātāji” (20 March 1927. The founders of Vendia), with portraits of the founders in ovals](../../../assets/fraternities/vendia/photo-3.jpg)
+![A historical sheet headed “1927. g. 20. martā. Vendias dibinātāji” (20 March 1927. The founders of Vendia), with portraits of the founders in ovals](@/assets/fraternities/vendia/photo-3.jpg)
 
 The founders of Vendia, 20 March 1927
 

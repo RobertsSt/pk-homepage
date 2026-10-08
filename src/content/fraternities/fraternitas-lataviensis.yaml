@@ -12,8 +12,8 @@ colors:
   - "#ffffff"
   - "#c9a348"
 heraldry:
-  shield: ../../assets/fraternities/fraternitas-lataviensis/shield.jpg
-  arms: ../../assets/fraternities/fraternitas-lataviensis/arms-large.jpg
-  zirkel: ../../assets/fraternities/fraternitas-lataviensis/zirkel.jpg
-  cap: ../../assets/fraternities/fraternitas-lataviensis/cap.jpg
-  star: ../../assets/fraternities/fraternitas-lataviensis/star.jpg
+  shield: "@/assets/fraternities/fraternitas-lataviensis/shield.jpg"
+  arms: "@/assets/fraternities/fraternitas-lataviensis/arms-large.jpg"
+  zirkel: "@/assets/fraternities/fraternitas-lataviensis/zirkel.jpg"
+  cap: "@/assets/fraternities/fraternitas-lataviensis/cap.jpg"
+  star: "@/assets/fraternities/fraternitas-lataviensis/star.jpg"

@@ -1,10 +1,11 @@
 ---
+title: Fraternitas Lettica
 wpModified: 2026-10-05T17:55:40
 ---
 
 ## Par Frat! Lettica
 
-![Fraternitas Lettica biedri zilos deķeļos gara ierindā ar korporācijas karogu pie akmens pieminekļa](../../../assets/fraternities/fraternitas-lettica/photo-1.jpg)
+![Fraternitas Lettica biedri zilos deķeļos gara ierindā ar korporācijas karogu pie akmens pieminekļa](@/assets/fraternities/fraternitas-lettica/photo-1.jpg)
 
 Dibināšanas datums: 1902. g. 20. oktobris.\
 Komāna garants: studentu korporācija Tervetia\

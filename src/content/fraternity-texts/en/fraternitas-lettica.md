@@ -1,10 +1,11 @@
 ---
+title: Fraternitas Lettica
 translatedFrom: 2026-10-05T17:55:40
 ---
 
 ## About Fraternitas Lettica
 
-![Members of Fraternitas Lettica in blue caps, drawn up in a long line with the fraternity’s flag beside a stone memorial](../../../assets/fraternities/fraternitas-lettica/photo-1.jpg)
+![Members of Fraternitas Lettica in blue caps, drawn up in a long line with the fraternity’s flag beside a stone memorial](@/assets/fraternities/fraternitas-lettica/photo-1.jpg)
 
 Founded: 20 October 1902.\
 Guarantor of the comment: the student fraternity Tervetia\

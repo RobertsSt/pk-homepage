@@ -13,8 +13,8 @@ colors:
   - "#522874"
   - "#036242"
 heraldry:
-  shield: ../../assets/fraternities/gersicania/shield.jpg
-  arms: ../../assets/fraternities/gersicania/arms-large.jpg
-  zirkel: ../../assets/fraternities/gersicania/zirkel.jpg
-  cap: ../../assets/fraternities/gersicania/cap.jpg
-  star: ../../assets/fraternities/gersicania/star.jpg
+  shield: "@/assets/fraternities/gersicania/shield.jpg"
+  arms: "@/assets/fraternities/gersicania/arms-large.jpg"
+  zirkel: "@/assets/fraternities/gersicania/zirkel.jpg"
+  cap: "@/assets/fraternities/gersicania/cap.jpg"
+  star: "@/assets/fraternities/gersicania/star.jpg"

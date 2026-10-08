@@ -1,4 +1,5 @@
 ---
+title: Fraternitas Imantica
 wpModified: 2024-05-03T18:38:04
 ---
 

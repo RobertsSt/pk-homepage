@@ -41,6 +41,12 @@ Read [docs/spec.md](docs/spec.md) first: it holds the decisions, the milestones 
 - Dates and times are Riga wall-clock strings (`src/lib/calendar/dates.ts`); do not use the local time zone
   of the machine.
 - `src/lib/calendar/feed.ts` is server-only. Client components import types and `dates.ts`/`labels.ts` only.
+- Content refers to a picture as `@/assets/…` (quoted in YAML, because of the `@`), never by a relative
+  path: the editing tool has one picture library and writes that prefix.
+- `.pages.yml` is the editing tool's view of the content and must match `src/content.config.ts`: a new
+  field needs both. Pages CMS rejects keys it does not know, and a `list` written as an object must
+  include `collapsible`. Optional fields in the schema go through `optional()`, because a form saves an
+  empty field as an empty string or null.
 - An image from outside WordPress needs an entry in `src/data/image-credits.json` (source, author,
   licence), and a path in `scripts/import-overrides.json` if it replaces an imported one.
 - Content arrives in one of two ways; see `src/styles/motion.css`. What is on screen when a page opens

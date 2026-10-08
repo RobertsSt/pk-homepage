@@ -26,7 +26,7 @@ intro:
 foundedYear: 1919
 
 about:
-  photo: ../../assets/site/btk-2023.jpg
+  photo: '@/assets/site/btk-2023.jpg'
   alt:
     lv: Vairāki simti studentu un studenšu korporāciju biedru ar karogiem pie Latvijas Nacionālās bibliotēkas
     en: Several hundred fraternity and sorority members with flags in front of the National Library of Latvia
@@ -45,21 +45,21 @@ officers:
       lv: Seniors
       en: Senior
     email: prezidijs@latvus.lv
-    photo: ../../assets/site/officers/senior.jpg
+    photo: '@/assets/site/officers/senior.jpg'
   - name: Rūdolfs Rubenis
     honorific: fil!
     role:
       lv: Viceseniors
       en: Vice-Senior
     email: prezidijs@latvus.lv
-    photo: ../../assets/site/officers/vice-senior.jpg
+    photo: '@/assets/site/officers/vice-senior.jpg'
   - name: Agnis Salmiņš
     honorific: taut!
     role:
       lv: Sekretārs
       en: Secretary
     email: prezidijs@latvus.lv
-    photo: ../../assets/site/officers/secretary.jpg
+    photo: '@/assets/site/officers/secretary.jpg'
 
 history:
   teaser:

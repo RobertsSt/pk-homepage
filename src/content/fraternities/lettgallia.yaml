@@ -14,8 +14,8 @@ colors:
   - "#1c1c22"
   - "#ffffff"
 heraldry:
-  shield: ../../assets/fraternities/lettgallia/shield.jpg
-  arms: ../../assets/fraternities/lettgallia/arms-large.png
-  zirkel: ../../assets/fraternities/lettgallia/zirkel.jpg
-  cap: ../../assets/fraternities/lettgallia/cap.jpg
-  star: ../../assets/fraternities/lettgallia/star.jpg
+  shield: "@/assets/fraternities/lettgallia/shield.jpg"
+  arms: "@/assets/fraternities/lettgallia/arms-large.png"
+  zirkel: "@/assets/fraternities/lettgallia/zirkel.jpg"
+  cap: "@/assets/fraternities/lettgallia/cap.jpg"
+  star: "@/assets/fraternities/lettgallia/star.jpg"

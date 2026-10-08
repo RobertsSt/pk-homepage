@@ -14,13 +14,13 @@ colors:
   - "#c9a348"
   - "#ffffff"
 heraldry:
-  shield: ../../assets/fraternities/fraternitas-imantica/shield.jpg
-  arms: ../../assets/fraternities/fraternitas-imantica/arms.jpg
-  zirkel: ../../assets/fraternities/fraternitas-imantica/zirkel-large.png
-  cap: ../../assets/fraternities/fraternitas-imantica/cap.jpg
-  star: ../../assets/fraternities/fraternitas-imantica/star.jpg
+  shield: "@/assets/fraternities/fraternitas-imantica/shield.jpg"
+  arms: "@/assets/fraternities/fraternitas-imantica/arms.jpg"
+  zirkel: "@/assets/fraternities/fraternitas-imantica/zirkel-large.png"
+  cap: "@/assets/fraternities/fraternitas-imantica/cap.jpg"
+  star: "@/assets/fraternities/fraternitas-imantica/star.jpg"
 cover:
-  src: ../../assets/fraternities/fraternitas-imantica/cover.jpg
+  src: "@/assets/fraternities/fraternitas-imantica/cover.jpg"
   alt:
     lv: Septiņi Fraternitas Imantica biedri sarkanos deķeļos, daļa ar krāsu lentēm un rapieriem, korporācijas karoga priekšā
     en: Seven members of Fraternitas Imantica in red caps, some with colour sashes and rapiers, in front of the fraternity’s flag

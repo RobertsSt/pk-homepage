@@ -1,10 +1,11 @@
 ---
+title: Selonija
 translatedFrom: 2025-04-07T17:34:58
 ---
 
 ## About Selonija
 
-![A large gathering of members of Selonija on steps in a park beneath the fraternity’s flag; three members in the front row wear colour sashes](../../../assets/fraternities/selonija/photo-1.jpg)
+![A large gathering of members of Selonija on steps in a park beneath the fraternity’s flag; three members in the front row wear colour sashes](@/assets/fraternities/selonija/photo-1.jpg)
 
 18 November 2022
 
@@ -15,7 +16,7 @@ Active members – 308
 
 ## Pastimes
 
-![Couples in evening dress dancing in a ballroom with balconies](../../../assets/fraternities/selonija/photo-2.jpg)
+![Couples in evening dress dancing in a ballroom with balconies](@/assets/fraternities/selonija/photo-2.jpg)
 
 Every week the members of Selonija have a range of activities: fencing practice, basketball and football training, ballroom dancing lessons. Selonija’s running, cycling and chess clubs are active, and in summer its yacht club. Besides this, members take on impressive challenges of their own, such as climbing Everest, skiing across Antarctica or running round Mont Blanc.
 
@@ -23,7 +24,7 @@ The ball of the 58th Baltic Nations’ Commers
 
 ## History
 
-![A historical black-and-white group photograph: several hundred members of the fraternity in front of a two-storey house](../../../assets/fraternities/selonija/photo-3.jpg)
+![A historical black-and-white group photograph: several hundred members of the fraternity in front of a two-storey house](@/assets/fraternities/selonija/photo-3.jpg)
 
 The commers for the 50th anniversary of the founding, Stabu iela, 1930.
 

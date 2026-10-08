@@ -14,8 +14,8 @@ colors:
   - "#7e4471"
   - "#c9a348"
 heraldry:
-  shield: ../../assets/fraternities/fraternitas-livonica/shield.jpg
-  arms: ../../assets/fraternities/fraternitas-livonica/arms-large.png
-  zirkel: ../../assets/fraternities/fraternitas-livonica/zirkel.jpg
-  cap: ../../assets/fraternities/fraternitas-livonica/cap.jpg
-  star: ../../assets/fraternities/fraternitas-livonica/star.jpg
+  shield: "@/assets/fraternities/fraternitas-livonica/shield.jpg"
+  arms: "@/assets/fraternities/fraternitas-livonica/arms-large.png"
+  zirkel: "@/assets/fraternities/fraternitas-livonica/zirkel.jpg"
+  cap: "@/assets/fraternities/fraternitas-livonica/cap.jpg"
+  star: "@/assets/fraternities/fraternitas-livonica/star.jpg"

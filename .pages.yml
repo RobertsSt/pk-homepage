@@ -1,0 +1,552 @@
+# Configuration of Pages CMS (https://pagescms.org), the editing tool for
+# people who do not work with the code. It describes which files in this
+# repository can be edited and as what kind of form. Labels and help texts are
+# in Latvian because the editors are; the guide for them is
+# docs/redigesanas-pamaciba.md.
+#
+# The shape of every file is defined in src/content.config.ts, and a build fails
+# when a file does not fit it. Keep the two in step: a field added there needs
+# a field here.
+
+# One library for all pictures. Content refers to a picture as
+# "@/assets/<path>", which means src/assets/<path> from any file.
+media:
+  - name: images
+    label: Attēli
+    input: src/assets
+    output: '@/assets'
+    categories: [image]
+    rename: safe
+
+settings:
+  content:
+    # Keep what a form does not show (for example the dates the import writes).
+    merge: true
+
+components:
+  # A short text in both languages of the site.
+  bilingual:
+    type: object
+    fields:
+      - name: lv
+        label: Latviski
+        type: string
+        required: true
+      - name: en
+        label: Angliski
+        type: string
+        required: true
+
+  # The same for a text of several lines.
+  bilingualLong:
+    type: object
+    fields:
+      - name: lv
+        label: Latviski
+        type: text
+        required: true
+      - name: en
+        label: Angliski
+        type: text
+        required: true
+
+  # What stands in for a picture when it cannot be seen.
+  pictureDescription:
+    type: object
+    description: Aprakstiet vienā teikumā, kas attēlā redzams. To dzird cilvēki, kuri attēlu neredz, un lasa meklētāji.
+    fields:
+      - name: lv
+        label: Latviski
+        type: string
+        required: true
+      - name: en
+        label: Angliski
+        type: string
+        required: true
+
+content:
+  - name: home
+    label: Sākumlapa
+    type: file
+    path: src/content/site/home.yaml
+    format: yaml
+    operations:
+      delete: false
+    fields:
+      - name: name
+        label: Nosaukums
+        component: bilingual
+      - name: tagline
+        label: Rinda virs nosaukuma
+        component: bilingual
+      - name: lead
+        label: Ievadteikums
+        component: bilingualLong
+      - name: intro
+        label: Sadaļas “Par mums” teksts
+        component: bilingualLong
+      - name: foundedYear
+        label: Dibināšanas gads
+        type: number
+        required: true
+      - name: about
+        label: Sadaļas “Par mums” attēls
+        type: object
+        fields:
+          - name: photo
+            label: Attēls
+            type: image
+            required: true
+            options:
+              media: images
+          - name: alt
+            label: Attēla apraksts
+            component: pictureDescription
+          - name: caption
+            label: Paraksts zem attēla
+            component: bilingual
+      - name: presiding
+        label: Prezidējošais konvents
+        description: Mainās ar katru prezidiju.
+        type: object
+        fields:
+          - name: fraternity
+            label: Korporācija
+            type: select
+            required: true
+            options:
+              values:
+                - { name: fraternitas-arctica, label: Fraternitas Arctica }
+                - { name: selonija, label: Selonija }
+                - { name: lettgallia, label: Lettgallia }
+                - { name: fraternitas-lettica, label: Fraternitas Lettica }
+                - { name: latvia, label: Latvia }
+                - { name: ventonia, label: Ventonia }
+                - { name: tervetia, label: Tervetia }
+                - { name: beveronija, label: Beveronija }
+                - { name: philyronia, label: Philyronia }
+                - { name: fraternitas-metropolitana, label: Fraternitas Metropolitana }
+                - { name: fraternitas-vesthardiana, label: Fraternitas Vesthardiana }
+                - { name: fraternitas-academica, label: Fraternitas Academica }
+                - { name: fraternitas-lataviensis, label: Fraternitas Lataviensis }
+                - { name: patria, label: Patria }
+                - { name: fraternitas-livonica, label: Fraternitas Livonica }
+                - { name: vendia, label: Vendia }
+                - { name: fraternitas-imantica, label: Fraternitas Imantica }
+                - { name: gersicania, label: Gersicania }
+                - { name: fraternitas-cursica, label: Fraternitas Cursica }
+                - { name: fraternitas-vanenica, label: Fraternitas Vanenica }
+          - name: term
+            label: Akadēmiskais gads
+            description: Piemēram, 2025/2026
+            type: string
+            required: true
+            pattern:
+              regex: '^\d{4}/\d{4}$'
+              message: Rakstiet divus gadus ar slīpsvītru, piemēram, 2025/2026
+      - name: officers
+        label: P!K! amatpersonas
+        type: object
+        list:
+          min: 1
+          collapsible:
+            collapsed: true
+            summary: '{name}'
+        fields:
+          - name: name
+            label: Vārds un uzvārds
+            type: string
+            required: true
+          - name: honorific
+            label: Uzruna
+            description: Piemēram, taut!, fil! vai com!
+            type: string
+            required: true
+          - name: role
+            label: Amats
+            component: bilingual
+          - name: email
+            label: E-pasts
+            type: string
+            required: true
+            pattern:
+              regex: '^[^@\s]+@[^@\s]+\.[^@\s]+$'
+              message: Tā neizskatās pēc e-pasta adreses
+          - name: photo
+            label: Fotogrāfija
+            description: Vislabāk kvadrātveida, vismaz 720 × 720 pikseļi.
+            type: image
+            required: true
+            options:
+              media: images
+      - name: history
+        label: Sadaļa “Vēsture”
+        type: object
+        fields:
+          - name: teaser
+            label: Ievadteksts
+            component: bilingualLong
+          - name: milestones
+            label: Laika līnija
+            description: Pēdējo punktu “Šodien” lapa pievieno pati.
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: '{year}'
+            fields:
+              - name: year
+                label: Gads
+                type: string
+                required: true
+              - name: text
+                label: Teksts
+                component: bilingualLong
+      - name: contact
+        label: Kontakti
+        type: object
+        fields:
+          - name: email
+            label: E-pasts
+            type: string
+            required: true
+          - name: legalName
+            label: Juridiskais nosaukums
+            component: bilingual
+          - name: registrationNumber
+            label: Reģistrācijas numurs
+            type: string
+            required: true
+          - name: address
+            label: Adrese
+            type: string
+            required: true
+      - name: calendarId
+        label: Google kalendāra identifikators
+        description: Kalendāra notikumus maina pašā Google kalendārā, nevis šeit.
+        type: string
+        readonly: true
+
+  - name: fraternities
+    label: Korporācijas
+    type: collection
+    path: src/content/fraternities
+    filename: '{primary}.yaml'
+    format: yaml
+    # The file name is the fraternity's address on the site, and a new
+    # fraternity also needs its symbols and texts: that is a developer's job.
+    operations:
+      create: false
+      rename: false
+      delete: false
+    view:
+      fields: [name, founded, membership]
+      primary: name
+      sort: [order, name, founded]
+      default:
+        sort: order
+        order: asc
+    fields:
+      - name: name
+        label: Nosaukums
+        type: string
+        required: true
+      - name: order
+        label: Vieta sarakstā
+        description: Senioritātes secība. Mainot vienu, jāmaina arī pārējās.
+        type: number
+        required: true
+        options:
+          min: 1
+      - name: membership
+        label: Statuss
+        type: select
+        required: true
+        options:
+          values:
+            - { name: pk, label: P!K! sastāvā }
+            - { name: outside, label: Ārpus P!K! }
+      - name: founded
+        label: Dibināšanas datums
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+      - name: mottos
+        label: Devīzes
+        type: string
+        list: true
+      - name: website
+        label: Mājaslapa
+        description: Pilna adrese, sākot ar https://
+        type: string
+        pattern:
+          regex: '^(https?://\S+)?$'
+          message: Adresei jāsākas ar http:// vai https://
+      - name: address
+        label: Adrese
+        type: string
+      - name: phone
+        label: Tālrunis
+        type: string
+      - name: email
+        label: E-pasts
+        type: string
+        pattern:
+          regex: '^([^@\s]+@[^@\s]+\.[^@\s]+)?$'
+          message: Tā neizskatās pēc e-pasta adreses
+      - name: colors
+        label: Krāsas
+        description: 'Trīs krāsas no augšas uz leju, katra kā #rrggbb. Secība ir korporācijas krāsu secība; nemainiet to.'
+        type: string
+        # The tool's schema wants `collapsible` whenever `list` is written out.
+        list:
+          min: 3
+          max: 3
+          collapsible: false
+        pattern:
+          regex: '^#[0-9a-fA-F]{6}$'
+          message: 'Krāsa jāraksta kā # un seši cipari vai burti a–f, piemēram, #c9a348'
+      - name: band
+        label: Vidējās joslas virziens vairogā
+        type: select
+        required: true
+        options:
+          values:
+            - { name: rising, label: Kāpj no kreisās uz labo }
+            - { name: falling, label: Krīt no kreisās uz labo }
+      - name: heraldry
+        label: Simbolika
+        type: object
+        fields:
+          - name: shield
+            label: Krāsu vairogs
+            type: image
+            required: true
+            options:
+              media: images
+          - name: arms
+            label: Vapenis
+            type: image
+            required: true
+            options:
+              media: images
+          - name: zirkel
+            label: Cirķelis
+            type: image
+            required: true
+            options:
+              media: images
+          - name: cap
+            label: Deķelis
+            type: image
+            required: true
+            options:
+              media: images
+          - name: star
+            label: Deķeļa zvaigzne
+            type: image
+            required: true
+            options:
+              media: images
+      - name: cover
+        label: Galvenā fotogrāfija
+        description: Platā fotogrāfija lapas augšā. Var nebūt.
+        type: object
+        fields:
+          - name: src
+            label: Attēls
+            type: image
+            options:
+              media: images
+          - name: alt
+            label: Attēla apraksts
+            component: pictureDescription
+      - name: photos
+        label: Citas fotogrāfijas
+        description: Parādās lapas apakšā, pēc teksta.
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: 'Fotogrāfija {index}'
+        fields:
+          - name: src
+            label: Attēls
+            type: image
+            options:
+              media: images
+          - name: alt
+            label: Attēla apraksts
+            component: pictureDescription
+
+  - name: fraternity-texts
+    label: Korporāciju teksti
+    type: group
+    items:
+      - name: fraternity-texts-lv
+        label: Latviski
+        type: collection
+        path: src/content/fraternity-texts/lv
+        filename: '{primary}.md'
+        format: yaml-frontmatter
+        operations:
+          create: false
+          rename: false
+          delete: false
+        view:
+          fields: [title]
+          primary: title
+          default:
+            sort: title
+            order: asc
+        fields:
+          - name: title
+            label: Korporācija
+            description: Tikai šim sarakstam; lapā nosaukumu ņem no sadaļas “Korporācijas”.
+            type: string
+            readonly: true
+          - name: body
+            label: Teksts
+            type: rich-text
+            options:
+              media: images
+      - name: fraternity-texts-en
+        label: Angliski
+        type: collection
+        path: src/content/fraternity-texts/en
+        filename: '{primary}.md'
+        format: yaml-frontmatter
+        operations:
+          create: false
+          rename: false
+          delete: false
+        view:
+          fields: [title]
+          primary: title
+          default:
+            sort: title
+            order: asc
+        fields:
+          - name: title
+            label: Korporācija
+            description: Tikai šim sarakstam; lapā nosaukumu ņem no sadaļas “Korporācijas”.
+            type: string
+            readonly: true
+          - name: body
+            label: Teksts
+            type: rich-text
+            options:
+              media: images
+
+  - name: pages
+    label: Lapas
+    type: group
+    items:
+      - name: pages-lv
+        label: Latviski
+        type: collection
+        path: src/content/pages/lv
+        filename: '{primary}.md'
+        format: yaml-frontmatter
+        # A page's file name is its address, and a new page also needs a place
+        # in the menu, which is code: src/data/navigation.ts.
+        operations:
+          create: false
+          rename: false
+          delete: false
+        view:
+          fields: [title]
+          primary: title
+        fields:
+          - name: title
+            label: Virsraksts
+            type: string
+            required: true
+          - name: description
+            label: Īss apraksts
+            description: Viens teikums, ko rāda meklētāji un saites sociālajos tīklos. Ja tukšs, ņem teksta sākumu.
+            type: text
+            options:
+              maxlength: 200
+          - name: body
+            label: Teksts
+            type: rich-text
+            options:
+              media: images
+      - name: pages-en
+        label: Angliski
+        type: collection
+        path: src/content/pages/en
+        filename: '{primary}.md'
+        format: yaml-frontmatter
+        operations:
+          create: false
+          rename: false
+          delete: false
+        view:
+          fields: [title]
+          primary: title
+        fields:
+          - name: title
+            label: Virsraksts
+            type: string
+            required: true
+          - name: description
+            label: Īss apraksts
+            description: Viens teikums, ko rāda meklētāji un saites sociālajos tīklos. Ja tukšs, ņem teksta sākumu.
+            type: text
+            options:
+              maxlength: 200
+          - name: body
+            label: Teksts
+            type: rich-text
+            options:
+              media: images
+
+  - name: image-credits
+    label: Attēlu avoti
+    type: file
+    path: src/data/image-credits.json
+    format: json
+    list: true
+    operations:
+      delete: false
+    fields:
+      - name: fraternity
+        label: Korporācija
+        type: string
+        required: true
+      - name: image
+        label: Attēla veids
+        type: select
+        required: true
+        options:
+          values:
+            - { name: arms, label: Vapenis }
+            - { name: zirkel, label: Cirķelis }
+            - { name: photo, label: Fotogrāfija }
+      - name: file
+        label: Fails
+        description: Ceļš sadaļā “Attēli”, piemēram, fraternities/lettonia/cover.jpg
+        type: string
+        required: true
+      - name: source
+        label: Avota adrese
+        description: Lapa, no kuras attēls ņemts, sākot ar https://
+        type: string
+        required: true
+        pattern:
+          regex: '^https?://\S+$'
+          message: Adresei jāsākas ar http:// vai https://
+      - name: author
+        label: Autors
+        type: string
+      - name: license
+        label: Licence
+        description: Piemēram, CC BY-SA 4.0. Ja nav zināma, atstājiet tukšu.
+        type: string
+      - name: host
+        label: Avota nosaukums
+        description: Piemēram, Wikimedia Commons. Ja tukšs, rāda adreses sākumu.
+        type: string

@@ -1,4 +1,5 @@
 ---
+title: Fraternitas Livonica
 translatedFrom: 2024-05-03T18:39:05
 ---
 

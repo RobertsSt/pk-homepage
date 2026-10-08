@@ -13,8 +13,8 @@ colors:
   - "#7aa277"
   - "#c9a348"
 heraldry:
-  shield: ../../assets/fraternities/talavija/shield.jpg
-  arms: ../../assets/fraternities/talavija/arms-large.jpg
-  zirkel: ../../assets/fraternities/talavija/zirkel.jpg
-  cap: ../../assets/fraternities/talavija/cap.jpg
-  star: ../../assets/fraternities/talavija/star.jpg
+  shield: "@/assets/fraternities/talavija/shield.jpg"
+  arms: "@/assets/fraternities/talavija/arms-large.jpg"
+  zirkel: "@/assets/fraternities/talavija/zirkel.jpg"
+  cap: "@/assets/fraternities/talavija/cap.jpg"
+  star: "@/assets/fraternities/talavija/star.jpg"

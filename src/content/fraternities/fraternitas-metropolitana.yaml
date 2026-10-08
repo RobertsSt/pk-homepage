@@ -13,8 +13,8 @@ colors:
   - "#756383"
   - "#82bb90"
 heraldry:
-  shield: ../../assets/fraternities/fraternitas-metropolitana/shield.jpg
-  arms: ../../assets/fraternities/fraternitas-metropolitana/arms-large.jpg
-  zirkel: ../../assets/fraternities/fraternitas-metropolitana/zirkel.jpg
-  cap: ../../assets/fraternities/fraternitas-metropolitana/cap.jpg
-  star: ../../assets/fraternities/fraternitas-metropolitana/star.jpg
+  shield: "@/assets/fraternities/fraternitas-metropolitana/shield.jpg"
+  arms: "@/assets/fraternities/fraternitas-metropolitana/arms-large.jpg"
+  zirkel: "@/assets/fraternities/fraternitas-metropolitana/zirkel.jpg"
+  cap: "@/assets/fraternities/fraternitas-metropolitana/cap.jpg"
+  star: "@/assets/fraternities/fraternitas-metropolitana/star.jpg"
