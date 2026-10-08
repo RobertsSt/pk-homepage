@@ -35,7 +35,7 @@ Out of scope for the first version: news or blog posts, member login, forms, sea
 | Content       | Markdown and YAML files in `src/content`, checked against schemas in `src/content.config.ts`.             | Plain files are what a git-based editing tool reads and writes, and a typo fails the build.       |
 | Calendar      | Read from the public calendar feed when the site is built. Rebuilt nightly. A saved copy is the fallback. | No API key and no dependence on Google while a visitor loads the page.                            |
 | Editing tool  | Pages CMS, set up in milestone 5.                                                                         | Editors sign in through a link sent by email, so they need no GitHub account.                     |
-| Hosting       | Stays at nano.lv. GitHub Actions builds the site and uploads it over FTPS.                                | No DNS or hosting change; the host offers FTPS but no SSH.                                        |
+| Hosting       | Stays at nano.lv. GitHub Actions builds the site and uploads it over FTPS (the `Deploy` workflow).        | No DNS or hosting change; the host offers FTPS but no SSH.                                        |
 | Preview       | GitHub Pages, published from `main`.                                                                      | Others can review work before anything touches pk.lv.                                             |
 | Quality       | `npm run verify`: Prettier, ESLint, type check, unit tests, build, browser tests. CI runs it on PRs.      | The same checks locally and in CI; some faults only show in a real browser.                       |
 
@@ -150,7 +150,9 @@ day; after that WordPress is retired and the import script is deleted.
    and nobody from P!K! has read it yet; that review is the part still to do. The word choices are listed
    under "English wording" below.
 5. **Editing tool.** Pages CMS configured; a one-page guide for editors in Latvian.
-6. **Launch.** Publishing workflow to nano.lv with nightly rebuild; final import; switch; WordPress archived.
+6. **Launch.** The publishing workflow exists and is started by hand. Still to do: the trial upload, the
+   final import, the switch, automatic and nightly publishing, WordPress archived. See "Publishing to
+   pk.lv" below.
 
 Work happens on a branch and reaches `main` through a pull request that passes `npm run verify`.
 Milestones 1 to 3 arrived together in the first pull request. The accessibility and speed passes follow
@@ -228,13 +230,54 @@ in the branch `accessibility-and-speed`, the English texts in `english-texts`.
 Dates are written as "27 September 1919". Latvian mottos are kept in Latvian with the English in brackets;
 Latin and German ones are left as they are. Names of people, streets and publications are not translated.
 
+## Publishing to pk.lv
+
+What is known about the host, checked from outside on 2026-10-08:
+
+- nano.lv shared hosting with cPanel; the server is `if17.nano.lv`. FTP offers TLS, and its certificate is
+  issued for `*.nano.lv`, so the server is addressed by that name, not as pk.lv.
+- nginx answers in front. It compresses text and lets browsers keep images, fonts, styles and scripts for
+  30 days. An address that does not exist gets the host's standard "404" page, not ours.
+- The web root holds WordPress files of its own (`index.php`, `wp-admin`, `wp-content` and the rest)
+  beside the `WordPress` folder. `/` is answered by that `index.php`, which sends visitors on to
+  `/WordPress/`. What else is in the web root is not known yet.
+
+How publishing works: the `Deploy` workflow builds the site and uploads `dist/` over FTPS into the folder
+of the FTP account it is given. It deletes only files it uploaded itself on an earlier run. It is started
+by hand until the switch; after it, it will run when `main` has passed CI, and every night for the
+calendar.
+
+The site is published in two steps, so that the first upload cannot touch the live site:
+
+1. **Trial folder.** An FTP account that can only see `public_html/jauna`, and `DEPLOY_BASE_PATH` set to
+   `/jauna/`. The site is then at `https://pk.lv/jauna/`, marked as not to be indexed. This proves the
+   account, the upload and how the host serves the files.
+2. **The switch.** The same account is pointed at the web root and `DEPLOY_BASE_PATH` becomes `/`.
+
+Until the editing tool exists, WordPress is the only way for others to change text, so the switch comes
+after milestone 5 unless Roberts decides to edit the files himself for a while.
+
 ## Launch checklist
 
-- [ ] FTPS account for the web root created in the nano.lv panel; host, user and password saved as GitHub
-      secrets, never in the repository.
-- [ ] Publishing workflow added and run once against a test folder.
+Trial folder:
+
+- [ ] In cPanel, an FTP account whose folder is `public_html/jauna` (or the same under the folder pk.lv is
+      served from, if that is not `public_html`).
+- [ ] In GitHub, the secrets `FTP_SERVER` (`if17.nano.lv`), `FTP_USERNAME`, `FTP_PASSWORD` and the variable
+      `DEPLOY_BASE_PATH` (`/jauna/`). Never in the repository.
+- [ ] `Deploy` run once; `https://pk.lv/jauna/` checked: home, one text page, one fraternity page, both
+      languages, images and fonts.
+- [ ] A list of what is in the web root, to plan the switch.
+
+The switch:
+
 - [ ] Final `npm run import:wordpress`, reviewed as a pull request.
-- [ ] The old `WordPress` folder renamed on the server, and the rule that sends `/` to `/WordPress/` removed.
-- [ ] Site published to the web root; home, one text page, one fraternity page and three old addresses
-      checked on pk.lv in both languages.
-- [ ] WordPress folder and database archived, then removed.
+- [ ] A full backup of files and database made in cPanel and downloaded.
+- [ ] WordPress moved out of the web root: its files there, and the `WordPress` folder, whose name the new
+      site needs for the pages that forward old addresses.
+- [ ] The FTP account's folder changed to the web root, `DEPLOY_BASE_PATH` changed to `/`, `Deploy` run.
+- [ ] Checked on pk.lv in both languages: home, one text page, one fraternity page and three old addresses
+      under `/WordPress/`.
+- [ ] `Deploy` set to run after CI on `main` and every night; the trial folder and its FTP access removed.
+- [ ] Our own "page not found" page set in cPanel (Error Pages), if the host allows it.
+- [ ] After a few weeks: the WordPress archive and database removed, and the import script deleted.

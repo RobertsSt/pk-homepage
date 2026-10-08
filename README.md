@@ -26,7 +26,7 @@ npm run dev                              # http://localhost:4321
 | `npm run check:translations` | Lists English texts that are missing or older than their Latvian text  |
 | `npm run build:fonts`        | Rebuilds the web fonts; only after changing the fonts or their letters |
 
-CI runs `npm run verify` on every pull request.
+CI runs `npm run verify` on every push, to any branch.
 
 ## Where things are
 
@@ -74,5 +74,9 @@ docs/spec.md         Decisions, milestones, open questions
 
 ## Preview and deployment
 
-Pushes to `main` publish a preview to GitHub Pages (enable once under Settings → Pages → Source: GitHub
-Actions). Publishing to pk.lv is set up at launch; see the launch checklist in the spec.
+Pushes to `main` publish a preview to GitHub Pages: <https://robertsst.github.io/pk-homepage/>.
+
+Publishing to pk.lv is the `Deploy` workflow (Actions → Deploy → Run workflow). It builds the site and
+uploads it over FTPS into the folder of the FTP account named in the repository's secrets; the comment at
+the top of [.github/workflows/deploy.yml](.github/workflows/deploy.yml) lists the settings it needs. For
+now it is started by hand. The steps to launch are in the spec under "Publishing to pk.lv".

@@ -1,0 +1,110 @@
+name: Deploy
+
+# Builds the site and uploads it to the hosting at nano.lv over FTPS.
+#
+# For now it runs only when started by hand: Actions → Deploy → Run workflow.
+# It needs, under Settings → Secrets and variables → Actions:
+#
+#   secrets    FTP_SERVER      the server's own name, if17.nano.lv (its
+#                              certificate is issued for that name, not pk.lv)
+#              FTP_USERNAME    an FTP account whose folder is the folder to fill
+#              FTP_PASSWORD
+#   variable   DEPLOY_BASE_PATH   the address of that folder on pk.lv: /jauna/
+#                                 for the trial folder, / for the site itself
+#
+# The upload goes to the FTP account's own folder and nowhere else, so the
+# account decides what a run can touch. A file on the server that this
+# workflow did not put there is left alone.
+on:
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: Only list what would be uploaded or deleted; change nothing
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+env:
+  SITE_URL: https://pk.lv
+  # No default on purpose: a build for the wrong address must not be uploaded.
+  BASE_PATH: ${{ vars.DEPLOY_BASE_PATH }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check the settings this workflow needs
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          for name in FTP_SERVER FTP_USERNAME FTP_PASSWORD; do
+            if [ -z "${!name}" ]; then
+              echo "::error::The secret $name is not set. Add it under Settings → Secrets and variables → Actions."
+              exit 1
+            fi
+          done
+          case "$BASE_PATH" in
+            /|/*/) ;;
+            "")
+              echo "::error::The variable DEPLOY_BASE_PATH is not set. Add it under Settings → Secrets and variables → Actions → Variables: /jauna/ for the trial folder, / for the site itself."
+              exit 1
+              ;;
+            *)
+              echo "::error::DEPLOY_BASE_PATH is \"$BASE_PATH\"; it must begin and end with a slash, like /jauna/ or /."
+              exit 1
+              ;;
+          esac
+
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build for ${{ env.SITE_URL }}${{ env.BASE_PATH }}
+        run: npm run build
+
+      # A third-party action that is given the FTP password, so it is pinned to
+      # the exact commit of its release rather than to a tag that could move.
+      - name: Upload over FTPS
+        uses: SamKirkland/FTP-Deploy-Action@110f9186c050f71550953127052e77650219c287 # v4.4.0
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          security: strict
+          local-dir: ./dist/
+          server-dir: ./
+          dry-run: ${{ inputs.dry-run }}
+
+      # Asks the web server for the stylesheet of this very build. Its name
+      # changes with every build, so an answer proves that the folder the files
+      # went to is the one served at this address. A wrong folder for the FTP
+      # account, or a wrong DEPLOY_BASE_PATH, shows up here.
+      - name: Check that this build is what the address now serves
+        if: ${{ !inputs.dry-run }}
+        run: |
+          stylesheet="$(grep -o '/[^"]*/_astro/[^"]*\.css\|/_astro/[^"]*\.css' dist/index.html | head -n 1)"
+          address="${SITE_URL}${stylesheet}"
+          for attempt in 1 2 3; do
+            if curl --fail --silent --show-error --max-time 20 --output /dev/null "$address"; then
+              echo "This build is live at ${SITE_URL}${BASE_PATH}"
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "::error::Uploaded, but $address is not there. Check that the FTP account's folder is the folder served at ${SITE_URL}${BASE_PATH}"
+          exit 1
