@@ -1,6 +1,15 @@
 import { expect, test } from '@playwright/test';
 import { PAGES } from './pages';
 
+test('the icons and other files named in the page head exist', async ({ page, request }) => {
+  await page.goto('/');
+  const hrefs = await page
+    .locator('link[rel~="icon"], link[rel="apple-touch-icon"], link[rel="preload"], link[rel="stylesheet"]')
+    .evaluateAll((links) => links.map((link) => (link as HTMLLinkElement).href));
+  expect(hrefs.length).toBeGreaterThanOrEqual(6);
+  for (const href of hrefs) expect((await request.get(href)).ok(), href).toBe(true);
+});
+
 test('an address of the old WordPress site leads to the new page', async ({ page }) => {
   await page.goto('/WordPress/lettonia/');
   await expect(page).toHaveURL(/\/studentu-korporacijas\/lettonia\/$/);

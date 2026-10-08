@@ -15,6 +15,13 @@ Read [docs/spec.md](docs/spec.md) first: it holds the decisions, the milestones 
   `https://api.github.com/repos/RobertsSt/pk-homepage/actions/runs?branch=<branch>`.
 - Never put anything from the hosting (FTP name, password, folder listing) into the repository. The
   `Deploy` workflow reads them from GitHub secrets; see the comment at its top.
+- Everything that passes CI on `main` is published by `Deploy` without anyone pressing a button: a merge,
+  an edit saved in the editing tool, the nightly run. So `main` is the live site; do not merge what is
+  not meant to be seen.
+- `.htaccess` and `robots.txt` are written by the build (`astro.config.mjs`), not kept in `public/`,
+  because they depend on the address the site is built for. A mistake in the rewrite rules can lock
+  visitors in a redirect loop: try a change in the trial folder first.
+- The tab and home-screen icons in `public/` are drawn from the crest by `npm run build:icons`.
 - Only one dev server can run per project. If Roberts already has one open (`npx astro dev status`), use
   it at http://localhost:4321 and never stop it. Otherwise `npx astro dev --background` starts one and
   `npx astro dev stop` ends it. `astro preview` also detaches; stop it with `npx astro preview stop`.

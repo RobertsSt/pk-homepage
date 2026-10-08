@@ -1,5 +1,6 @@
 // @ts-check
 import { readdirSync } from 'node:fs';
+import { writeFile } from 'node:fs/promises';
 import preact from '@astrojs/preact';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
@@ -49,6 +50,48 @@ const redirects = {
 };
 
 // https://astro.build/config
+/**
+ * Rules for the Apache server of the hosting, written into the site's folder
+ * as `.htaccess`. A host that is not Apache (the preview) ignores the file.
+ * @param {string} host
+ */
+const serverRules = (host) => `# Written by the build (astro.config.mjs). A change made on the server is
+# overwritten by the next upload; change it there instead.
+
+# The site's own "page not found" page instead of the hosting's.
+ErrorDocument 404 ${base}404.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # One address for every page: https://${host}. A request over plain http, or
+  # for www.${host} or another name the hosting answers to, is sent there. The
+  # folder .well-known is left alone: the hosting uses it to renew the
+  # certificate.
+  RewriteCond %{REQUEST_URI} !^/\\.well-known/
+  RewriteCond %{HTTPS} !=on [OR]
+  RewriteCond %{HTTP_HOST} !^${host.replaceAll('.', '\\.')}(:\\d+)?$ [NC]
+  RewriteRule ^ https://${host}%{REQUEST_URI} [R=301,L]
+</IfModule>
+`;
+
+/**
+ * Two files that sit beside the pages and depend on the address the site is
+ * built for, so they are written after each build: the server rules above, and
+ * robots.txt, which tells search engines where the list of pages is.
+ * @type {import('astro').AstroIntegration}
+ */
+const hostFiles = {
+  name: 'host-files',
+  hooks: {
+    'astro:build:done': async ({ dir }) => {
+      const sitemapUrl = new URL(`${base}sitemap-index.xml`, site);
+      await writeFile(new URL('.htaccess', dir), serverRules(new URL(site).host));
+      await writeFile(new URL('robots.txt', dir), `User-agent: *\nAllow: /\n\nSitemap: ${sitemapUrl}\n`);
+    },
+  },
+};
+
 export default defineConfig({
   site,
   base,
@@ -69,6 +112,7 @@ export default defineConfig({
     sitemap({
       i18n: { defaultLocale: 'lv', locales: { lv: 'lv-LV', en: 'en' } },
     }),
+    hostFiles,
   ],
   vite: {
     plugins: [tailwindcss()],
