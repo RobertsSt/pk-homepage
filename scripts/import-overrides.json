@@ -56,7 +56,13 @@
       "heraldry": {
         "arms": "../../assets/fraternities/latvia/arms-large.jpg"
       },
-      "cover": "../../assets/fraternities/latvia/cover.jpg"
+      "cover": {
+        "src": "../../assets/fraternities/latvia/cover.jpg",
+        "alt": {
+          "lv": "Koka paneļiem apdarināta telpa ar grāmatplauktiem, ādas krēsliem un kamīnu; pie sienas divi sakrustoti rapieri un sarkanbaltsarkani karogi",
+          "en": "A wood-panelled room with bookcases, leather armchairs and a fireplace; two crossed rapiers and red-white-red flags hang on the wall"
+        }
+      }
     },
     "ventonia": {
       "founded": "1917-11-21",
@@ -135,7 +141,13 @@
         "#9cbe12",
         "#c9a348"
       ],
-      "cover": "../../assets/fraternities/fraternitas-academica/cover.jpg"
+      "cover": {
+        "src": "../../assets/fraternities/fraternitas-academica/cover.jpg",
+        "alt": {
+          "lv": "Fraternitas Academica biedri tumšos mēteļos un deķeļos iet ierindā pa aleju, priekšgalā korporācijas karogs",
+          "en": "Members of Fraternitas Academica in dark coats and caps march in column along an avenue behind the fraternity’s flag"
+        }
+      }
     },
     "fraternitas-lataviensis": {
       "founded": "1926-09-16",
@@ -196,7 +208,13 @@
       "heraldry": {
         "zirkel": "../../assets/fraternities/fraternitas-imantica/zirkel-large.png"
       },
-      "cover": "../../assets/fraternities/fraternitas-imantica/cover.jpg"
+      "cover": {
+        "src": "../../assets/fraternities/fraternitas-imantica/cover.jpg",
+        "alt": {
+          "lv": "Septiņi Fraternitas Imantica biedri sarkanos deķeļos, daļa ar krāsu lentēm un rapieriem, korporācijas karoga priekšā",
+          "en": "Seven members of Fraternitas Imantica in red caps, some with colour sashes and rapiers, in front of the fraternity’s flag"
+        }
+      }
     },
     "gersicania": {
       "founded": "1947-03-14",
@@ -233,7 +251,13 @@
       "heraldry": {
         "arms": "../../assets/fraternities/fraternitas-vanenica/arms-large.jpg"
       },
-      "cover": "../../assets/fraternities/fraternitas-vanenica/cover.jpg"
+      "cover": {
+        "src": "../../assets/fraternities/fraternitas-vanenica/cover.jpg",
+        "alt": {
+          "lv": "Fraternitas Vanenica biedri tumšos mēteļos stāv pie korporācijas karoga atceres brīdī brīvā dabā, deķeļus noņēmuši",
+          "en": "Members of Fraternitas Vanenica in dark coats stand beside the fraternity’s flag at an outdoor commemoration, caps in hand"
+        }
+      }
     },
     "lettonia": {
       "founded": "1870-02-19",
@@ -243,10 +267,28 @@
         "#0e1b77",
         "#c9a348"
       ],
-      "cover": "../../assets/fraternities/lettonia/cover.jpg",
+      "cover": {
+        "src": "../../assets/fraternities/lettonia/cover.jpg",
+        "alt": {
+          "lv": "Vairāki desmiti Lettonia biedru zaļos deķeļos un krāsu lentēs kopbildē zem korporācijas vapeņa un karogiem",
+          "en": "Several dozen members of Lettonia in green caps and colour sashes, gathered for a group photograph beneath the fraternity’s coat of arms and flags"
+        }
+      },
       "photos": [
-        "../../assets/fraternities/lettonia/extra-1.jpg",
-        "../../assets/fraternities/lettonia/extra-2.jpg"
+        {
+          "src": "../../assets/fraternities/lettonia/extra-1.jpg",
+          "alt": {
+            "lv": "Pāri vakartērpos iet gājienā pa balles zāli; kungi frakās un zaļos deķeļos",
+            "en": "Couples in evening dress walk in procession through a ballroom; the men wear tailcoats and green caps"
+          }
+        },
+        {
+          "src": "../../assets/fraternities/lettonia/extra-2.jpg",
+          "alt": {
+            "lv": "Balles viesi vakartērpos; priekšplānā sirmi kungi zaļos deķeļos kopā ar dāmām",
+            "en": "Guests in evening dress at a ball; in front, grey-haired gentlemen in green caps with their partners"
+          }
+        }
       ]
     },
     "talavija": {
@@ -281,5 +323,17 @@
         "Dibināšanas datums – 1917. gada 21. novembris"
       ]
     ]
+  },
+  "imageAlts": {
+    "fraternities/beveronija/photo-1.jpg": "Beveronijas biedri violetos deķeļos un krāsu lentēs ar korporācijas karogu pieminekļa pakājē",
+    "fraternities/beveronija/photo-2.jpg": "Septiņi vīrieši violetos sporta kreklos ar futbola bumbām basketbola laukumā",
+    "fraternities/beveronija/photo-3.jpg": "Vēsturiska melnbalta kopbilde: vairāki desmiti korporācijas biedru deķeļos, priekšējā rindā sēdošie ar krāsu lentēm",
+    "fraternities/selonija/photo-1.jpg": "Liels Selonijas biedru pulks uz kāpnēm parkā zem korporācijas karoga; priekšējā rindā trīs biedri ar krāsu lentēm",
+    "fraternities/selonija/photo-2.jpg": "Pāri vakartērpos dejo balles zālē ar balkoniem",
+    "fraternities/selonija/photo-3.jpg": "Vēsturiska melnbalta kopbilde: vairāki simti korporācijas biedru divstāvu nama priekšā",
+    "fraternities/vendia/photo-1.jpg": "Vendijas biedri mēteļos un zaļos deķeļos uz kāpnēm ar korporācijas karogu; priekšā trīs biedri ar krāsu lentēm",
+    "fraternities/vendia/photo-2.jpg": "Ap piecpadsmit Vendijas biedru kreklos un zaļos deķeļos ar glāzēm rokās uz ķieģeļu ēkas terases",
+    "fraternities/vendia/photo-3.jpg": "Vēsturiska lapa ar uzrakstu «1927. g. 20. martā. Vendias dibinātāji» un dibinātāju portretiem ovālos",
+    "fraternities/fraternitas-lettica/photo-1.jpg": "Fraternitas Lettica biedri zilos deķeļos gara ierindā ar korporācijas karogu pie akmens pieminekļa"
   }
 }

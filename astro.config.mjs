@@ -1,9 +1,9 @@
 // @ts-check
 import { readdirSync } from 'node:fs';
-import react from '@astrojs/react';
+import preact from '@astrojs/preact';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
-import { defineConfig } from 'astro/config';
+import { defineConfig, sharpImageService } from 'astro/config';
 
 // The same code builds for pk.lv (served from the domain root) and for a
 // preview hosted under a sub-path; the two differ only in these variables.
@@ -59,8 +59,13 @@ export default defineConfig({
     defaultLocale: 'lv',
     routing: { prefixDefaultLocale: false },
   },
+  image: {
+    // Transparent images (the crest above all) may lose a little precision in
+    // their transparency; left exact, the crest alone weighs twice as much.
+    service: sharpImageService({ webp: { alphaQuality: 50 } }),
+  },
   integrations: [
-    react(),
+    preact(),
     sitemap({
       i18n: { defaultLocale: 'lv', locales: { lv: 'lv-LV', en: 'en' } },
     }),

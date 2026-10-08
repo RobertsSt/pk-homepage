@@ -1,10 +1,12 @@
 ---
 import '@/styles/global.css';
 import { getImage, Image } from 'astro:assets';
+import sansFont from '@/assets/fonts/instrument-sans.woff2?url';
+import displayFont from '@/assets/fonts/newsreader-400.woff2?url';
 import sharePhoto from '@/assets/site/btk-2023.jpg';
 import crest from '@/assets/site/crest-ink.png';
 import { navigation } from '@/data/navigation';
-import { locales, type Locale } from '@/i18n/config';
+import { localeNames, locales, type Locale } from '@/i18n/config';
 import { useTranslations } from '@/i18n/ui';
 import { localizedUrl } from '@/i18n/urls';
 import { creditsUrl, homeUrl, pageUrl } from '@/lib/routes';
@@ -16,9 +18,11 @@ interface Props {
   /** Page title; the site name is appended. Omit on the homepage. */
   title?: string;
   description?: string;
+  /** False for a page that has no address of its own: the "not found" page. */
+  indexable?: boolean;
 }
 
-const { locale, path = '', title, description } = Astro.props;
+const { locale, path = '', title, description, indexable = true } = Astro.props;
 const t = useTranslations(locale);
 
 const fullTitle = title ? `${title} — P!K!` : t('site.title');
@@ -47,12 +51,18 @@ const isPreview = import.meta.env.BASE_URL !== '/';
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={new URL(share.src, Astro.site)} />
     <meta name="twitter:card" content="summary_large_image" />
-    {isPreview && <meta name="robots" content="noindex" />}
-    <link rel="canonical" href={canonical} />
-    {locales.map((code) => (
-      <link rel="alternate" hreflang={code} href={new URL(localizedUrl(code, path), Astro.site)} />
-    ))}
+    {(isPreview || !indexable) && <meta name="robots" content="noindex" />}
+    {indexable && <link rel="canonical" href={canonical} />}
+    {indexable &&
+      locales.map((code) => (
+        <link rel="alternate" hreflang={code} href={new URL(localizedUrl(code, path), Astro.site)} />
+      ))}
     <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
+    {/* The two fonts every page opens with, fetched alongside the stylesheet
+         instead of after it. A font is always requested as cross-origin. */}
+    <link rel="preload" as="font" type="font/woff2" href={displayFont} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={sansFont} crossorigin />
+    <slot name="head" />
     <script is:inline>
       // `js` lets the stylesheet hide content that will animate in. If the page
       // script then never starts (it failed to load), take the class away again
@@ -69,28 +79,35 @@ const isPreview = import.meta.env.BASE_URL !== '/';
       {t('nav.skip')}
     </a>
 
-    <header class="border-rule/70 bg-paper/90 sticky top-0 z-40 border-b backdrop-blur-md">
-      <div class="shell flex items-center justify-between gap-6 py-2.5">
-        <a href={homeUrl(locale)} class="flex items-center gap-3" aria-label={t('site.title')}>
-          <Image src={crest} alt="" width={44} class="h-11 w-auto" loading="eager" />
-          <span class="font-display text-[1.7rem] leading-none tracking-tight">P!K!</span>
+    <header class="site-header border-rule/70 bg-paper/90 sticky top-0 z-40 border-b backdrop-blur-md">
+      <div class="shell flex items-center justify-between gap-4 py-2.5 sm:gap-6">
+        <a href={homeUrl(locale)} class="flex flex-none items-center gap-3" aria-label={t('site.title')}>
+          <Image src={crest} alt="" width={44} densities={[1, 2, 3]} class="h-11 w-auto" loading="eager" />
+          {/* On the narrowest phones the crest alone is the way home. */}
+          <span class="font-display hidden text-[1.7rem] leading-none tracking-tight min-[22.5rem]:inline">
+            P!K!
+          </span>
         </a>
 
-        <nav aria-label={t('nav.menu')} class="hidden lg:block">
+        <nav aria-label={t('nav.menu')} class="hidden lg:block" data-menu-bar>
           <ul class="flex items-center gap-9 text-[0.84rem] font-medium tracking-[0.03em]">
-            {navigation.map((group) => (
-              <li class="group relative">
-                <button type="button" class="flex items-center gap-1.5 py-3" aria-haspopup="true">
+            {navigation.map((group, index) => (
+              <li class="menu-group relative">
+                <button
+                  type="button"
+                  class="flex items-center gap-1.5 py-3"
+                  aria-expanded="false"
+                  aria-controls={`menu-group-${index}`}
+                >
                   {group.label[locale]}
-                  <svg
-                    viewBox="0 0 10 6"
-                    class="h-1.5 w-2.5 transition-transform group-focus-within:rotate-180 group-hover:rotate-180"
-                    aria-hidden="true"
-                  >
-                    <path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4" />
+                  <svg viewBox="0 0 10 6" class="h-1.5 w-2.5" aria-hidden="true">
+                    <path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4"></path>
                   </svg>
                 </button>
-                <ul class="border-rule bg-paper invisible absolute top-full left-1/2 w-64 -translate-x-1/2 translate-y-1 border p-2 opacity-0 shadow-[0_18px_40px_-18px_rgb(23_21_15/0.35)] transition duration-200 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+                <ul
+                  id={`menu-group-${index}`}
+                  class="menu-panel border-rule bg-paper absolute top-full left-1/2 w-64 border p-2 shadow-[0_18px_40px_-18px_rgb(23_21_15/0.35)]"
+                >
                   {group.links.map((link) => (
                     <li>
                       <a href={pageUrl(locale, link.page)} class="hover:bg-paper-deep block px-3 py-2.5">
@@ -104,33 +121,40 @@ const isPreview = import.meta.env.BASE_URL !== '/';
           </ul>
         </nav>
 
-        <div class="flex items-center gap-5">
-          <p
-            class="flex items-center gap-2 text-[0.78rem] font-semibold tracking-[0.14em]"
-            aria-label={t('nav.language')}
-          >
-            {locales.map((code, index) => (
-              <>
-                {index > 0 && (
-                  <span class="text-rule" aria-hidden="true">
-                    /
-                  </span>
-                )}
-                <a
-                  href={localizedUrl(code, path)}
-                  hreflang={code}
-                  lang={code}
-                  aria-current={code === locale ? 'true' : undefined}
-                  class:list={[code === locale ? 'text-ink' : 'text-ink-soft hover:text-ink']}
-                >
-                  {code.toUpperCase()}
-                </a>
-              </>
-            ))}
-          </p>
+        <div class="flex items-center gap-3">
+          <nav aria-label={t('nav.language')}>
+            <ul class="flex items-center text-[0.78rem] font-semibold tracking-[0.14em]">
+              {locales.map((code, index) => (
+                <li class="flex items-center">
+                  {index > 0 && (
+                    <span class="text-rule" aria-hidden="true">
+                      /
+                    </span>
+                  )}
+                  <a
+                    href={localizedUrl(code, path)}
+                    hreflang={code}
+                    lang={code}
+                    aria-current={code === locale ? 'true' : undefined}
+                    class:list={[
+                      'grid size-9 place-items-center',
+                      code === locale ? 'text-ink' : 'text-ink-soft hover:text-ink',
+                    ]}
+                  >
+                    <span>
+                      {code.toUpperCase()}
+                      <span class="sr-only">({localeNames[code]})</span>
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
           <button
             type="button"
             class="border-rule border px-3.5 py-2 text-[0.78rem] font-semibold tracking-[0.14em] uppercase lg:hidden"
+            aria-haspopup="dialog"
+            aria-controls="site-menu"
             data-menu-open
           >
             {t('nav.menu')}
@@ -141,7 +165,8 @@ const isPreview = import.meta.env.BASE_URL !== '/';
 
     <dialog
       id="site-menu"
-      class="bg-paper text-ink m-0 h-dvh max-h-none w-screen max-w-none overflow-y-auto p-0 backdrop:bg-transparent"
+      aria-label={t('nav.menu')}
+      class="bg-paper text-ink m-0 h-dvh max-h-none w-screen max-w-none overflow-y-auto overscroll-contain p-0 backdrop:bg-transparent"
     >
       <div class="shell flex items-center justify-between py-2.5">
         <a href={homeUrl(locale)} class="font-display text-[1.7rem] leading-none tracking-tight">
@@ -180,27 +205,29 @@ const isPreview = import.meta.env.BASE_URL !== '/';
     </main>
 
     <footer class="on-ink">
-      <div class="shell border-paper/15 grid gap-10 border-t py-14 sm:grid-cols-2 lg:grid-cols-[1.4fr_repeat(4,1fr)]">
+      <div class="shell border-paper/15 grid gap-10 border-t py-14 lg:grid-cols-[1.4fr_4fr]">
         <div>
-          <Image src={crest} alt="" width={96} class="h-24 w-auto opacity-90 invert" />
+          <Image src={crest} alt="" width={96} densities={[1, 2]} class="h-24 w-auto opacity-90 invert" />
           <p class="font-display mt-4 text-xl">{t('site.name')}</p>
         </div>
-        {navigation.map((group) => (
-          <div>
-            <h2 class="text-brass text-[0.7rem] font-semibold tracking-[0.22em] uppercase">
-              {group.label[locale]}
-            </h2>
-            <ul class="text-paper/70 mt-4 space-y-2.5 text-sm">
-              {group.links.map((link) => (
-                <li>
-                  <a href={pageUrl(locale, link.page)} class="hover:text-paper">
-                    {link.label[locale]}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+        <nav aria-label={t('nav.footer')} class="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+          {navigation.map((group) => (
+            <div>
+              <h2 class="text-brass text-[0.7rem] font-semibold tracking-[0.22em] uppercase">
+                {group.label[locale]}
+              </h2>
+              <ul class="text-paper/70 mt-4 space-y-2.5 text-sm">
+                {group.links.map((link) => (
+                  <li>
+                    <a href={pageUrl(locale, link.page)} class="hover:text-paper">
+                      {link.label[locale]}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </nav>
       </div>
       <div class="shell border-paper/15 text-paper/60 flex flex-wrap justify-between gap-x-8 gap-y-2 border-t py-6 text-sm">
         <p>
@@ -216,12 +243,10 @@ const isPreview = import.meta.env.BASE_URL !== '/';
 
     <script>
       import '@/scripts/motion';
+      import { initMenuBar, initMobileMenu } from '@/scripts/menu';
 
-      const menu = document.querySelector<HTMLDialogElement>('#site-menu');
-      document.querySelector('[data-menu-open]')?.addEventListener('click', () => menu?.showModal());
-      menu?.addEventListener('click', (event) => {
-        if ((event.target as HTMLElement).closest('[data-menu-close], a')) menu.close();
-      });
+      initMenuBar();
+      initMobileMenu();
     </script>
   </body>
 </html>

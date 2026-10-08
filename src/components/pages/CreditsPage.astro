@@ -21,12 +21,12 @@ const cell = 'border-rule border-b py-3.5 pr-6 align-top';
 
 <Layout locale={locale} path={CREDITS_SLUG} title={t('credits.title')} description={t('credits.intro')}>
   <PageHeader title={t('credits.title')} kicker={t('site.name')}>
-    <p class="text-ink-soft mt-8 max-w-2xl text-lg leading-relaxed" data-reveal>
+    <p class="text-ink-soft mt-8 max-w-2xl text-lg leading-relaxed" data-enter style="--reveal-order:3">
       {t('credits.intro')}
     </p>
   </PageHeader>
 
-  <div class="shell overflow-x-auto pb-24 lg:pb-36" data-reveal>
+  <div class="shell overflow-x-auto pb-24 lg:pb-36" data-enter style="--reveal-order:4">
     <table class="w-full min-w-[44rem] border-collapse text-left text-[0.95rem]">
       <thead>
         <tr class="text-ink-soft text-[0.7rem] tracking-[0.2em] uppercase">
@@ -59,6 +59,7 @@ const cell = 'border-rule border-b py-3.5 pr-6 align-top';
             <td class={cell}>
               <a href={credit.source} class="link" target="_blank" rel="noreferrer">
                 {credit.host ?? displayHost(credit.source)}
+                <span class="sr-only"> ({t('a11y.newTab')})</span>
               </a>
             </td>
           </tr>

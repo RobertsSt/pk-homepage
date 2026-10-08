@@ -1,6 +1,6 @@
 import type { Locale } from '@/i18n/config';
 import type { UiKey } from '@/i18n/ui';
-import { dateOf } from './dates';
+import { dateOf } from './dates.ts';
 import type { CalendarEvent } from './types';
 
 type Strings = Record<UiKey, string>;
@@ -10,6 +10,13 @@ export function formatYears(years: number, locale: Locale): string {
   if (locale === 'en') return `${years} ${years === 1 ? 'year' : 'years'}`;
   const singular = years % 10 === 1 && years % 100 !== 11;
   return `${years} ${singular ? 'gads' : 'gadi'}`;
+}
+
+/** "3 notikumi" / "21 notikums" / "3 events", by the same rule as the years. */
+export function formatEventCount(count: number, locale: Locale): string {
+  if (locale === 'en') return `${count} ${count === 1 ? 'event' : 'events'}`;
+  const singular = count % 10 === 1 && count % 100 !== 11;
+  return `${count} ${singular ? 'notikums' : 'notikumi'}`;
 }
 
 /**

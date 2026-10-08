@@ -14,7 +14,11 @@ colors:
   - "#1c1c22"
   - "#9cbe12"
   - "#c9a348"
-cover: ../../assets/fraternities/fraternitas-academica/cover.jpg
+cover:
+  src: ../../assets/fraternities/fraternitas-academica/cover.jpg
+  alt:
+    lv: Fraternitas Academica biedri tumšos mēteļos un deķeļos iet ierindā pa aleju, priekšgalā korporācijas karogs
+    en: Members of Fraternitas Academica in dark coats and caps march in column along an avenue behind the fraternity’s flag
 heraldry:
   shield: ../../assets/fraternities/fraternitas-academica/shield.jpg
   arms: ../../assets/fraternities/fraternitas-academica/arms.jpg

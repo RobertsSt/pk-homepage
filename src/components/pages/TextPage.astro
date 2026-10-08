@@ -40,7 +40,13 @@ const title = translated ? entry.data.title : (place?.link.label[locale] ?? entr
           {t('page.untranslated')}
         </p>
       )}
-      <div class="prose max-w-[42rem]" lang={translated ? undefined : 'lv'} data-reveal>
+      {/* The article is what the page is for, so it does not wait for a script to appear. */}
+      <div
+        class="prose max-w-[42rem]"
+        lang={translated ? undefined : 'lv'}
+        data-enter
+        style="--reveal-order:2"
+      >
         <Content />
       </div>
     </article>

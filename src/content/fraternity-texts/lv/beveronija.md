@@ -4,7 +4,7 @@ wpModified: 2024-12-04T21:46:41
 
 ## Par Beveroniju
 
-![](../../../assets/fraternities/beveronija/photo-1.jpg)
+![Beveronijas biedri violetos deķeļos un krāsu lentēs ar korporācijas karogu pieminekļa pakājē](../../../assets/fraternities/beveronija/photo-1.jpg)
 
 Dibināšanas datumi:
 
@@ -18,13 +18,13 @@ Aktīvo biedru skaits – 75
 
 ## Aizraušanās
 
-![](../../../assets/fraternities/beveronija/photo-2.jpg)
+![Septiņi vīrieši violetos sporta kreklos ar futbola bumbām basketbola laukumā](../../../assets/fraternities/beveronija/photo-2.jpg)
 
 Beveroņi regulāri nodarbojas ar tādu komandas sporta veidu spēlēšanu kā volejbols, basketbols un futbols, kuplā skaitā piedalās buršu rīkotos zoles turnīros, kā arī aktīvi iesaistās dienestā Zemessardzē.
 
 ## Vēsture
 
-![](../../../assets/fraternities/beveronija/photo-3.jpg)
+![Vēsturiska melnbalta kopbilde: vairāki desmiti korporācijas biedru deķeļos, priekšējā rindā sēdošie ar krāsu lentēm](../../../assets/fraternities/beveronija/photo-3.jpg)
 
 Korporācijas Beveronijas dibināšana cieši saistīta ar vienreizēju latviešu nacionālās dzīves uzplaukumu, kas sekoja Latvijas brīvības cīņām. Jaunās latviešu korporācijas dibināšanu sekmēja nacionālā sajūsma un garīgie centieni, kuru ietekmē veidojās akadēmiskā dzīve neatkarīgās Latvijas valsts un toreizējās Latvijas augstskolas pirmajos gados. Beveronijas dibinātāji bija 16 imatrikulēti Latvijas augstskolas studenti no astoņām dažādām fakultātēm.
 

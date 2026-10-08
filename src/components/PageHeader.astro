@@ -13,13 +13,13 @@ const { title, kicker } = Astro.props;
 
 <header class="shell pt-14 pb-12 lg:pt-20 lg:pb-16">
   {kicker && (
-    <p class="kicker" data-reveal>
+    <p class="kicker" data-enter>
       {kicker}
     </p>
   )}
   <h1
     class="font-display mt-6 max-w-5xl text-[clamp(2.8rem,7.2vw,6.25rem)] leading-[0.95] font-normal tracking-[-0.028em]"
-    data-reveal="lines"
+    data-enter="lines"
   >
     <span class="line-mask">
       <span>{title}</span>

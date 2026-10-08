@@ -15,7 +15,7 @@ export default defineConfig(
   ...astro.configs['flat/recommended'],
   ...astro.configs['flat/jsx-a11y-recommended'],
 
-  // The same accessibility checks for React components.
+  // The same accessibility checks for Preact components.
   { files: ['**/*.tsx'], ...jsxA11y.configs.recommended },
 
   {
@@ -28,9 +28,9 @@ export default defineConfig(
     },
   },
 
-  // Build and import scripts run in Node, not in the browser.
+  // Build, import and test-server scripts run in Node, not in the browser.
   {
-    files: ['scripts/**', '*.config.{js,mjs}'],
+    files: ['scripts/**', 'tests/serve.mjs', '*.config.{js,mjs}'],
     languageOptions: {
       globals: {
         console: 'readonly',

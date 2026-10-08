@@ -4,7 +4,7 @@ wpModified: 2025-04-07T17:34:58
 
 ## Par Seloniju
 
-![](../../../assets/fraternities/selonija/photo-1.jpg)
+![Liels Selonijas biedru pulks uz kāpnēm parkā zem korporācijas karoga; priekšējā rindā trīs biedri ar krāsu lentēm](../../../assets/fraternities/selonija/photo-1.jpg)
 
 2022\. gada 18. novembris
 
@@ -15,7 +15,7 @@ Aktīvo biedru skaits – 308
 
 ## Aizraušanās
 
-![](../../../assets/fraternities/selonija/photo-2.jpg)
+![Pāri vakartērpos dejo balles zālē ar balkoniem](../../../assets/fraternities/selonija/photo-2.jpg)
 
 Sēļiem ik nedēļu norisinās dažādas aktivitātes – paukošanas nodarbības, basketbola un futbola treniņi, balles deju stundas. Aktīvi darbojas Selonijas skriešanas, velobraukšanas un šaha klubi, savukārt vasarā – jahtu klubs. Papildus tam sēļi pievēršas iespaidīgiem solo izaicinājumiem, piemēram, uzkāpj Everestā, pārslēpo Antarktīdu vai apskrien Montblānu.
 
@@ -23,7 +23,7 @@ Sēļiem ik nedēļu norisinās dažādas aktivitātes – paukošanas nodarbīb
 
 ## Vēsture
 
-![](../../../assets/fraternities/selonija/photo-3.jpg)
+![Vēsturiska melnbalta kopbilde: vairāki simti korporācijas biedru divstāvu nama priekšā](../../../assets/fraternities/selonija/photo-3.jpg)
 
 50 gadu dibināšanas komeršs, Stabu ielā, 1930. gads.
 

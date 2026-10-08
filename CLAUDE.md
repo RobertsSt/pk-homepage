@@ -1,11 +1,14 @@
 # pk-homepage
 
-Static site for P!K! (pk.lv): Astro 7, Tailwind 4, React 19 for the calendar only, Latvian and English.
+Static site for P!K! (pk.lv): Astro 7, Tailwind 4, Preact for the calendar only, Latvian and English.
 Read [docs/spec.md](docs/spec.md) first: it holds the decisions, the milestones and the open questions.
 
 ## Commands
 
-- `npm run verify` runs format check, lint, type check, tests and build. Run it before calling work done.
+- `npm run verify` runs format check, lint, type check, unit tests, build and browser tests. Run it before
+  calling work done. The browser tests need `npx playwright install chromium webkit` once per machine.
+- `npm run test:browser` runs only the browser tests, against `dist/`; build first. They start their own
+  server on port 4173 and do not touch the dev server.
 - Only one dev server can run per project. If Roberts already has one open (`npx astro dev status`), use
   it at http://localhost:4321 and never stop it. Otherwise `npx astro dev --background` starts one and
   `npx astro dev stop` ends it. `astro preview` also detaches; stop it with `npx astro preview stop`.
@@ -13,6 +16,10 @@ Read [docs/spec.md](docs/spec.md) first: it holds the decisions, the milestones 
   scripts return 504. Saving `astro.config.mjs` restarts it; a real edit to `src/content.config.ts` makes
   it re-read the schema.
 - `npm run import:wordpress` re-imports Latvian content from the live WordPress site.
+- `npm run build:fonts` rebuilds `src/assets/fonts` from the pinned sources. Needed only when the list of
+  characters in `scripts/build-fonts.mjs` or the fonts change.
+- Optimised images are cached in `node_modules/.astro/assets`, and the cache does not notice a change to
+  the image options in `astro.config.mjs`. Delete that folder after changing them.
 
 ## Conventions
 
@@ -29,8 +36,19 @@ Read [docs/spec.md](docs/spec.md) first: it holds the decisions, the milestones 
 - `src/lib/calendar/feed.ts` is server-only. Client components import types and `dates.ts`/`labels.ts` only.
 - An image from outside WordPress needs an entry in `src/data/image-credits.json` (source, author,
   licence), and a path in `scripts/import-overrides.json` if it replaces an imported one.
-- Hidden states for scroll reveals hang off the `js` class and `data-reveal`; see `src/styles/motion.css`.
-  Do not hide content any other way, or the watchdog in `Layout.astro` cannot rescue it.
+- Content arrives in one of two ways; see `src/styles/motion.css`. What is on screen when a page opens
+  (hero, page header, the article of a text page) takes `data-enter`, a plain CSS animation that needs no
+  script. Everything further down takes `data-reveal`, which the page script shows on scroll. Do not hide
+  content any other way, or the watchdog in `Layout.astro` cannot rescue it, and never make a reveal wait
+  for a share of the element's own height: that left long articles invisible once.
+- A new kind of page goes into `tests/pages.ts`, so the visibility and accessibility tests cover it.
+- Accessibility target is WCAG 2.2 AA. A sign used as an icon (→, ↗) is wrapped in `aria-hidden`; a link
+  that opens a new tab says so in an `sr-only` span; every photograph has a description (`alt`), which for
+  imported content lives in `scripts/import-overrides.json`.
+- The calendar is a Preact component: hooks come from `preact/hooks`, markup uses `class`, and SVG
+  attributes are written as in SVG (`stroke-width`). Its month is an ARIA grid with one tab stop.
+- The fonts hold only the letters listed in `scripts/build-fonts.mjs`. Any other character still shows,
+  but in a system font.
 - The seal lettering on the homepage is spaced by a script, not by `textLength`: Safari ignores
   `textLength` for text on a path. Check WebKit as well as Chromium when touching SVG text.
 

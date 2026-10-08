@@ -3,14 +3,12 @@
  * strong colour comes from the fraternities' own tricolours.
  */
 @import 'tailwindcss';
-@import '@fontsource-variable/newsreader/opsz.css';
-@import '@fontsource-variable/newsreader/opsz-italic.css';
-@import '@fontsource-variable/instrument-sans';
+@import './fonts.css';
 @import './motion.css';
 
 @theme {
-  --font-display: 'Newsreader Variable', 'Iowan Old Style', Georgia, serif;
-  --font-sans: 'Instrument Sans Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Newsreader', 'Newsreader Fallback', 'Iowan Old Style', Georgia, serif;
+  --font-sans: 'Instrument Sans', 'Instrument Sans Fallback', ui-sans-serif, system-ui, sans-serif;
 
   --color-paper: #f5f1e8;
   --color-paper-deep: #ebe5d7;
@@ -42,6 +40,27 @@
   :focus-visible {
     outline: 2px solid var(--color-wine);
     outline-offset: 3px;
+  }
+
+  /* A long name on a narrow screen breaks rather than running off the page. */
+  h1,
+  h2,
+  h3 {
+    overflow-wrap: break-word;
+  }
+
+  /*
+   * On a very short window (a phone on its side, or a page zoomed far in) a
+   * header that stays in view would cover too much of the content.
+   */
+  @media (height < 30rem) {
+    html {
+      scroll-padding-top: 0;
+    }
+
+    .site-header {
+      position: static;
+    }
   }
 }
 
@@ -173,6 +192,75 @@
     }
   }
 
+  /*
+   * A group of the main menu: a button and the list of links it discloses.
+   * The page script opens and closes the list (src/scripts/menu.ts); a mouse
+   * pointer over the group opens it from here. Without the script, keyboard
+   * focus opens it instead.
+   */
+  .menu-panel {
+    visibility: hidden;
+    opacity: 0;
+    translate: -50% 0.25rem;
+    /* Hidden only once it has faded out; shown, and reachable by Tab, at once. */
+    transition:
+      opacity 0.2s,
+      translate 0.2s,
+      visibility 0s 0.2s;
+  }
+
+  .menu-group > button svg {
+    transition: rotate 0.2s;
+  }
+
+  .menu-group > button[aria-expanded='true'] + .menu-panel,
+  html:not(.js) .menu-group:focus-within > .menu-panel {
+    visibility: visible;
+    opacity: 1;
+    translate: -50% 0;
+    transition-delay: 0s;
+  }
+
+  .menu-group > button[aria-expanded='true'] svg {
+    rotate: 180deg;
+  }
+
+  /* `data-dismissed` is set when Escape closes a list the pointer is still over. */
+  @media (hover: hover) {
+    .menu-group:not([data-dismissed]):hover > .menu-panel {
+      visibility: visible;
+      opacity: 1;
+      translate: -50% 0;
+      transition-delay: 0s;
+    }
+
+    .menu-group:not([data-dismissed]):hover > button svg {
+      rotate: 180deg;
+    }
+  }
+
+  /* A small round button that holds a single sign. */
+  .icon-button {
+    display: grid;
+    width: 2.25rem;
+    height: 2.25rem;
+    place-items: center;
+    border: 1px solid var(--color-rule);
+    border-radius: 999px;
+    transition:
+      background-color 0.2s,
+      color 0.2s;
+
+    &:hover:not(:disabled) {
+      background: var(--color-ink);
+      color: var(--color-paper);
+    }
+
+    &:disabled {
+      opacity: 0.3;
+    }
+  }
+
   /* A thin outline set off behind a picture, down and to the right. */
   .framed {
     position: relative;
@@ -218,6 +306,40 @@
       animation: seal-turn 90s linear infinite;
       will-change: transform;
     }
+
+    &[data-paused] svg {
+      animation-play-state: paused;
+    }
+  }
+
+  /*
+   * Stops and restarts the turning. It sits in a corner of the square the ring
+   * is drawn in, where the ring leaves room. Hidden when nothing turns.
+   */
+  .seal-toggle {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    color: var(--color-ink-soft);
+
+    & svg {
+      width: 0.7rem;
+      height: 0.7rem;
+      fill: currentColor;
+    }
+
+    & .seal-toggle-play,
+    &[aria-pressed='true'] .seal-toggle-pause {
+      display: none;
+    }
+
+    &[aria-pressed='true'] .seal-toggle-play {
+      display: block;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      display: none;
+    }
   }
 
   /*
@@ -251,11 +373,16 @@
     }
   }
 
+  /*
+   * The name is part of the link and starts right under the shield, so the
+   * pointer can move onto it without the name going away.
+   */
   .shield-row-label {
     display: none;
     position: absolute;
-    top: calc(100% + 0.55rem);
+    top: 100%;
     left: 50%;
+    padding-top: 0.55rem;
     translate: -50% 0.35rem;
     font-size: 0.7rem;
     font-weight: 600;
@@ -315,6 +442,7 @@
     .shield-row li:is(:hover, :focus-within) .shield-row-label {
       translate: -50% 0;
       opacity: 1;
+      pointer-events: auto;
     }
 
     .shield-row li[data-edge]:is(:hover, :focus-within) .shield-row-label {
@@ -327,52 +455,33 @@
     animation-delay: calc(var(--i) * 40ms + 450ms);
   }
 
-  /* Calendar pieces rendered by the Calendar component. */
-  .cal-step {
-    display: grid;
-    width: 2.25rem;
-    height: 2.25rem;
-    place-items: center;
-    border: 1px solid var(--color-rule);
-    border-radius: 999px;
-    transition:
-      background-color 0.2s,
-      color 0.2s;
-
-    &:hover:not(:disabled) {
-      background: var(--color-ink);
-      color: var(--color-paper);
-    }
-
-    &:disabled {
-      opacity: 0.3;
-    }
-  }
-
+  /*
+   * Calendar pieces rendered by the Calendar component. A day is a table cell
+   * holding a button (the day number) and, for the eye, the day's events. The
+   * button is stretched over the cell, so the whole cell can be pressed.
+   */
   .cal-cell {
-    display: flex;
-    width: 100%;
-    min-height: 3.1rem;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.25rem;
+    position: relative;
+    height: 3.1rem;
     border-top: 1px solid var(--color-rule);
     padding: 0.35rem 0.15rem 0.45rem;
-    text-align: left;
+    text-align: center;
+    vertical-align: top;
     transition: background-color 0.2s;
 
     @media (width >= 48rem) {
-      min-height: 6rem;
-      align-items: stretch;
+      height: 6rem;
       padding: 0.45rem 0.4rem 0.6rem;
+      text-align: left;
     }
 
     &:hover {
       background: color-mix(in srgb, var(--color-paper-deep) 65%, transparent);
     }
 
+    /* Days of the neighbouring months: quieter, but still readable. */
     &[data-outside] {
-      color: color-mix(in srgb, var(--color-ink) 32%, transparent);
+      color: color-mix(in srgb, var(--color-ink) 65%, var(--color-paper));
     }
 
     &[data-selected] {
@@ -381,17 +490,34 @@
     }
   }
 
+  .cal-day {
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+    }
+
+    /* The focus ring belongs to the whole cell, not just to the number. */
+    &:focus-visible {
+      outline: none;
+
+      &::after {
+        outline: 2px solid var(--color-wine);
+        outline-offset: -2px;
+      }
+    }
+  }
+
   .cal-number {
     display: grid;
     width: 1.7rem;
     height: 1.7rem;
-    flex: none;
     place-items: center;
     border-radius: 999px;
     font-size: 0.85rem;
     font-variant-numeric: tabular-nums;
 
-    [data-today] > & {
+    [data-today] & {
       background: var(--color-ink);
       color: var(--color-paper);
     }
@@ -405,10 +531,12 @@
     display: none;
     position: relative;
     overflow: hidden;
+    margin-top: 0.25rem;
     padding-left: 0.5rem;
     color: var(--color-ink);
     font-size: 0.69rem;
     line-height: 1.25;
+    pointer-events: none;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
 
@@ -432,10 +560,27 @@
     }
   }
 
+  /* "+2": the events a cell has no room to name. */
+  .cal-more {
+    display: none;
+    margin-top: 0.25rem;
+    padding-left: 0.5rem;
+    color: var(--color-ink-soft);
+    font-size: 0.68rem;
+    pointer-events: none;
+
+    @media (width >= 48rem) {
+      display: block;
+    }
+  }
+
   /* On narrow screens there is no room for names, so each event is a dot. */
   .cal-dots {
     display: flex;
+    justify-content: center;
     gap: 3px;
+    margin-top: 0.25rem;
+    pointer-events: none;
 
     @media (width >= 48rem) {
       display: none;
@@ -611,6 +756,36 @@
       width: auto;
       height: 1px;
     }
+  }
+}
+
+/*
+ * High-contrast mode replaces background colours, which would erase the two
+ * calendar states that are shown by a background alone.
+ */
+@media (forced-colors: active) {
+  [data-today] .cal-number {
+    outline: 2px solid;
+  }
+
+  .cal-cell[data-selected] {
+    outline: 2px solid;
+    outline-offset: -2px;
+  }
+}
+
+/* On paper: no menus or controls, and nothing waits to be scrolled to. */
+@media print {
+  .site-header {
+    position: static;
+  }
+
+  .site-header nav,
+  .site-header button,
+  .skip-link,
+  .reading-progress,
+  .seal-toggle {
+    display: none;
   }
 }
 

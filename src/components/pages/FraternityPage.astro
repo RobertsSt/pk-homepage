@@ -67,30 +67,34 @@ const neighbours = [
 
     <header class="shell grid gap-10 pt-10 pb-14 lg:grid-cols-12 lg:pt-14 lg:pb-20">
       <div class="lg:col-span-8">
-        <p class="text-sm font-semibold" data-reveal>
+        <p class="text-sm font-semibold" data-enter>
           <a href={fraternitiesUrl(locale)} class="link">
-            ← {t('fraternity.all')}
+            <span aria-hidden="true">←</span> {t('fraternity.all')}
           </a>
         </p>
-        <p class="kicker mt-12" data-reveal>
+        <p class="kicker mt-12" data-enter>
           {data.membership === 'pk' ? t('fraternity.member') : t('fraternity.outside')}
           {data.membership === 'pk' && <span aria-hidden="true"> · {String(position).padStart(2, '0')}</span>}
         </p>
         <h1
           class="font-display mt-6 text-[clamp(2.8rem,8vw,7rem)] leading-[0.92] font-normal tracking-[-0.03em]"
-          data-reveal="lines"
+          data-enter="lines"
         >
           <span class="line-mask">
             <span>{data.name}</span>
           </span>
         </h1>
-        <ul class="font-display text-ink-soft mt-8 space-y-1 text-[1.45rem] leading-snug italic" data-reveal>
+        <ul
+          class="font-display text-ink-soft mt-8 space-y-1 text-[1.45rem] leading-snug italic"
+          data-enter
+          style="--reveal-order:4"
+        >
           {data.mottos.map((motto) => (
             <li>{motto}</li>
           ))}
         </ul>
       </div>
-      <div class="flex items-start lg:col-span-4 lg:justify-end" data-reveal>
+      <div class="flex items-start lg:col-span-4 lg:justify-end" data-enter style="--reveal-order:2">
         <Shield
           colors={data.colors}
           band={data.band}
@@ -105,11 +109,14 @@ const neighbours = [
       <figure class="shell pb-20 lg:pb-28" data-reveal="clip">
         <div class="framed mr-4">
           <div class="overflow-hidden">
+            {/* The largest thing near the top of the page, so it is fetched first. */}
             <Image
-              src={data.cover}
-              alt=""
+              src={data.cover.src}
+              alt={data.cover.alt[locale]}
               widths={[640, 1024, 1600, 2000]}
               sizes="(min-width: 88rem) 82rem, 92vw"
+              loading="eager"
+              fetchpriority="high"
               class="aspect-[16/9] w-full object-cover lg:aspect-[2/1]"
             />
           </div>
@@ -161,6 +168,7 @@ const neighbours = [
                     rel={fact.href.startsWith('http') ? 'noreferrer' : undefined}
                   >
                     {fact.value}
+                    {fact.href.startsWith('http') && <span class="sr-only"> ({t('a11y.newTab')})</span>}
                   </a>
                 ) : (
                   fact.value
@@ -186,7 +194,7 @@ const neighbours = [
         {hasCreditedImages && (
           <p class="text-ink-soft mt-12 text-sm">
             <a href={creditsUrl(locale)} class="link">
-              {t('credits.title')} →
+              {t('credits.title')} <span aria-hidden="true">→</span>
             </a>
           </p>
         )}
@@ -198,8 +206,8 @@ const neighbours = [
         {data.photos.map((photo) => (
           <div class="overflow-hidden" data-reveal="clip">
             <Image
-              src={photo}
-              alt=""
+              src={photo.src}
+              alt={photo.alt[locale]}
               widths={[480, 800, 1200]}
               sizes="(min-width: 40rem) 44vw, 92vw"
               class="aspect-[3/2] w-full object-cover transition duration-[1.2s] ease-out hover:scale-[1.03]"
@@ -209,7 +217,7 @@ const neighbours = [
       </section>
     )}
 
-    <nav class="border-rule border-t" aria-label={t('fraternities.title')}>
+    <nav class="border-rule border-t" aria-label={t('fraternity.neighbours')}>
       <div class="shell flex gap-6 py-10">
         {neighbours.map(
           ({ fraternity: other, label, arrow, align }) =>
@@ -222,7 +230,9 @@ const neighbours = [
                 />
                 <span>
                   <span class="text-ink-soft block text-[0.7rem] font-semibold tracking-[0.2em] uppercase">
-                    {arrow === '←' ? `${arrow} ${label}` : `${label} ${arrow}`}
+                    {arrow === '←' && <span aria-hidden="true">← </span>}
+                    {label}
+                    {arrow === '→' && <span aria-hidden="true"> →</span>}
                   </span>
                   <span class="font-display mt-1 block text-[1.5rem] leading-tight">{other.data.name}</span>
                 </span>

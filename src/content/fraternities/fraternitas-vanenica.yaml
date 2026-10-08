@@ -18,4 +18,8 @@ heraldry:
   zirkel: ../../assets/fraternities/fraternitas-vanenica/zirkel.jpg
   cap: ../../assets/fraternities/fraternitas-vanenica/cap.jpg
   star: ../../assets/fraternities/fraternitas-vanenica/star.jpg
-cover: ../../assets/fraternities/fraternitas-vanenica/cover.jpg
+cover:
+  src: ../../assets/fraternities/fraternitas-vanenica/cover.jpg
+  alt:
+    lv: Fraternitas Vanenica biedri tumšos mēteļos stāv pie korporācijas karoga atceres brīdī brīvā dabā, deķeļus noņēmuši
+    en: Members of Fraternitas Vanenica in dark coats stand beside the fraternity’s flag at an outdoor commemoration, caps in hand

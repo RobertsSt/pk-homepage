@@ -31,12 +31,12 @@ const copy = {
 
 <section class="shell grid items-center gap-12 pt-12 pb-12 lg:grid-cols-12 lg:gap-6 lg:pt-16 lg:pb-16">
   <div class="lg:col-span-7">
-    <p class="kicker" data-reveal>
+    <p class="kicker" data-enter>
       {page.tagline}
     </p>
     <h1
       class="font-display mt-7 text-[clamp(3.6rem,11.5vw,10.5rem)] leading-[0.84] font-normal tracking-[-0.035em]"
-      data-reveal="lines"
+      data-enter="lines"
     >
       <span class="line-mask">
         <span>{firstWord}</span>
@@ -47,26 +47,27 @@ const copy = {
         </span>
       </span>
     </h1>
-    <p class="mt-9 max-w-xl text-[1.3rem] leading-relaxed" data-reveal style="--reveal-order:4">
+    <p class="mt-9 max-w-xl text-[1.3rem] leading-relaxed" data-enter style="--reveal-order:4">
       {page.lead}
     </p>
     <p
       class="mt-9 flex flex-wrap gap-x-9 gap-y-3 text-[0.95rem] font-semibold"
-      data-reveal
+      data-enter
       style="--reveal-order:6"
     >
       <a href="#korporacijas" class="link">
-        {t('hero.fraternities')} ↓
+        {t('hero.fraternities')} <span aria-hidden="true">↓</span>
       </a>
       <a href="#kalendars" class="link">
-        {t('hero.calendar')} ↓
+        {t('hero.calendar')} <span aria-hidden="true">↓</span>
       </a>
     </p>
   </div>
 
-  <div class="lg:col-span-5" data-reveal style="--reveal-order:3">
+  {/* No delay here: this is the largest thing on the first screen. */}
+  <div class="lg:col-span-5" data-enter>
     <div class="relative mx-auto aspect-square w-full max-w-[34rem]">
-      <div class="seal absolute inset-0" aria-hidden="true">
+      <div class="seal absolute inset-0" aria-hidden="true" data-seal>
         <svg viewBox="0 0 400 400" class="text-ink/55 h-full w-full">
           <defs>
             <path id="seal-path" d="M200 200m-181 0a181 181 0 1 1 362 0a181 181 0 1 1-362 0"></path>
@@ -91,11 +92,28 @@ const copy = {
       <Image
         src={crest}
         alt={copy.crestAlt}
+        width={800}
         widths={[360, 560, 800]}
         sizes="(min-width: 64rem) 26rem, 70vw"
         loading="eager"
+        fetchpriority="high"
         class="absolute inset-[14%] h-[72%] w-[72%] object-contain"
       />
+      {/* Anything that keeps moving needs a way to stop it. */}
+      <button
+        type="button"
+        class="icon-button seal-toggle"
+        aria-pressed="false"
+        aria-label={t('hero.pauseSeal')}
+        data-seal-toggle
+      >
+        <svg viewBox="0 0 10 10" class="seal-toggle-pause" aria-hidden="true">
+          <path d="M1.5 1h2.5v8H1.5zM6 1h2.5v8H6z"></path>
+        </svg>
+        <svg viewBox="0 0 10 10" class="seal-toggle-play" aria-hidden="true">
+          <path d="M2 .8l7 4.2-7 4.2z"></path>
+        </svg>
+      </button>
     </div>
   </div>
 </section>
@@ -126,4 +144,36 @@ const copy = {
 
   // Letter widths are only final once the web font has loaded.
   document.fonts.ready.then(fitSeal);
+
+  /**
+   * The button that stops the ring turning. The choice is kept for the next
+   * visit, where the browser allows storing it.
+   */
+  const SEAL_PAUSED = 'pk-seal-paused';
+  const seal = document.querySelector<HTMLElement>('[data-seal]');
+  const toggle = document.querySelector<HTMLButtonElement>('[data-seal-toggle]');
+
+  function setSealPaused(paused: boolean) {
+    seal?.toggleAttribute('data-paused', paused);
+    toggle?.setAttribute('aria-pressed', String(paused));
+  }
+
+  function storedChoice(): boolean {
+    try {
+      return localStorage.getItem(SEAL_PAUSED) === '1';
+    } catch {
+      return false;
+    }
+  }
+
+  if (storedChoice()) setSealPaused(true);
+  toggle?.addEventListener('click', () => {
+    const paused = toggle.getAttribute('aria-pressed') !== 'true';
+    setSealPaused(paused);
+    try {
+      localStorage.setItem(SEAL_PAUSED, paused ? '1' : '0');
+    } catch {
+      // Storage is blocked; the choice then lasts for this page only.
+    }
+  });
 </script>

@@ -10,7 +10,8 @@ const lv = useTranslations('lv');
 const en = useTranslations('en');
 ---
 
-<Layout locale="lv" path="404" title={lv('notFound.title')}>
+{/* No `path`: the language switch then leads to the two homepages. */}
+<Layout locale="lv" title={lv('notFound.title')} indexable={false}>
   <section class="shell grid min-h-[70vh] place-items-center py-20 text-center">
     <div>
       <Image src={crest} alt="" width={160} class="mx-auto h-40 w-auto opacity-80" />
