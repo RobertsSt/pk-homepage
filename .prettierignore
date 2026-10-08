@@ -8,3 +8,8 @@ package-lock.json
 src/content/
 src/data/*.ics
 scripts/import-overrides.json
+
+# Also saved by the CMS, in its own layout. A formatting difference here must
+# not fail the checks that publishing waits for.
+src/data/image-credits.json
+.pages.yml
