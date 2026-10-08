@@ -7,6 +7,12 @@ const hexColor = z.string().regex(/^#[0-9a-f]{6}$/i);
 /** A string that exists in both site languages. */
 const localized = z.object({ lv: z.string(), en: z.string() });
 
+/**
+ * On an English text: the `wpModified` of the Latvian text it was translated
+ * from. When the Latvian text has changed since, the import reports it.
+ */
+const translatedFrom = z.coerce.date();
+
 /** A photograph with the words that stand in for it when it cannot be seen. */
 const photo = (image: ImageFunction) => z.object({ src: image(), alt: localized });
 
@@ -50,6 +56,7 @@ const fraternityTexts = defineCollection({
   loader: glob({ base: './src/content/fraternity-texts', pattern: '{lv,en}/*.md' }),
   schema: z.object({
     wpModified: z.coerce.date().optional(),
+    translatedFrom: translatedFrom.optional(),
   }),
 });
 
@@ -60,6 +67,7 @@ const pages = defineCollection({
     title: z.string(),
     description: z.string().optional(),
     wpModified: z.coerce.date().optional(),
+    translatedFrom: translatedFrom.optional(),
   }),
 });
 
