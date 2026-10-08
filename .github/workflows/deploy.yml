@@ -2,7 +2,11 @@ name: Deploy
 
 # Builds the site and uploads it to the hosting at nano.lv over FTPS.
 #
-# For now it runs only when started by hand: Actions → Deploy → Run workflow.
+# It runs whenever the checks (the CI workflow) have passed on main: after a
+# merge, after an edit saved in the editing tool, and after the nightly run
+# that keeps the calendar fresh. It can also be started by hand: Actions →
+# Deploy → Run workflow.
+#
 # It needs, under Settings → Secrets and variables → Actions:
 #
 #   secrets    FTP_SERVER      the server's own name, if17.nano.lv (its
@@ -16,6 +20,10 @@ name: Deploy
 # account decides what a run can touch. A file on the server that this
 # workflow did not put there is left alone.
 on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
   workflow_dispatch:
     inputs:
       dry-run:
@@ -37,6 +45,8 @@ env:
 
 jobs:
   deploy:
+    # Nothing is published from a commit whose checks did not pass.
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -64,7 +74,10 @@ jobs:
               ;;
           esac
 
+      # After a CI run, publish exactly the commit that run checked.
       - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
 
       - uses: actions/setup-node@v7
         with:

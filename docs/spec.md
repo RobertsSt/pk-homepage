@@ -149,13 +149,14 @@ day; after that WordPress is retired and the import script is deleted.
    fraternity texts are in English (about 33,000 words). The translation was made by Claude on 2026-10-08
    and nobody from P!K! has read it yet; that review is the part still to do. The word choices are listed
    under "English wording" below.
-5. **Editing tool.** Configured, not yet tried. `.pages.yml` describes every content file as a form and
-   passes Pages CMS's own check of that file; the guide for editors is `docs/redigesanas-pamaciba.md`.
-   Still to do: Roberts installs the app on the repository and tries one edit, because the tool cannot
-   be run from here. See "Editing tool" below.
-6. **Launch.** The publishing workflow exists and is started by hand. Still to do: the trial upload, the
-   final import, the switch, automatic and nightly publishing, WordPress archived. See "Publishing to
-   pk.lv" below.
+5. **Editing tool.** Working. `.pages.yml` describes every content file as a form; the guide for editors
+   is `docs/redigesanas-pamaciba.md`. On 2026-10-08 Roberts installed the app and saved one edit, which
+   arrived as one clean commit with the rest of the file intact. Not yet tried: uploading a picture,
+   editing a long text, the forms for YAML files. Editors are invited after the switch. See "Editing
+   tool" below.
+6. **Launch.** The site is published to a trial folder, `https://pk.lv/jauna/`, by the same workflow that
+   will publish the real one, automatically and every night. Still to do: check the server rules there,
+   the final import, the switch, WordPress archived. See "Publishing to pk.lv" below.
 
 Work happens on a branch and reaches `main` through a pull request that passes `npm run verify`.
 Milestones 1 to 3 arrived together in the first pull request. The accessibility and speed passes follow
@@ -257,52 +258,63 @@ translations that have fallen behind then has to compare when the two files were
 
 ## Publishing to pk.lv
 
-What is known about the host, checked from outside on 2026-10-08:
+What is known about the host, checked on 2026-10-08:
 
 - nano.lv shared hosting with cPanel; the server is `if17.nano.lv`. FTP offers TLS, and its certificate is
   issued for `*.nano.lv`, so the server is addressed by that name, not as pk.lv.
-- nginx answers in front. It compresses text and lets browsers keep images, fonts, styles and scripts for
-  30 days. An address that does not exist gets the host's standard "404" page, not ours.
-- The web root holds WordPress files of its own (`index.php`, `wp-admin`, `wp-content` and the rest)
-  beside the `WordPress` folder. `/` is answered by that `index.php`, which sends visitors on to
-  `/WordPress/`. What else is in the web root is not known yet.
+- nginx answers in front of Apache. It compresses text and lets browsers keep images, fonts, styles and
+  scripts for 30 days.
+- Left to itself the host serves the site over plain http as well as https, and as www.pk.lv as well as
+  pk.lv, and answers a missing address with its own "404" page.
+- The folder pk.lv is served from holds WordPress twice: loose files of its own, whose `index.php` sends
+  `/` on to `/WordPress/`, and the `WordPress` folder with the site people see.
 
-How publishing works: the `Deploy` workflow builds the site and uploads `dist/` over FTPS into the folder
-of the FTP account it is given. It deletes only files it uploaded itself on an earlier run. It is started
-by hand until the switch; after it, it will run when `main` has passed CI, and every night for the
-calendar.
+How publishing works:
+
+- The `Deploy` workflow builds the site and uploads `dist/` over FTPS into the folder of the FTP account
+  it is given. It deletes only files it uploaded itself on an earlier run.
+- It follows every run of the checks (CI) that passes on `main`: after a merge, after an edit saved in
+  the editing tool, and after the run CI makes every night, which is what brings new calendar events to
+  the site. A commit whose checks fail is not published. It can also be started by hand.
+- GitHub switches a schedule off after 60 days without a commit. The nightly run asks for the workflow
+  to stay enabled, which restarts that count; if events ever stop appearing, look there first.
+- The build writes two files for the host beside the pages: `.htaccess`, which makes
+  `https://pk.lv` the one address (plain http, www and other names are forwarded to it) and shows our own
+  "page not found", and `robots.txt`, which points search engines to the list of pages.
 
 The site is published in two steps, so that the first upload cannot touch the live site:
 
-1. **Trial folder.** An FTP account that can only see `public_html/jauna`, and `DEPLOY_BASE_PATH` set to
-   `/jauna/`. The site is then at `https://pk.lv/jauna/`, marked as not to be indexed. This proves the
-   account, the upload and how the host serves the files.
-2. **The switch.** The same account is pointed at the web root and `DEPLOY_BASE_PATH` becomes `/`.
-
-Until the editing tool exists, WordPress is the only way for others to change text, so the switch comes
-after milestone 5 unless Roberts decides to edit the files himself for a while.
+1. **Trial folder.** Done. An FTP account that can only see the folder `jauna`, and `DEPLOY_BASE_PATH` set
+   to `/jauna/`. The site is at `https://pk.lv/jauna/`, marked as not to be indexed.
+2. **The switch.** WordPress is moved out of the folder pk.lv is served from, the FTP account is given
+   that folder, and `DEPLOY_BASE_PATH` becomes `/`.
 
 ## Launch checklist
 
 Trial folder:
 
-- [ ] In cPanel, an FTP account whose folder is `public_html/jauna` (or the same under the folder pk.lv is
-      served from, if that is not `public_html`).
-- [ ] In GitHub, the secrets `FTP_SERVER` (`if17.nano.lv`), `FTP_USERNAME`, `FTP_PASSWORD` and the variable
+- [x] In cPanel, an FTP account limited to the trial folder.
+- [x] In GitHub, the secrets `FTP_SERVER` (`if17.nano.lv`), `FTP_USERNAME`, `FTP_PASSWORD` and the variable
       `DEPLOY_BASE_PATH` (`/jauna/`). Never in the repository.
-- [ ] `Deploy` run once; `https://pk.lv/jauna/` checked: home, one text page, one fraternity page, both
-      languages, images and fonts.
-- [ ] A list of what is in the web root, to plan the switch.
+- [x] `Deploy` run; `https://pk.lv/jauna/` checked in two browser engines: eight pages in both languages,
+      images, fonts, calendar, menu, old addresses.
+- [x] What is in the folder pk.lv is served from: seen.
+- [ ] The server rules checked in the trial folder: http and www are forwarded once and without a loop,
+      and a missing address shows our own page.
 
 The switch:
 
 - [ ] Final `npm run import:wordpress`, reviewed as a pull request.
 - [ ] A full backup of files and database made in cPanel and downloaded.
-- [ ] WordPress moved out of the web root: its files there, and the `WordPress` folder, whose name the new
-      site needs for the pages that forward old addresses.
-- [ ] The FTP account's folder changed to the web root, `DEPLOY_BASE_PATH` changed to `/`, `Deploy` run.
-- [ ] Checked on pk.lv in both languages: home, one text page, one fraternity page and three old addresses
-      under `/WordPress/`.
-- [ ] `Deploy` set to run after CI on `main` and every night; the trial folder and its FTP access removed.
-- [ ] Our own "page not found" page set in cPanel (Error Pages), if the host allows it.
-- [ ] After a few weeks: the WordPress archive and database removed, and the import script deleted.
+- [ ] WordPress moved out of the folder pk.lv is served from, to a folder beside it that the web cannot
+      reach: the loose WordPress files, hidden ones such as `.htaccess` included, and the folders
+      `WordPress`, `wp-admin`, `wp-content`, `wp-includes` and `old`. The new site needs the name
+      `WordPress` for the pages that forward old addresses.
+- [ ] A new FTP account whose folder is the one pk.lv is served from; its name and password put into the
+      GitHub secrets; `DEPLOY_BASE_PATH` changed to `/`; `Deploy` run by hand.
+- [ ] Checked on pk.lv in both languages: home, one text page, one fraternity page, three old addresses
+      under `/WordPress/`, a missing address, and http and www.
+- [ ] The trial folder and its FTP account removed.
+- [ ] Editors invited to the editing tool; the check for translations that have fallen behind changed to
+      compare when the two files were last edited; the import script deleted.
+- [ ] After a few weeks: the WordPress archive and database removed.
