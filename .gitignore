@@ -21,6 +21,10 @@ npm-debug.log*
 .idea/
 .playwright-mcp/
 
+# browser test output
+test-results/
+playwright-report/
+
 # local screenshots of the design drafts
 docs/design-drafts/
 
