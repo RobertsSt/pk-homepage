@@ -1,10 +1,10 @@
 name: CI
 
-# Runs the same checks as `npm run verify` on every pull request and on main.
+# Runs the same checks as `npm run verify` on every push, to any branch. A pull
+# request shows the result for its latest commit.
 on:
-  pull_request:
   push:
-    branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -17,6 +17,13 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    # The image comes with the browsers the tests run in (Chromium, and WebKit,
+    # the engine of Safari), so no run has to download and install them; that
+    # download once stalled until the time limit. The version in the image name
+    # must be the version of @playwright/test in package.json.
+    container:
+      image: mcr.microsoft.com/playwright:v1.64.0-noble
+      options: --user 1001
     steps:
       - uses: actions/checkout@v7
 
@@ -27,9 +34,16 @@ jobs:
 
       - run: npm ci
 
-      # The browser tests run in Chromium and in WebKit, the engine of Safari.
-      - name: Install the browsers for the tests
-        run: npx playwright install --with-deps chromium webkit
+      - name: Check that the image has the browsers this Playwright needs
+        run: |
+          node -e "
+            const { chromium, webkit } = require('@playwright/test');
+            const { existsSync } = require('node:fs');
+            if (![chromium, webkit].every((browser) => existsSync(browser.executablePath()))) {
+              console.error('::error::The Playwright image and @playwright/test are different versions. Set the image in .github/workflows/ci.yml to the version in package.json.');
+              process.exit(1);
+            }
+          "
 
       - name: Format, lint, type-check, build and test in browsers
         run: npm run verify
