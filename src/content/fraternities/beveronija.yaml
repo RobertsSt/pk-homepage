@@ -14,8 +14,8 @@ colors:
   - "#c9a348"
   - "#8ec6e4"
 heraldry:
-  shield: ../../assets/fraternities/beveronija/shield.jpg
-  arms: ../../assets/fraternities/beveronija/arms-large.png
-  zirkel: ../../assets/fraternities/beveronija/zirkel.jpg
-  cap: ../../assets/fraternities/beveronija/cap.jpg
-  star: ../../assets/fraternities/beveronija/star.jpg
+  shield: "@/assets/fraternities/beveronija/shield.jpg"
+  arms: "@/assets/fraternities/beveronija/arms-large.png"
+  zirkel: "@/assets/fraternities/beveronija/zirkel.jpg"
+  cap: "@/assets/fraternities/beveronija/cap.jpg"
+  star: "@/assets/fraternities/beveronija/star.jpg"

@@ -12,8 +12,8 @@ colors:
   - "#c9a348"
   - "#5b6e9b"
 heraldry:
-  shield: ../../assets/fraternities/fraternitas-cursica/shield.jpg
-  arms: ../../assets/fraternities/fraternitas-cursica/arms-large.jpg
-  zirkel: ../../assets/fraternities/fraternitas-cursica/zirkel.jpg
-  cap: ../../assets/fraternities/fraternitas-cursica/cap.jpg
-  star: ../../assets/fraternities/fraternitas-cursica/star.jpg
+  shield: "@/assets/fraternities/fraternitas-cursica/shield.jpg"
+  arms: "@/assets/fraternities/fraternitas-cursica/arms-large.jpg"
+  zirkel: "@/assets/fraternities/fraternitas-cursica/zirkel.jpg"
+  cap: "@/assets/fraternities/fraternitas-cursica/cap.jpg"
+  star: "@/assets/fraternities/fraternitas-cursica/star.jpg"

@@ -11,8 +11,8 @@ colors:
   - "#e24260"
   - "#c9a348"
 heraldry:
-  shield: ../../assets/fraternities/fraternitas-vesthardiana/shield.jpg
-  arms: ../../assets/fraternities/fraternitas-vesthardiana/arms.jpg
-  zirkel: ../../assets/fraternities/fraternitas-vesthardiana/zirkel.jpg
-  cap: ../../assets/fraternities/fraternitas-vesthardiana/cap.jpg
-  star: ../../assets/fraternities/fraternitas-vesthardiana/star.jpg
+  shield: "@/assets/fraternities/fraternitas-vesthardiana/shield.jpg"
+  arms: "@/assets/fraternities/fraternitas-vesthardiana/arms.jpg"
+  zirkel: "@/assets/fraternities/fraternitas-vesthardiana/zirkel.jpg"
+  cap: "@/assets/fraternities/fraternitas-vesthardiana/cap.jpg"
+  star: "@/assets/fraternities/fraternitas-vesthardiana/star.jpg"

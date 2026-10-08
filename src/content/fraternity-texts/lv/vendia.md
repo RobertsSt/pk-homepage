@@ -1,10 +1,11 @@
 ---
+title: Vendia
 wpModified: 2025-04-07T16:58:40
 ---
 
 ## Par Vendiju
 
-![Vendijas biedri mēteļos un zaļos deķeļos uz kāpnēm ar korporācijas karogu; priekšā trīs biedri ar krāsu lentēm](../../../assets/fraternities/vendia/photo-1.jpg)
+![Vendijas biedri mēteļos un zaļos deķeļos uz kāpnēm ar korporācijas karogu; priekšā trīs biedri ar krāsu lentēm](@/assets/fraternities/vendia/photo-1.jpg)
 
 Dibināšanas datums – 1927.gada 20.marts\
 Komāna garants – Selonija\
@@ -13,13 +14,13 @@ Aktīvo biedru skaits – 54
 
 ## Aizraušanās
 
-![Ap piecpadsmit Vendijas biedru kreklos un zaļos deķeļos ar glāzēm rokās uz ķieģeļu ēkas terases](../../../assets/fraternities/vendia/photo-2.jpg)
+![Ap piecpadsmit Vendijas biedru kreklos un zaļos deķeļos ar glāzēm rokās uz ķieģeļu ēkas terases](@/assets/fraternities/vendia/photo-2.jpg)
 
 Vendu saimē ir dažādu interešu burši. Daļa vendu aktīvi piedalās prāta spēlēs, cīnoties gan vienotās, gan dažādās komandās par labākajiem rezultātiem. Citi vendi aktīvi sporto un gūst godalgotas vietas Latvijas čempionātos gan tradicionālos sporta veidos, gan ekstrēmajos sporta veidos. Komandu sporta sacensības arī ir plaši pārstāvētas ar vendiem. Katru gadu vendi rīko iekšējo boulinga turnīru, savukārt pavasarī lielākā daļa vendu pilda zemessardzes fiziskās sagatavotības normatīvus.
 
 ## Vēsture
 
-![Vēsturiska lapa ar uzrakstu «1927. g. 20. martā. Vendias dibinātāji» un dibinātāju portretiem ovālos](../../../assets/fraternities/vendia/photo-3.jpg)
+![Vēsturiska lapa ar uzrakstu «1927. g. 20. martā. Vendias dibinātāji» un dibinātāju portretiem ovālos](@/assets/fraternities/vendia/photo-3.jpg)
 
 Vendia dibinātāju bilde 1927. g. 20. marts
 

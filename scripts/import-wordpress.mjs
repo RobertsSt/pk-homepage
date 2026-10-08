@@ -33,6 +33,13 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const CONTENT = path.join(ROOT, 'src/content');
 const ASSETS = path.join(ROOT, 'src/assets');
 
+/**
+ * How content refers to a file in src/assets. The alias means the same from
+ * any content file, however deep it sits, which is also what lets the editing
+ * tool offer one picture library for all of them.
+ */
+const ASSET_ALIAS = '@/assets';
+
 const HOME_SLUG = 'prezidiju-konvents';
 const INDEX_SLUG = 'studentu-korporacijas';
 const HERALDRY_SLOTS = ['shield', 'arms', 'zirkel', 'cap', 'star'];
@@ -260,7 +267,7 @@ async function importFraternities(pages, resolveImage, overrides) {
     }
     const detail = parseFraternityPage(page.content.rendered, item.name);
     const assetDir = path.join(ASSETS, 'fraternities', item.id);
-    const relAssetDir = `../../assets/fraternities/${item.id}`;
+    const relAssetDir = `${ASSET_ALIAS}/fraternities/${item.id}`;
 
     // Heraldry: whichever of the two pages holds the larger file wins.
     const heraldry = {};
@@ -291,7 +298,7 @@ async function importFraternities(pages, resolveImage, overrides) {
         const asset = `fraternities/${item.id}/${file}`;
         const alt = clean(section.image.getAttribute('alt') ?? '') || overrides.imageAlts?.[asset] || '';
         if (!alt) warn(`${item.name}: ${file} has no description for screen readers`);
-        parts.push(`![${alt.replace(/[[\]]/g, '')}](../../../assets/${asset})`);
+        parts.push(`![${alt.replace(/[[\]]/g, '')}](${ASSET_ALIAS}/${asset})`);
       }
       const md = tidyMarkdown(td.turndown(section.html));
       if (md) parts.push(md);
@@ -306,7 +313,8 @@ async function importFraternities(pages, resolveImage, overrides) {
     await writeText(path.join(CONTENT, 'fraternities', `${id}.yaml`), stringify(data, { lineWidth: 0 }));
     await writeText(
       path.join(CONTENT, 'fraternity-texts/lv', `${id}.md`),
-      `${frontmatter({ wpModified: page.modified })}\n${parts.join('\n\n')}`,
+      // The title is not shown on the site; it names the text in the editing tool's list.
+      `${frontmatter({ title: item.name, wpModified: page.modified })}\n${parts.join('\n\n')}`,
     );
   }
   return list;
@@ -325,7 +333,7 @@ async function importTextPages(pages, skip, resolveImage) {
       const url = resolveImage(img);
       const file = path.basename(new URL(url).pathname).toLowerCase();
       await download(url, path.join(ASSETS, 'pages', page.slug, file));
-      img.setAttribute('src', `../../../assets/pages/${page.slug}/${file}`);
+      img.setAttribute('src', `${ASSET_ALIAS}/pages/${page.slug}/${file}`);
       img.removeAttribute('srcset');
     }
     const title = clean(parse(page.title.rendered).text);

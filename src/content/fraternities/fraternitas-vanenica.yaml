@@ -13,13 +13,13 @@ colors:
   - "#8e3f55"
   - "#a0a8a9"
 heraldry:
-  shield: ../../assets/fraternities/fraternitas-vanenica/shield.jpg
-  arms: ../../assets/fraternities/fraternitas-vanenica/arms-large.jpg
-  zirkel: ../../assets/fraternities/fraternitas-vanenica/zirkel.jpg
-  cap: ../../assets/fraternities/fraternitas-vanenica/cap.jpg
-  star: ../../assets/fraternities/fraternitas-vanenica/star.jpg
+  shield: "@/assets/fraternities/fraternitas-vanenica/shield.jpg"
+  arms: "@/assets/fraternities/fraternitas-vanenica/arms-large.jpg"
+  zirkel: "@/assets/fraternities/fraternitas-vanenica/zirkel.jpg"
+  cap: "@/assets/fraternities/fraternitas-vanenica/cap.jpg"
+  star: "@/assets/fraternities/fraternitas-vanenica/star.jpg"
 cover:
-  src: ../../assets/fraternities/fraternitas-vanenica/cover.jpg
+  src: "@/assets/fraternities/fraternitas-vanenica/cover.jpg"
   alt:
     lv: Fraternitas Vanenica biedri tumšos mēteļos stāv pie korporācijas karoga atceres brīdī brīvā dabā, deķeļus noņēmuši
     en: Members of Fraternitas Vanenica in dark coats stand beside the fraternity’s flag at an outdoor commemoration, caps in hand

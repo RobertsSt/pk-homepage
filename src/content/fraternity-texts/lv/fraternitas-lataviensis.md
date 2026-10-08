@@ -1,4 +1,5 @@
 ---
+title: Fraternitas Lataviensis
 wpModified: 2024-05-03T18:40:16
 ---
 

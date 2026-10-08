@@ -14,13 +14,13 @@ colors:
   - "#566f9f"
   - "#c9a348"
 heraldry:
-  shield: ../../assets/fraternities/latvia/shield.jpg
-  arms: ../../assets/fraternities/latvia/arms-large.jpg
-  zirkel: ../../assets/fraternities/latvia/zirkel.jpg
-  cap: ../../assets/fraternities/latvia/cap.jpg
-  star: ../../assets/fraternities/latvia/star.jpg
+  shield: "@/assets/fraternities/latvia/shield.jpg"
+  arms: "@/assets/fraternities/latvia/arms-large.jpg"
+  zirkel: "@/assets/fraternities/latvia/zirkel.jpg"
+  cap: "@/assets/fraternities/latvia/cap.jpg"
+  star: "@/assets/fraternities/latvia/star.jpg"
 cover:
-  src: ../../assets/fraternities/latvia/cover.jpg
+  src: "@/assets/fraternities/latvia/cover.jpg"
   alt:
     lv: Koka paneļiem apdarināta telpa ar grāmatplauktiem, ādas krēsliem un kamīnu; pie sienas divi sakrustoti rapieri un sarkanbaltsarkani karogi
     en: A wood-panelled room with bookcases, leather armchairs and a fireplace; two crossed rapiers and red-white-red flags hang on the wall

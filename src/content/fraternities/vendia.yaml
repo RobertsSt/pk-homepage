@@ -13,8 +13,8 @@ colors:
   - "#a63f46"
   - "#c9a348"
 heraldry:
-  shield: ../../assets/fraternities/vendia/shield.jpg
-  arms: ../../assets/fraternities/vendia/arms-large.jpg
-  zirkel: ../../assets/fraternities/vendia/zirkel.jpg
-  cap: ../../assets/fraternities/vendia/cap.jpg
-  star: ../../assets/fraternities/vendia/star.jpg
+  shield: "@/assets/fraternities/vendia/shield.jpg"
+  arms: "@/assets/fraternities/vendia/arms-large.jpg"
+  zirkel: "@/assets/fraternities/vendia/zirkel.jpg"
+  cap: "@/assets/fraternities/vendia/cap.jpg"
+  star: "@/assets/fraternities/vendia/star.jpg"

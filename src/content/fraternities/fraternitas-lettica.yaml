@@ -13,8 +13,8 @@ colors:
   - "#92c847"
   - "#c9a348"
 heraldry:
-  shield: ../../assets/fraternities/fraternitas-lettica/shield.png
-  arms: ../../assets/fraternities/fraternitas-lettica/arms.jpg
-  zirkel: ../../assets/fraternities/fraternitas-lettica/zirkel.png
-  cap: ../../assets/fraternities/fraternitas-lettica/cap.png
-  star: ../../assets/fraternities/fraternitas-lettica/star.png
+  shield: "@/assets/fraternities/fraternitas-lettica/shield.png"
+  arms: "@/assets/fraternities/fraternitas-lettica/arms.jpg"
+  zirkel: "@/assets/fraternities/fraternitas-lettica/zirkel.png"
+  cap: "@/assets/fraternities/fraternitas-lettica/cap.png"
+  star: "@/assets/fraternities/fraternitas-lettica/star.png"

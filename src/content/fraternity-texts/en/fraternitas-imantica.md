@@ -1,4 +1,5 @@
 ---
+title: Fraternitas Imantica
 translatedFrom: 2024-05-03T18:38:04
 ---
 

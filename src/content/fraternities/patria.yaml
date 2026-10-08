@@ -14,8 +14,8 @@ colors:
   - "#63a78c"
   - "#c9a348"
 heraldry:
-  shield: ../../assets/fraternities/patria/shield.jpg
-  arms: ../../assets/fraternities/patria/arms.jpg
-  zirkel: ../../assets/fraternities/patria/zirkel-large.png
-  cap: ../../assets/fraternities/patria/cap.jpg
-  star: ../../assets/fraternities/patria/star.jpg
+  shield: "@/assets/fraternities/patria/shield.jpg"
+  arms: "@/assets/fraternities/patria/arms.jpg"
+  zirkel: "@/assets/fraternities/patria/zirkel-large.png"
+  cap: "@/assets/fraternities/patria/cap.jpg"
+  star: "@/assets/fraternities/patria/star.jpg"

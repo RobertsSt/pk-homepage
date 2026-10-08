@@ -54,11 +54,11 @@ const cell = 'border-rule border-b py-3.5 pr-6 align-top';
               {credit.fraternity}
             </th>
             <td class={cell}>{kind(credit.image)}</td>
-            <td class={cell}>{credit.author ?? t('credits.unknown')}</td>
-            <td class={cell}>{credit.license ?? t('credits.unknown')}</td>
+            <td class={cell}>{credit.author || t('credits.unknown')}</td>
+            <td class={cell}>{credit.license || t('credits.unknown')}</td>
             <td class={cell}>
               <a href={credit.source} class="link" target="_blank" rel="noreferrer">
-                {credit.host ?? displayHost(credit.source)}
+                {credit.host || displayHost(credit.source)}
                 <span class="sr-only"> ({t('a11y.newTab')})</span>
               </a>
             </td>

@@ -1,4 +1,5 @@
 ---
+title: Fraternitas Lataviensis
 translatedFrom: 2024-05-03T18:40:16
 ---
 

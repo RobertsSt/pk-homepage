@@ -1,4 +1,5 @@
 ---
+title: Lettonia
 translatedFrom: 2024-05-03T18:39:28
 ---
 

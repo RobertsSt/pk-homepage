@@ -13,8 +13,8 @@ colors:
   - "#788597"
   - "#000191"
 heraldry:
-  shield: ../../assets/fraternities/tervetia/shield.jpg
-  arms: ../../assets/fraternities/tervetia/arms-large.jpg
-  zirkel: ../../assets/fraternities/tervetia/zirkel.jpg
-  cap: ../../assets/fraternities/tervetia/cap.jpg
-  star: ../../assets/fraternities/tervetia/star.jpg
+  shield: "@/assets/fraternities/tervetia/shield.jpg"
+  arms: "@/assets/fraternities/tervetia/arms-large.jpg"
+  zirkel: "@/assets/fraternities/tervetia/zirkel.jpg"
+  cap: "@/assets/fraternities/tervetia/cap.jpg"
+  star: "@/assets/fraternities/tervetia/star.jpg"
