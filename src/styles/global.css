@@ -2,7 +2,10 @@
  * The site's one stylesheet: a paper-and-ink editorial look in which the only
  * strong colour comes from the fraternities' own tricolours.
  */
-@import 'tailwindcss';
+/* Class names are looked for in src/ only. Left to itself Tailwind reads every
+   file in the repository, and a word in a workflow or a document that happens
+   to be a class name ends up in the stylesheet. */
+@import 'tailwindcss' source('..');
 @import './fonts.css';
 @import './motion.css';
 
