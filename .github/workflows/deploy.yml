@@ -106,18 +106,22 @@ jobs:
       # Asks the web server for the stylesheet of this very build. Its name
       # changes with every build, so an answer proves that the folder the files
       # went to is the one served at this address. A wrong folder for the FTP
-      # account, or a wrong DEPLOY_BASE_PATH, shows up here.
+      # account, or a wrong DEPLOY_BASE_PATH, shows up here. Only a plain
+      # "200 OK" counts: a redirect would mean the server rules are sending
+      # visitors somewhere else, perhaps in a circle.
       - name: Check that this build is what the address now serves
         if: ${{ !inputs.dry-run }}
         run: |
           stylesheet="$(grep -o '/[^"]*/_astro/[^"]*\.css\|/_astro/[^"]*\.css' dist/index.html | head -n 1)"
-          address="${SITE_URL}${stylesheet}"
+          status() { curl --silent --max-time 20 --output /dev/null --write-out '%{http_code}' "$1" || true; }
           for attempt in 1 2 3; do
-            if curl --fail --silent --show-error --max-time 20 --output /dev/null "$address"; then
+            page="$(status "${SITE_URL}${BASE_PATH}")"
+            file="$(status "${SITE_URL}${stylesheet}")"
+            if [ "$page" = 200 ] && [ "$file" = 200 ]; then
               echo "This build is live at ${SITE_URL}${BASE_PATH}"
               exit 0
             fi
             sleep 10
           done
-          echo "::error::Uploaded, but $address is not there. Check that the FTP account's folder is the folder served at ${SITE_URL}${BASE_PATH}"
+          echo "::error::Uploaded, but ${SITE_URL}${BASE_PATH} answered $page and its stylesheet $file instead of 200. Check that the FTP account's folder is the folder served at that address, and the rules in .htaccess."
           exit 1
