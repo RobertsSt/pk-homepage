@@ -15,7 +15,8 @@ Read [docs/spec.md](docs/spec.md) first: it holds the decisions, the milestones 
 - A running dev server can go stale when a build or a schema change happens underneath it: pages error or
   scripts return 504. Saving `astro.config.mjs` restarts it; a real edit to `src/content.config.ts` makes
   it re-read the schema.
-- `npm run import:wordpress` re-imports Latvian content from the live WordPress site.
+- `npm run import:wordpress` re-imports Latvian content from the live WordPress site, and ends by listing
+  English texts whose Latvian source has changed (`npm run check:translations` on its own does the same).
 - `npm run build:fonts` rebuilds `src/assets/fonts` from the pinned sources. Needed only when the list of
   characters in `scripts/build-fonts.mjs` or the fonts change.
 - Optimised images are cached in `node_modules/.astro/assets`, and the cache does not notice a change to
@@ -47,6 +48,9 @@ Read [docs/spec.md](docs/spec.md) first: it holds the decisions, the milestones 
   imported content lives in `scripts/import-overrides.json`.
 - The calendar is a Preact component: hooks come from `preact/hooks`, markup uses `class`, and SVG
   attributes are written as in SVG (`stroke-width`). Its month is an ARIA grid with one tab stop.
+- English texts follow the word list under "English wording" in the spec; change a term there and in
+  every text at once. After revising a translation, copy the Latvian `wpModified` into its
+  `translatedFrom`.
 - The fonts hold only the letters listed in `scripts/build-fonts.mjs`. Any other character still shows,
   but in a system font.
 - The seal lettering on the homepage is spaced by a script, not by `textLength`: Safari ignores

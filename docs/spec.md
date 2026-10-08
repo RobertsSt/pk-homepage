@@ -128,7 +128,9 @@ The WordPress site is still being edited, so the import is built to be run again
 - `npm run import:wordpress` rewrites every Latvian file and image from WordPress.
 - What WordPress does not hold lives in `scripts/import-overrides.json` and is merged in on every run:
   colours, band direction, founding dates, larger heraldry files, chosen photographs and text corrections.
-- English files are never touched by the import.
+- English files are never touched by the import. Each records, as `translatedFrom`, the date of the
+  Latvian text it was made from, and the import ends by listing the English texts that have fallen behind
+  (`npm run check:translations` gives the same list at any time).
 - `src/content/site/home.yaml` is maintained by hand.
 
 So until launch, edit Latvian text in WordPress, not in this repository. The last import happens on launch
@@ -143,8 +145,10 @@ day; after that WordPress is retired and the import script is deleted.
    fraternity page, image credits, 404, working menu, redirects from the old addresses, page titles,
    descriptions and share images. The accessibility and speed passes are done (see above). Still to do:
    listen to the site once with a screen reader.
-4. **English.** The homepage, menu and all labels are in English. The ten text pages and 23 fraternity
-   texts are not; they show Latvian under a notice. Translate, then have P!K! review.
+4. **English.** Translated, not yet reviewed. The homepage, menu, labels, the ten text pages and the 23
+   fraternity texts are in English (about 33,000 words). The translation was made by Claude on 2026-10-08
+   and nobody from P!K! has read it yet; that review is the part still to do. The word choices are listed
+   under "English wording" below.
 5. **Editing tool.** Pages CMS configured; a one-page guide for editors in Latvian.
 6. **Launch.** Publishing workflow to nano.lv with nightly rebuild; final import; switch; WordPress archived.
 
@@ -168,10 +172,61 @@ in the branch `accessibility-and-speed`, the English texts in `english-texts`.
 4. Image rights. Photos taken from fraternities' own websites carry no stated licence, and the Fraternitas
    Vanenica coat of arms is marked fair use on Wikipedia. Roberts has said the fraternities are fine with
    this; each should still hear that its pictures are used.
-5. English wording, in particular "Presidium Convent" and "student fraternity", and the names of events.
-6. Likely typos in the current text. Ventonia's founding year is corrected to 1917 here and should also be
-   fixed in WordPress. Still to confirm: Fraternitas Imantica's motto reads "Sclentiae" and Fraternitas
-   Lataviensis's reads "lustitia".
+5. English wording. The translation follows one set of choices, listed in the next section, so that a
+   reviewer can change a term everywhere at once. The ones most worth a second opinion: "Presidium Convent",
+   "student fraternity", "philister" and "comment".
+6. Faults in the current Latvian text, found while translating. They are in WordPress, so that is where
+   they need correcting; the English text already has what was clearly meant, and says nothing where the
+   meaning could not be recovered.
+   - Ventonia's founding year: corrected to 1917 here, still to fix in WordPress.
+   - Mottos: Fraternitas Imantica's reads "Sclentiae" and Fraternitas Lataviensis's "lustitia" in the list.
+   - P!K! history: "24.11.1997" for Selonija's admission to the C!C! (1897) and "Vironia (1990.)" (1900);
+     "apliecinājusi" where "apcietinājusi" is meant; the entry for the 1st semester of 1927 ends in the
+     stray words "Marta menesi"; in the list of fraternities, "saluten", "Actilabores", "Mit Eort" and
+     "niebei".
+   - Selonija: WordPress turned six dated paragraphs into a numbered list that starts at 1918, so it shows
+     the years 1918 to 1923 one after another; only the first is right. The English text gives a year only
+     where it is certain.
+   - Lettgallia: two paragraphs begin "gadā …" and "gada 27. septembri …" with the year missing (1919).
+   - Fraternitas Lettica: "1960. gadu beigās" for the national awakening of the 1860s.
+   - Fraternitas Imantica: a sentence is split in two after "1947."
+   - Vendia: admitted to P!K! on 9 December 1930 here, on 9 December 1929 in the P!K! history.
+   - Tervetia: the Estonian fraternity is spelt "Ugula" (Ugala).
+   - P!K! Men's Choir: says all 23 fraternities belong to P!K!; the list has 20 members and 3 outside.
+   - Association of Latvian Fraternities: the text is a scan with many misread words ("Te viļas fonds",
+     "Laiviņas", "Pīki") and breaks off in the middle of its last sentence.
+   - Scanning slips elsewhere: "Gersicamu", "Eslmgenā" (Gersicania), "Philvroniu" (Philyronia), "kāp" for
+     "kara" (Patria, Vendia).
+
+## English wording
+
+| Latvian                     | English used                         | Note                                               |
+| --------------------------- | ------------------------------------ | -------------------------------------------------- |
+| Prezidiju Konvents (P!K!)   | Presidium Convent                    | Abbreviations (P!K!, L!K!A!, F!B!S!) are kept.     |
+| studentu korporācija        | student fraternity                   | "studenšu korporācija" is "sorority".              |
+| konvents                    | convent                              | Both the body and its meeting.                     |
+| filistrs, filistru biedrība | philister, philisters' society       |                                                    |
+| komiltonis                  | commilito, commilitones              |                                                    |
+| fuksis, zēns, krustdēls     | fox, or new member                   | Each fraternity's own word is not carried over.    |
+| krāsnesis                   | colour-bearer                        |                                                    |
+| komāns                      | comment                              | A!K!K!: Comment of the United Fraternities.        |
+| garantēt komānu pie …       | to vouch for the comment with …      | "komāna garants": guarantor of the comment.        |
+| kartelis                    | cartel                               |                                                    |
+| komeršs                     | commers                              | Baltic Nations' Commers.                           |
+| Zemes tēvs, kāters, ūzuss   | Landesvater, Kater, custom           | German student terms are kept where usual.         |
+| Šaržēto Konvents            | Chargierten-Convent                  | Ch!C! in Tartu, C!C! in Riga.                      |
+| deķelis, cirķelis, vapenis  | cap, Zirkel (monogram), coat of arms | Labels on the site say "Monogram".                 |
+| konventa dzīvoklis          | convent quarters                     |                                                    |
+| kopa (trimdā)               | chapter                              | K!K!, the joint groups in exile: fraternity group. |
+| seniors, I šaržētais        | senior, 1st officer                  | Also vice-senior, secretary, Oldermann.            |
+| Tērbata                     | Tartu                                |                                                    |
+| Atsevišķā studentu rota     | Separate Student Company             |                                                    |
+| Brīvības cīņas              | War of Independence                  |                                                    |
+| Baigais gads                | Year of Terror                       |                                                    |
+| trimda                      | exile                                |                                                    |
+
+Dates are written as "27 September 1919". Latvian mottos are kept in Latvian with the English in brackets;
+Latin and German ones are left as they are. Names of people, streets and publications are not translated.
 
 ## Launch checklist
 

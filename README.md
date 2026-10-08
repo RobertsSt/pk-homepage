@@ -13,17 +13,18 @@ npx playwright install chromium webkit   # once: the browsers the tests run in
 npm run dev                              # http://localhost:4321
 ```
 
-| Command                    | What it does                                                           |
-| -------------------------- | ---------------------------------------------------------------------- |
-| `npm run dev`              | Local site with live reload                                            |
-| `npm run build`            | Builds the site into `dist/`                                           |
-| `npm run preview`          | Serves `dist/` locally, as the host would                              |
-| `npm run verify`           | Format check, lint, type check, unit tests, build and browser tests    |
-| `npm test`                 | Runs the unit tests                                                    |
-| `npm run test:browser`     | Runs the browser tests against `dist/`; build first                    |
-| `npm run format`           | Formats the code with Prettier                                         |
-| `npm run import:wordpress` | Re-imports Latvian content and images from the live WordPress site     |
-| `npm run build:fonts`      | Rebuilds the web fonts; only after changing the fonts or their letters |
+| Command                      | What it does                                                           |
+| ---------------------------- | ---------------------------------------------------------------------- |
+| `npm run dev`                | Local site with live reload                                            |
+| `npm run build`              | Builds the site into `dist/`                                           |
+| `npm run preview`            | Serves `dist/` locally, as the host would                              |
+| `npm run verify`             | Format check, lint, type check, unit tests, build and browser tests    |
+| `npm test`                   | Runs the unit tests                                                    |
+| `npm run test:browser`       | Runs the browser tests against `dist/`; build first                    |
+| `npm run format`             | Formats the code with Prettier                                         |
+| `npm run import:wordpress`   | Re-imports Latvian content and images from the live WordPress site     |
+| `npm run check:translations` | Lists English texts that are missing or older than their Latvian text  |
+| `npm run build:fonts`        | Rebuilds the web fonts; only after changing the fonts or their letters |
 
 CI runs `npm run verify` on every pull request.
 
@@ -62,7 +63,9 @@ docs/spec.md         Decisions, milestones, open questions
 
 - Until launch, Latvian text is edited in WordPress and brought over with `npm run import:wordpress`.
   Hand edits to imported Latvian files are overwritten by the next import.
-- English text and `src/content/site/home.yaml` are edited here.
+- English text and `src/content/site/home.yaml` are edited here. An English text names, in `translatedFrom`,
+  the date (`wpModified`) of the Latvian text it was translated from; `npm run check:translations` lists
+  the ones whose Latvian text has changed since.
 - An image that does not come from WordPress needs an entry in `src/data/image-credits.json`.
 - A photograph needs a description for people who cannot see it: `alt` beside it in
   `scripts/import-overrides.json`, or in WordPress for a photograph that comes from there.
