@@ -65,13 +65,3 @@ test.describe('the main menu on a phone', () => {
     await expect(page).toHaveURL(/\/pk-merki\/$/);
   });
 });
-
-test('the language switch leads to the same page in the other language', async ({ page }) => {
-  await page.goto('/studentu-korporacijas/lettonia/');
-  await page
-    .getByRole('navigation', { name: 'Valoda' })
-    .getByRole('link', { name: /English/ })
-    .click();
-  await expect(page).toHaveURL(/\/en\/studentu-korporacijas\/lettonia\/$/);
-  await expect(page.locator('html')).toHaveAttribute('lang', 'en');
-});

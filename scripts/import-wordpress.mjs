@@ -12,7 +12,9 @@
  *  - Facts WordPress does not hold (colours, founding dates, larger heraldry,
  *    chosen photographs, descriptions of photographs, corrections) live in
  *    scripts/import-overrides.json and are merged in on every run.
- *  - English files (src/content/**\/en/) are never touched.
+ *  - English files (src/content/**\/en/) are never touched. The import ends
+ *    by listing the ones whose Latvian source has changed since they were
+ *    translated.
  *
  * The script is retired at cutover, once WordPress stops being the source.
  */
@@ -23,6 +25,7 @@ import { parse } from 'node-html-parser';
 import sharp from 'sharp';
 import TurndownService from 'turndown';
 import { stringify } from 'yaml';
+import { checkTranslations, report as reportTranslations } from './check-translations.mjs';
 
 const WP = 'https://pk.lv/WordPress';
 const API = `${WP}/wp-json/wp/v2`;
@@ -394,6 +397,10 @@ async function main() {
   console.log(`Text pages:   ${textPages.length} (${textPages.join(', ')})`);
   console.log(`Skipped:      home, list, leftovers: ${leftovers.join(', ') || 'none'}`);
   if (warnings.length) console.log(`\nWarnings:\n${warnings.map((w) => `  - ${w}`).join('\n')}`);
+
+  // A Latvian text that changed in WordPress leaves its English translation behind.
+  console.log('');
+  reportTranslations(await checkTranslations());
 }
 
 await main();
