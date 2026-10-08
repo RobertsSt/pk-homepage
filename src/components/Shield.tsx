@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react';
+import type { CSSProperties } from 'preact';
 import { SHIELD_OUTLINE, SHIELD_REGIONS, SHIELD_VIEWBOX, type Band } from '@/lib/shield';
 
 interface Props {
@@ -18,7 +18,7 @@ export function Shield({ colors, band, title, className, style }: Props) {
   return (
     <svg
       viewBox={SHIELD_VIEWBOX}
-      className={className}
+      class={className}
       style={style}
       role={title ? 'img' : undefined}
       aria-label={title}
@@ -27,7 +27,7 @@ export function Shield({ colors, band, title, className, style }: Props) {
       <path d={SHIELD_OUTLINE} fill={middle} />
       <path d={topPath} fill={top} />
       <path d={bottomPath} fill={bottom} />
-      <path d={SHIELD_OUTLINE} fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+      <path d={SHIELD_OUTLINE} fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
     </svg>
   );
 }

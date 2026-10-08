@@ -10,8 +10,8 @@
  * Rules that keep re-runs safe:
  *  - Latvian text always comes from WordPress and is overwritten on every run.
  *  - Facts WordPress does not hold (colours, founding dates, larger heraldry,
- *    chosen photographs, corrections) live in scripts/import-overrides.json and
- *    are merged in on every run.
+ *    chosen photographs, descriptions of photographs, corrections) live in
+ *    scripts/import-overrides.json and are merged in on every run.
  *  - English files (src/content/**\/en/) are never touched.
  *
  * The script is retired at cutover, once WordPress stops being the source.
@@ -284,7 +284,11 @@ async function importFraternities(pages, resolveImage, overrides) {
         const url = resolveImage(section.image);
         const file = `photo-${photo}${extension(url)}`;
         await download(url, path.join(assetDir, file));
-        parts.push(`![](../../../assets/fraternities/${item.id}/${file})`);
+        // The description set in WordPress wins; the overrides fill in where there is none.
+        const asset = `fraternities/${item.id}/${file}`;
+        const alt = clean(section.image.getAttribute('alt') ?? '') || overrides.imageAlts?.[asset] || '';
+        if (!alt) warn(`${item.name}: ${file} has no description for screen readers`);
+        parts.push(`![${alt.replace(/[[\]]/g, '')}](../../../assets/${asset})`);
       }
       const md = tidyMarkdown(td.turndown(section.html));
       if (md) parts.push(md);

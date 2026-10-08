@@ -1,10 +1,12 @@
-import type { CSSProperties } from 'react';
+import type { CSSProperties, TargetedKeyboardEvent } from 'preact';
+import { useEffect, useId, useRef } from 'preact/hooks';
 import { Shield } from '@/components/Shield';
 import { shortLocation, useCalendar } from '@/components/calendar/useCalendar';
 import type { Locale } from '@/i18n/config';
 import type { UiKey } from '@/i18n/ui';
 import {
   dateOf,
+  dayForKey,
   dayNumber,
   longDate,
   monthOf,
@@ -14,7 +16,7 @@ import {
   weekdayLong,
   weekdayNames,
 } from '@/lib/calendar/dates';
-import { eventTitle } from '@/lib/calendar/labels';
+import { eventTitle, formatEventCount } from '@/lib/calendar/labels';
 import type { CalendarEvent } from '@/lib/calendar/types';
 import type { FraternityColors } from '@/lib/site';
 
@@ -39,59 +41,92 @@ function marker(event: CalendarEvent, colors: Props['colors']): CSSProperties | 
   const fraternity = event.fraternityId ? colors[event.fraternityId] : undefined;
   if (!fraternity) return undefined;
   const [top, middle, bottom] = fraternity.colors;
-  return {
-    '--marker': `linear-gradient(${top} 0 33.4%, ${middle} 33.4% 66.7%, ${bottom} 66.7%)`,
-  } as CSSProperties;
+  return { '--marker': `linear-gradient(${top} 0 33.4%, ${middle} 33.4% 66.7%, ${bottom} 66.7%)` };
 }
 
-/** The month with its events written into the days, beside a list of what comes next. */
+/**
+ * The month with its events written into the days, beside a list of what
+ * comes next.
+ *
+ * The month is a grid in the accessibility sense: it is one stop in the tab
+ * order, arrow keys move from day to day (Home and End within the week, Page
+ * Up and Page Down by month), and Enter or Space picks the day.
+ */
 export function Calendar({ events, colors, locale, strings, builtOn, subscribeUrl }: Props) {
   const calendar = useCalendar(events, builtOn);
   const { today, month, selected } = calendar;
+  const titleId = useId();
 
   const listed = selected ? (calendar.byDay.get(selected) ?? []) : calendar.upcoming.slice(0, UPCOMING_COUNT);
   const heading = selected ? longDate(locale, selected) : strings['calendar.upcoming'];
 
+  // An arrow key may lead to a day that is only drawn after the month has
+  // turned, so keyboard focus is moved once the grid has been redrawn.
+  const grid = useRef<HTMLTableElement>(null);
+  const focusNext = useRef<string | null>(null);
+  useEffect(() => {
+    if (!focusNext.current) return;
+    grid.current?.querySelector<HTMLElement>(`[data-day="${focusNext.current}"]`)?.focus();
+    focusNext.current = null;
+  });
+
+  const onGridKeyDown = (event: TargetedKeyboardEvent<HTMLTableElement>) => {
+    if (event.ctrlKey || event.metaKey || event.altKey) return;
+    // Count from the day the last key press asked for, if focus has not got there yet.
+    const from = focusNext.current ?? (event.target as HTMLElement).dataset.day;
+    const to = from && dayForKey(event.key, from);
+    if (!to) return;
+    event.preventDefault();
+    if (calendar.moveTo(to)) focusNext.current = to;
+  };
+
   return (
-    <div className="grid gap-x-16 gap-y-14 lg:grid-cols-12">
-      <div className="order-2 lg:order-1 lg:col-span-7">
-        <div className="flex items-center justify-between gap-3">
-          <p className="font-display text-2xl first-letter:uppercase sm:text-3xl" aria-live="polite">
+    <div class="grid gap-x-16 gap-y-14 lg:grid-cols-12">
+      <div class="order-2 lg:order-1 lg:col-span-7">
+        <div class="flex items-center justify-between gap-3">
+          <p id={titleId} class="font-display text-2xl first-letter:uppercase sm:text-3xl" aria-live="polite">
             {monthTitle(locale, month)}
           </p>
-          <div className="flex items-center gap-2">
-            <button type="button" className="link mr-2 text-sm" onClick={calendar.goToToday}>
+          <div class="flex items-center gap-2">
+            <button type="button" class="link mr-2 py-1 text-sm" onClick={calendar.goToToday}>
               {strings['calendar.today']}
             </button>
             <button
               type="button"
-              className="cal-step"
+              class="icon-button"
               onClick={calendar.goBack}
               disabled={!calendar.canGoBack}
               aria-label={strings['calendar.previous']}
             >
-              ←
+              <span aria-hidden="true">←</span>
             </button>
             <button
               type="button"
-              className="cal-step"
+              class="icon-button"
               onClick={calendar.goForward}
               disabled={!calendar.canGoForward}
               aria-label={strings['calendar.next']}
             >
-              →
+              <span aria-hidden="true">→</span>
             </button>
           </div>
         </div>
 
-        <table className="mt-6 w-full table-fixed border-collapse border-b border-rule">
-          <thead>
+        <table
+          ref={grid}
+          role="grid"
+          aria-labelledby={titleId}
+          class="mt-6 w-full table-fixed border-collapse border-b border-rule"
+          onKeyDown={onGridKeyDown}
+        >
+          {/* Each day's label names its weekday, so the column heads are for the eye only. */}
+          <thead aria-hidden="true">
             <tr>
               {weekdayNames(locale).map((name) => (
                 <th
                   key={name}
                   scope="col"
-                  className="px-1.5 pb-3 text-center text-[0.65rem] font-semibold tracking-[0.16em] text-ink-soft uppercase md:text-left"
+                  class="px-1.5 pb-3 text-center text-[0.65rem] font-semibold tracking-[0.16em] text-ink-soft uppercase md:text-left"
                 >
                   {name}
                 </th>
@@ -104,43 +139,56 @@ export function Calendar({ events, colors, locale, strings, builtOn, subscribeUr
                 {week.map((day) => {
                   const dayEvents = calendar.byDay.get(day) ?? [];
                   const titles = dayEvents.map((event) => eventTitle(event, locale, strings));
+                  const date =
+                    day === today
+                      ? `${strings['calendar.today']}, ${longDate(locale, day)}`
+                      : longDate(locale, day);
                   return (
-                    <td key={day} className="p-0 align-top">
+                    <td
+                      key={day}
+                      role="gridcell"
+                      aria-selected={day === selected ? true : undefined}
+                      class="cal-cell"
+                      data-today={day === today ? '' : undefined}
+                      data-selected={day === selected ? '' : undefined}
+                      data-outside={monthOf(day).month === month.month ? undefined : ''}
+                    >
+                      {/* The button is stretched over the whole cell by the stylesheet. */}
                       <button
                         type="button"
-                        className="cal-cell"
-                        data-today={day === today ? '' : undefined}
-                        data-selected={day === selected ? '' : undefined}
-                        data-outside={monthOf(day).month === month.month ? undefined : ''}
-                        aria-pressed={day === selected}
-                        aria-label={`${longDate(locale, day)}${titles.length ? `: ${titles.join('; ')}` : ''}`}
+                        class="cal-day"
+                        data-day={day}
+                        tabIndex={day === calendar.tabStop ? 0 : -1}
+                        aria-label={titles.length ? `${date}: ${titles.join('; ')}` : date}
                         onClick={() => calendar.select(day === selected ? null : day)}
                       >
-                        <span className="cal-number">{dayNumber(day)}</span>
-                        {dayEvents.slice(0, EVENTS_PER_DAY).map((event, i) => (
-                          <span
-                            key={event.id}
-                            className="cal-event"
-                            data-kind={event.kind}
-                            style={marker(event, colors)}
-                          >
-                            {/* In the narrow cell an anniversary shows just the name. */}
-                            {event.kind === 'anniversary' ? (event.subject ?? titles[i]) : titles[i]}
-                          </span>
-                        ))}
-                        {dayEvents.length > EVENTS_PER_DAY && (
-                          <span className="hidden pl-2 text-[0.68rem] text-ink-soft md:block">
-                            +{dayEvents.length - EVENTS_PER_DAY}
-                          </span>
-                        )}
-                        {dayEvents.length > 0 && (
-                          <span className="cal-dots" aria-hidden="true">
-                            {dayEvents.slice(0, 3).map((event) => (
-                              <i key={event.id} data-kind={event.kind} style={marker(event, colors)} />
-                            ))}
-                          </span>
-                        )}
+                        <span class="cal-number">{dayNumber(day)}</span>
                       </button>
+                      {/* What follows is for the eye; the button's label reads the events out. */}
+                      {dayEvents.slice(0, EVENTS_PER_DAY).map((event, i) => (
+                        <span
+                          key={event.id}
+                          class="cal-event"
+                          data-kind={event.kind}
+                          style={marker(event, colors)}
+                          aria-hidden="true"
+                        >
+                          {/* In the narrow cell an anniversary shows just the name. */}
+                          {event.kind === 'anniversary' ? (event.subject ?? titles[i]) : titles[i]}
+                        </span>
+                      ))}
+                      {dayEvents.length > EVENTS_PER_DAY && (
+                        <span class="cal-more" aria-hidden="true">
+                          +{dayEvents.length - EVENTS_PER_DAY}
+                        </span>
+                      )}
+                      {dayEvents.length > 0 && (
+                        <span class="cal-dots" aria-hidden="true">
+                          {dayEvents.slice(0, 3).map((event) => (
+                            <i key={event.id} data-kind={event.kind} style={marker(event, colors)} />
+                          ))}
+                        </span>
+                      )}
                     </td>
                   );
                 })}
@@ -150,44 +198,44 @@ export function Calendar({ events, colors, locale, strings, builtOn, subscribeUr
         </table>
       </div>
 
-      <div className="order-1 lg:order-2 lg:col-span-5">
-        <div className="flex items-baseline justify-between gap-4">
-          <h3
-            className="text-xs font-semibold tracking-[0.22em] text-ink-soft uppercase lg:pt-3"
-            aria-live="polite"
-          >
-            {heading}
-          </h3>
+      <div class="order-1 lg:order-2 lg:col-span-5">
+        <div class="flex items-baseline justify-between gap-4">
+          <h3 class="text-xs font-semibold tracking-[0.22em] text-ink-soft uppercase lg:pt-3">{heading}</h3>
           {selected && (
-            <button type="button" className="link text-sm" onClick={() => calendar.select(null)}>
+            <button type="button" class="link py-1 text-sm" onClick={() => calendar.select(null)}>
               {strings['calendar.upcoming']}
             </button>
           )}
         </div>
+        {/* Tells a screen reader what picking a day has brought up in the list. */}
+        <p class="sr-only" role="status">
+          {selected &&
+            `${longDate(locale, selected)}: ${listed.length ? formatEventCount(listed.length, locale) : strings['calendar.empty']}`}
+        </p>
 
         {listed.length === 0 ? (
-          <p className="mt-5 border-t border-rule py-8 text-ink-soft">
+          <p class="mt-5 border-t border-rule py-8 text-ink-soft">
             {strings[selected ? 'calendar.empty' : 'calendar.none']}
           </p>
         ) : (
-          <ol className="mt-5">
+          <ol class="mt-5">
             {listed.map((event) => {
               const day = selected ?? dateOf(event.start);
               const fraternity = event.fraternityId ? colors[event.fraternityId] : undefined;
               return (
                 <li
                   key={event.id}
-                  className="grid grid-cols-[3.25rem_1fr_auto] items-center gap-4 border-t border-rule py-4 sm:gap-5"
+                  class="grid grid-cols-[3.25rem_1fr_auto] items-center gap-4 border-t border-rule py-4 sm:gap-5"
                 >
-                  <time dateTime={event.start} className="text-center">
-                    <span className="block font-display text-[2.5rem] leading-none">{dayNumber(day)}</span>
-                    <span className="mt-1 block text-[0.66rem] font-semibold tracking-[0.2em] text-ink-soft uppercase">
+                  <time dateTime={event.start} class="text-center">
+                    <span class="block font-display text-[2.5rem] leading-none">{dayNumber(day)}</span>
+                    <span class="mt-1 block text-[0.66rem] font-semibold tracking-[0.2em] text-ink-soft uppercase">
                       {monthShort(locale, day)}
                     </span>
                   </time>
                   <div>
-                    <p className="font-display text-xl leading-snug">{eventTitle(event, locale, strings)}</p>
-                    <p className="mt-0.5 text-sm text-ink-soft">
+                    <p class="font-display text-xl leading-snug">{eventTitle(event, locale, strings)}</p>
+                    <p class="mt-0.5 text-sm text-ink-soft">
                       {[weekdayLong(locale, day), timeOf(event.start), shortLocation(event.location)]
                         .filter(Boolean)
                         .join(' · ')}
@@ -202,7 +250,7 @@ export function Calendar({ events, colors, locale, strings, builtOn, subscribeUr
                   ) : (
                     <span
                       aria-hidden="true"
-                      className={`mr-3 size-2.5 rounded-full ${event.kind === 'meeting' ? 'bg-wine' : 'bg-ink/25'}`}
+                      class={`mr-3 size-2.5 rounded-full ${event.kind === 'meeting' ? 'bg-wine' : 'bg-ink/25'}`}
                     />
                   )}
                 </li>
@@ -211,8 +259,9 @@ export function Calendar({ events, colors, locale, strings, builtOn, subscribeUr
           </ol>
         )}
 
-        <a className="link mt-6 inline-block text-sm" href={subscribeUrl} target="_blank" rel="noreferrer">
-          {strings['calendar.subscribe']} ↗
+        <a class="link mt-6 inline-block py-1 text-sm" href={subscribeUrl} target="_blank" rel="noreferrer">
+          {strings['calendar.subscribe']} <span aria-hidden="true">↗</span>
+          <span class="sr-only"> ({strings['a11y.newTab']})</span>
         </a>
       </div>
     </div>

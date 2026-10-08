@@ -1,4 +1,5 @@
 ---
+import italicFont from '@/assets/fonts/newsreader-italic-400.woff2?url';
 import type { Locale } from '@/i18n/config';
 import Layout from '@/layouts/Layout.astro';
 import { loadHomepage } from '@/lib/site';
@@ -20,6 +21,8 @@ const page = await loadHomepage(locale);
 ---
 
 <Layout locale={locale}>
+  {/* Half of the headline is set in italic, so here that font is fetched early too. */}
+  <link slot="head" rel="preload" as="font" type="font/woff2" href={italicFont} crossorigin />
   <Hero page={page} />
   <Facts page={page} />
   <About page={page} />

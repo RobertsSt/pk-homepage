@@ -19,4 +19,8 @@ heraldry:
   zirkel: ../../assets/fraternities/latvia/zirkel.jpg
   cap: ../../assets/fraternities/latvia/cap.jpg
   star: ../../assets/fraternities/latvia/star.jpg
-cover: ../../assets/fraternities/latvia/cover.jpg
+cover:
+  src: ../../assets/fraternities/latvia/cover.jpg
+  alt:
+    lv: Koka paneļiem apdarināta telpa ar grāmatplauktiem, ādas krēsliem un kamīnu; pie sienas divi sakrustoti rapieri un sarkanbaltsarkani karogi
+    en: A wood-panelled room with bookcases, leather armchairs and a fireplace; two crossed rapiers and red-white-red flags hang on the wall

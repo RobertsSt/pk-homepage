@@ -109,6 +109,41 @@ export function monthGrid({ year, month }: YearMonth): string[][] {
   );
 }
 
+/** The same day of the month a number of months away, or that month's last day if it is shorter. */
+export function sameDayInMonth(dateKey: string, by: number): string {
+  const { year, month } = shiftMonth(monthOf(dateKey), by);
+  const lastDay = new Date(Date.UTC(year, month, 0)).getUTCDate();
+  return toDateKey(year, month, Math.min(parts(dateKey).day, lastDay));
+}
+
+/**
+ * Where a key press in the month grid leads from a day: arrows move by a day
+ * or a week, Home and End go to Monday and Sunday, Page Up and Page Down turn
+ * the month. Any other key gives `undefined`.
+ */
+export function dayForKey(key: string, dateKey: string): string | undefined {
+  switch (key) {
+    case 'ArrowLeft':
+      return addDays(dateKey, -1);
+    case 'ArrowRight':
+      return addDays(dateKey, 1);
+    case 'ArrowUp':
+      return addDays(dateKey, -7);
+    case 'ArrowDown':
+      return addDays(dateKey, 7);
+    case 'Home':
+      return addDays(dateKey, -weekdayIndex(dateKey));
+    case 'End':
+      return addDays(dateKey, 6 - weekdayIndex(dateKey));
+    case 'PageUp':
+      return sameDayInMonth(dateKey, -1);
+    case 'PageDown':
+      return sameDayInMonth(dateKey, 1);
+    default:
+      return undefined;
+  }
+}
+
 export const dayNumber = (dateKey: string) => parts(dateKey).day;
 
 export const monthName = (locale: Locale, month: number) => MONTHS[locale][month - 1]!;

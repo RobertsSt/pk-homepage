@@ -1,4 +1,4 @@
-import { defineCollection, reference } from 'astro:content';
+import { defineCollection, reference, type ImageFunction } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
@@ -6,6 +6,9 @@ const hexColor = z.string().regex(/^#[0-9a-f]{6}$/i);
 
 /** A string that exists in both site languages. */
 const localized = z.object({ lv: z.string(), en: z.string() });
+
+/** A photograph with the words that stand in for it when it cannot be seen. */
+const photo = (image: ImageFunction) => z.object({ src: image(), alt: localized });
 
 /**
  * Language-neutral facts about each fraternity. `order` is seniority, the
@@ -36,9 +39,9 @@ const fraternities = defineCollection({
         star: image(),
       }),
       /** The photograph that leads the fraternity's page, if there is one. */
-      cover: image().optional(),
+      cover: photo(image).optional(),
       /** Further photographs, shown after the text. */
-      photos: z.array(image()).default([]),
+      photos: z.array(photo(image)).default([]),
     }),
 });
 

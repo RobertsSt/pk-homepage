@@ -13,10 +13,20 @@ colors:
   - "#3f6117"
   - "#0e1b77"
   - "#c9a348"
-cover: ../../assets/fraternities/lettonia/cover.jpg
+cover:
+  src: ../../assets/fraternities/lettonia/cover.jpg
+  alt:
+    lv: Vairāki desmiti Lettonia biedru zaļos deķeļos un krāsu lentēs kopbildē zem korporācijas vapeņa un karogiem
+    en: Several dozen members of Lettonia in green caps and colour sashes, gathered for a group photograph beneath the fraternity’s coat of arms and flags
 photos:
-  - ../../assets/fraternities/lettonia/extra-1.jpg
-  - ../../assets/fraternities/lettonia/extra-2.jpg
+  - src: ../../assets/fraternities/lettonia/extra-1.jpg
+    alt:
+      lv: Pāri vakartērpos iet gājienā pa balles zāli; kungi frakās un zaļos deķeļos
+      en: Couples in evening dress walk in procession through a ballroom; the men wear tailcoats and green caps
+  - src: ../../assets/fraternities/lettonia/extra-2.jpg
+    alt:
+      lv: Balles viesi vakartērpos; priekšplānā sirmi kungi zaļos deķeļos kopā ar dāmām
+      en: Guests in evening dress at a ball; in front, grey-haired gentlemen in green caps with their partners
 heraldry:
   shield: ../../assets/fraternities/lettonia/shield.jpg
   arms: ../../assets/fraternities/lettonia/arms.gif

@@ -1,14 +1,13 @@
 /**
- * Page motion, driven by data attributes so templates stay declarative:
+ * Scroll-driven motion, switched on by data attributes so templates stay
+ * declarative:
  *
- *   data-reveal            fade and rise in when scrolled into view
- *   data-reveal="clip"     open out from an inset frame instead
+ *   data-reveal            appear when scrolled into view (styles in motion.css)
  *   data-count="20"        count up to the number when first seen
  *   data-parallax="40"     drift up to 40px against the scroll while in view
  *
  * All of it is skipped when the visitor asks for reduced motion.
  */
-import { animate, scroll } from 'motion';
 
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -43,28 +42,59 @@ function initReveals() {
   onceVisible(elements, (element) => element.classList.add('is-visible'), '0px 0px -8% 0px');
 }
 
+const COUNT_DURATION = 1600;
+
+/** Fast at first, settling on the final number. */
+const easeOut = (progress: number) => 1 - (1 - progress) ** 3;
+
 function initCounters() {
-  const elements = document.querySelectorAll<HTMLElement>('[data-count]');
   if (reducedMotion) return;
-  onceVisible(elements, (element) => {
+  onceVisible(document.querySelectorAll<HTMLElement>('[data-count]'), (element) => {
     const target = Number((element as HTMLElement).dataset.count);
-    animate(0, target, {
-      duration: 1.6,
-      ease: [0.2, 0.7, 0.2, 1],
-      onUpdate: (value) => (element.textContent = String(Math.round(value))),
-    });
+    const started = performance.now();
+    const step = (now: number) => {
+      const progress = Math.min((now - started) / COUNT_DURATION, 1);
+      element.textContent = String(Math.round(target * easeOut(progress)));
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
   });
 }
 
+/**
+ * Moves each element between -distance and +distance as its parent crosses the
+ * viewport. `transform` is used because the templates position these elements
+ * with the separate `translate` property, which this must not overwrite.
+ */
 function initParallax() {
   if (reducedMotion) return;
-  for (const element of document.querySelectorAll<HTMLElement>('[data-parallax]')) {
-    const distance = Number(element.dataset.parallax);
-    scroll(animate(element, { y: [-distance, distance] }, { ease: 'linear' }), {
-      target: element.parentElement ?? element,
-      offset: ['start end', 'end start'],
-    });
-  }
+  const items = [...document.querySelectorAll<HTMLElement>('[data-parallax]')].map((element) => ({
+    element,
+    track: element.parentElement ?? element,
+    distance: Number(element.dataset.parallax),
+  }));
+  if (items.length === 0) return;
+
+  let queued = false;
+  const update = () => {
+    queued = false;
+    const viewport = window.innerHeight;
+    for (const { element, track, distance } of items) {
+      const { top, bottom, height } = track.getBoundingClientRect();
+      if (bottom < 0 || top > viewport) continue;
+      // 0 as the parent's top edge meets the bottom of the screen, 1 as it leaves at the top.
+      const progress = (viewport - top) / (viewport + height);
+      element.style.transform = `translate3d(0, ${((progress * 2 - 1) * distance).toFixed(1)}px, 0)`;
+    }
+  };
+  const request = () => {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(update);
+  };
+  window.addEventListener('scroll', request, { passive: true });
+  window.addEventListener('resize', request);
+  update();
 }
 
 initReveals();
