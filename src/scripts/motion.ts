@@ -15,6 +15,11 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matc
 // Tells the watchdog in <head> that this script arrived and will reveal the content.
 document.documentElement.dataset.motion = 'on';
 
+/**
+ * Calls back once for each element when any part of it enters the viewport.
+ * The trigger must not be a share of the element's own height: an article many
+ * screens tall never has a tenth of itself in view and would stay hidden.
+ */
 function onceVisible(elements: Iterable<Element>, callback: (element: Element) => void, rootMargin = '0px') {
   const observer = new IntersectionObserver(
     (entries) => {
@@ -24,7 +29,7 @@ function onceVisible(elements: Iterable<Element>, callback: (element: Element) =
         callback(entry.target);
       }
     },
-    { rootMargin, threshold: 0.12 },
+    { rootMargin, threshold: 0 },
   );
   for (const element of elements) observer.observe(element);
 }
