@@ -34,7 +34,7 @@ Out of scope for the first version: news or blog posts, member login, forms, sea
 | Languages     | Latvian at `/`, English at `/en/`. An untranslated page shows the Latvian text under a notice.            | Latvian stays the primary address; English can be filled in page by page.                         |
 | Content       | Markdown and YAML files in `src/content`, checked against schemas in `src/content.config.ts`.             | Plain files are what a git-based editing tool reads and writes, and a typo fails the build.       |
 | Calendar      | Read from the public calendar feed when the site is built. Rebuilt nightly. A saved copy is the fallback. | No API key and no dependence on Google while a visitor loads the page.                            |
-| Editing tool  | Pages CMS, set up in milestone 5.                                                                         | Editors sign in through a link sent by email, so they need no GitHub account.                     |
+| Editing tool  | Pages CMS, configured in `.pages.yml`.                                                                    | Editors sign in through a link sent by email, so they need no GitHub account.                     |
 | Hosting       | Stays at nano.lv. GitHub Actions builds the site and uploads it over FTPS (the `Deploy` workflow).        | No DNS or hosting change; the host offers FTPS but no SSH.                                        |
 | Preview       | GitHub Pages, published from `main`.                                                                      | Others can review work before anything touches pk.lv.                                             |
 | Quality       | `npm run verify`: Prettier, ESLint, type check, unit tests, build, browser tests. CI runs it on PRs.      | The same checks locally and in CI; some faults only show in a real browser.                       |
@@ -113,7 +113,7 @@ results keep working. The build writes these as small redirect pages, which work
 | Homepage: officers, About photo, milestones, contact | `src/content/site/home.yaml`            | Both languages side by side |
 | Menu                                                 | `src/data/navigation.ts`                | Both languages side by side |
 | Button and label text                                | `src/i18n/ui.ts`                        | Both languages side by side |
-| Images                                               | `src/assets/`                           | n/a                         |
+| Images, referred to in content as `@/assets/…`       | `src/assets/`                           | n/a                         |
 | Source, author and licence of outside images         | `src/data/image-credits.json`           | n/a                         |
 
 Fraternities are always listed in seniority order (the `order` field), as on the current site.
@@ -149,7 +149,10 @@ day; after that WordPress is retired and the import script is deleted.
    fraternity texts are in English (about 33,000 words). The translation was made by Claude on 2026-10-08
    and nobody from P!K! has read it yet; that review is the part still to do. The word choices are listed
    under "English wording" below.
-5. **Editing tool.** Pages CMS configured; a one-page guide for editors in Latvian.
+5. **Editing tool.** Configured, not yet tried. `.pages.yml` describes every content file as a form and
+   passes Pages CMS's own check of that file; the guide for editors is `docs/redigesanas-pamaciba.md`.
+   Still to do: Roberts installs the app on the repository and tries one edit, because the tool cannot
+   be run from here. See "Editing tool" below.
 6. **Launch.** The publishing workflow exists and is started by hand. Still to do: the trial upload, the
    final import, the switch, automatic and nightly publishing, WordPress archived. See "Publishing to
    pk.lv" below.
@@ -229,6 +232,28 @@ in the branch `accessibility-and-speed`, the English texts in `english-texts`.
 
 Dates are written as "27 September 1919". Latvian mottos are kept in Latvian with the English in brackets;
 Latin and German ones are left as they are. Names of people, streets and publications are not translated.
+
+## Editing tool
+
+Pages CMS is a web form over the files in this repository. Saving a form writes a commit to `main`, as if a
+developer had edited the file; nothing else stores content.
+
+- What can be edited: the homepage data, the facts and photographs of each fraternity, the long texts and
+  the text pages in both languages, the image credits, and the picture library.
+- What cannot: adding, renaming or deleting a page or a fraternity. File names are addresses, and a new
+  page also needs a place in the menu, which is code.
+- A save cannot break the live site. Each commit is checked by CI, and once publishing is automatic it
+  will run only after CI has passed; a form saved with a wrong value leaves the site as it was. A field
+  left empty is read as "not given", whatever the tool writes for it.
+- The tool rewrites a file when it saves it: comments in a YAML file are lost and its layout may change.
+- Installing the tool gives its app write access to this repository. That is how it saves; it is also a
+  reason to keep the FTP account limited to the site's own folder.
+
+Until the switch, Latvian texts still come from WordPress and an import overwrites them, so editors are
+invited only after it.
+
+Once WordPress is gone, `translatedFrom` can no longer be compared with a WordPress date. The check for
+translations that have fallen behind then has to compare when the two files were last changed.
 
 ## Publishing to pk.lv
 
