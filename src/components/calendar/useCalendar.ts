@@ -112,6 +112,3 @@ export function useCalendar(events: CalendarEvent[], builtOn: string) {
     },
   };
 }
-
-/** "Šarlotes iela 3, Centra rajons, Rīga, LV-1001, Latvija" → "Šarlotes iela 3" */
-export const shortLocation = (location: string | undefined) => location?.split(',')[0]?.trim();

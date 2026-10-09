@@ -30,7 +30,8 @@ const to = (path) => `${base.replace(/\/$/, '')}${path}`;
 
 // Every address of the old WordPress site leads to its new home, so existing
 // links and search results keep working. The build writes each one as a small
-// redirect page, which any static host can serve.
+// redirect page, which any static host can serve; on the hosting itself the
+// server rules below answer first, with a proper "moved permanently".
 const redirects = {
   '/WordPress': to('/'),
   '/WordPress/studentu-korporacijas': to('/studentu-korporacijas/'),
@@ -63,6 +64,12 @@ ErrorDocument 404 ${base}404.html
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
+
+  # The addresses of the WordPress site this one replaced: each is moved for
+  # good to the page that took its place, whatever was written after a "?".
+${Object.entries(redirects)
+  .map(([from, target]) => `  RewriteRule ^${from.slice(1)}/?$ https://${host}${target} [R=301,L,QSD]`)
+  .join('\n')}
 
   # One address for every page: https://${host}. A request over plain http, or
   # for www.${host} or another name the hosting answers to, is sent there. The

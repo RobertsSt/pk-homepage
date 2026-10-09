@@ -10,6 +10,18 @@ test('the icons and other files named in the page head exist', async ({ page, re
   for (const href of hrefs) expect((await request.get(href)).ok(), href).toBe(true);
 });
 
+test('every page ends with the address to write to', async ({ page }) => {
+  await page.goto('/');
+  const contact = await page.locator('main a[href^="mailto:"]').last().getAttribute('href');
+  for (const { path } of PAGES) {
+    await page.goto(path);
+    const address = page.locator('footer a[href^="mailto:"]');
+    await expect(address, path).toHaveCount(1);
+    await expect(address, path).toHaveAttribute('href', contact!);
+    await expect(address, path).toContainText(contact!.replace('mailto:', ''));
+  }
+});
+
 test('an address of the old WordPress site leads to the new page', async ({ page }) => {
   await page.goto('/WordPress/lettonia/');
   await expect(page).toHaveURL(/\/studentu-korporacijas\/lettonia\/$/);

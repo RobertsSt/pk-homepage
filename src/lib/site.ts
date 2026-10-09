@@ -34,6 +34,22 @@ export async function getFraternityPaths() {
   });
 }
 
+/** The fraternity that presides over P!K! this academic year, as the homepage names it. */
+export async function getPresiding() {
+  const home = await getEntry('home', 'home');
+  if (!home) throw new Error('src/content/site/home.yaml is missing');
+  const fraternity = await getEntry(home.data.presiding.fraternity);
+  if (!fraternity) throw new Error(`home.yaml names an unknown presiding fraternity`);
+  return { fraternity, term: home.data.presiding.term, foundedYear: home.data.foundedYear };
+}
+
+/** How to reach P!K!: shown on the homepage and at the foot of every page. */
+export async function getContact() {
+  const home = await getEntry('home', 'home');
+  if (!home) throw new Error('src/content/site/home.yaml is missing');
+  return home.data.contact;
+}
+
 /** Everything the homepage shows, with text already resolved to one language. */
 export async function loadHomepage(locale: Locale) {
   const [homeEntry, fraternities] = await Promise.all([getEntry('home', 'home'), getFraternities()]);
