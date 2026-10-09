@@ -1,7 +1,7 @@
 import type { CSSProperties, TargetedKeyboardEvent } from 'preact';
 import { useEffect, useId, useRef } from 'preact/hooks';
 import { Shield } from '@/components/Shield';
-import { shortLocation, useCalendar } from '@/components/calendar/useCalendar';
+import { useCalendar } from '@/components/calendar/useCalendar';
 import type { Locale } from '@/i18n/config';
 import type { UiKey } from '@/i18n/ui';
 import {
@@ -12,11 +12,11 @@ import {
   monthOf,
   monthShort,
   monthTitle,
-  timeOf,
   weekdayLong,
   weekdayNames,
 } from '@/lib/calendar/dates';
-import { eventTitle, formatEventCount } from '@/lib/calendar/labels';
+import { eventTitle, formatEventCount, placeName, timeRange } from '@/lib/calendar/labels';
+import { addToGoogleUrl, mapUrl } from '@/lib/calendar/links';
 import type { CalendarEvent } from '@/lib/calendar/types';
 import type { FraternityColors } from '@/lib/site';
 
@@ -222,37 +222,76 @@ export function Calendar({ events, colors, locale, strings, builtOn, subscribeUr
             {listed.map((event) => {
               const day = selected ?? dateOf(event.start);
               const fraternity = event.fraternityId ? colors[event.fraternityId] : undefined;
+              const newTab = <span class="sr-only"> ({strings['a11y.newTab']})</span>;
               return (
-                <li
-                  key={event.id}
-                  class="grid grid-cols-[3.25rem_1fr_auto] items-center gap-4 border-t border-rule py-4 sm:gap-5"
-                >
-                  <time dateTime={event.start} class="text-center">
-                    <span class="block font-display text-[2.5rem] leading-none">{dayNumber(day)}</span>
-                    <span class="mt-1 block text-[0.66rem] font-semibold tracking-[0.2em] text-ink-soft uppercase">
-                      {monthShort(locale, day)}
-                    </span>
-                  </time>
-                  <div>
-                    <p class="font-display text-xl leading-snug">{eventTitle(event, locale, strings)}</p>
-                    <p class="mt-0.5 text-sm text-ink-soft">
-                      {[weekdayLong(locale, day), timeOf(event.start), shortLocation(event.location)]
-                        .filter(Boolean)
-                        .join(' · ')}
-                    </p>
-                  </div>
-                  {fraternity ? (
-                    <Shield
-                      colors={fraternity.colors}
-                      band={fraternity.band}
-                      className="h-10 w-auto text-ink/60"
-                    />
-                  ) : (
-                    <span
-                      aria-hidden="true"
-                      class={`mr-3 size-2.5 rounded-full ${event.kind === 'meeting' ? 'bg-wine' : 'bg-ink/25'}`}
-                    />
-                  )}
+                // The row opens to show where the event is and to copy it into one's own calendar.
+                <li key={event.id} class="border-t border-rule">
+                  <details class="cal-entry group">
+                    <summary class="grid cursor-pointer list-none grid-cols-[3.25rem_1fr_auto_auto] items-center gap-4 py-4 sm:gap-5">
+                      <time dateTime={event.start} class="text-center">
+                        <span class="block font-display text-[2.5rem] leading-none">{dayNumber(day)}</span>
+                        <span class="mt-1 block text-[0.66rem] font-semibold tracking-[0.2em] text-ink-soft uppercase">
+                          {monthShort(locale, day)}
+                        </span>
+                      </time>
+                      <span class="block">
+                        <span class="block font-display text-xl leading-snug">
+                          {eventTitle(event, locale, strings)}
+                        </span>
+                        <span class="mt-0.5 block text-sm text-ink-soft">
+                          {[weekdayLong(locale, day), timeRange(event), placeName(event.location)]
+                            .filter(Boolean)
+                            .join(' · ')}
+                        </span>
+                      </span>
+                      {fraternity ? (
+                        <Shield
+                          colors={fraternity.colors}
+                          band={fraternity.band}
+                          className="h-10 w-auto text-ink/60"
+                        />
+                      ) : (
+                        <span
+                          aria-hidden="true"
+                          class={`mr-3 size-2.5 rounded-full ${event.kind === 'meeting' ? 'bg-wine' : 'bg-ink/25'}`}
+                        />
+                      )}
+                      <span
+                        aria-hidden="true"
+                        class="w-3 text-center text-lg leading-none text-ink-soft transition-transform group-open:rotate-45"
+                      >
+                        +
+                      </span>
+                    </summary>
+                    <div class="pb-5 pl-[4.25rem] text-sm sm:pl-[4.5rem]">
+                      {event.description && (
+                        // Entries are written in Latvian whatever the language of the page.
+                        <p
+                          class="mb-3 max-w-[34rem] whitespace-pre-line text-ink-soft"
+                          lang={locale === 'lv' ? undefined : 'lv'}
+                        >
+                          {event.description}
+                        </p>
+                      )}
+                      {event.location && <p class="mb-3">{event.location.replace(/\s*\n\s*/g, ', ')}</p>}
+                      <ul class="flex flex-wrap gap-x-6 gap-y-2">
+                        {event.location && (
+                          <li>
+                            <a class="link" href={mapUrl(event.location)} target="_blank" rel="noreferrer">
+                              {strings['calendar.map']} <span aria-hidden="true">↗</span>
+                              {newTab}
+                            </a>
+                          </li>
+                        )}
+                        <li>
+                          <a class="link" href={addToGoogleUrl(event)} target="_blank" rel="noreferrer">
+                            {strings['calendar.addEvent']} <span aria-hidden="true">↗</span>
+                            {newTab}
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </details>
                 </li>
               );
             })}

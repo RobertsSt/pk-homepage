@@ -15,7 +15,7 @@ Stipendija paredzēta: bakalauriem (sākot no 2. kursa); maģistriem – Korpor�
 Šī stipendija ir veltīta Dr. Armīna Rūša, kas bija izcils advokāts un mācību spēks kā pirmskara Latvijas Republikā, tā arī ārzemēs, un viņa dēla Armīna I. Rūša piemiņai. Stipendija ir nodibināta ar mērķi studiju laikā atbalstīt spējīgus un centīgus Latvijas studentus un popularizēt studentu un studenšu korporāciju akadēmisko vienotību gan studiju laikā, gan ārpus tā. Stipendiju sava tēva un brāļa gaišai piemiņai ir izveidojis Lettonias filistrs Roberts Rūsis.\
 Stipendija paredzēta: bakalauriem (sākot no 2. kursa); maģistriem – studentu un studenšu korporāciju biedriem LR augstskolām: LU, LLU, RTU, RSU, REA, JA.
 
- **Vējiņu ģimenes stipendija**
+**Vējiņu ģimenes stipendija**
 
 Austrālijas latvietis Jānis Rūdolfs Vējiņš 2007.gadā izveidoja Jāņa un Ainas Vējiņu vārdā nosauktas stipendijas Latvijas studentu un studenšu korporāciju biedriem, īpaši dodot priekšroku studentu korporācijas Gersicania biedriem.\
 Stipendija paredzēta: bakalauriem (sākot no 2. kursa); maģistriem – LU korporācijas Gersicania biedriem.

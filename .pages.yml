@@ -308,6 +308,178 @@ content:
             label: Skaidrojums
             component: bilingualLong
 
+  # A page that explains a subject in short sections. Three field sets repeat
+  # and are written once: &guidePicture, &guideEntries and &guideSection.
+  - name: guides
+    label: Skaidrojošās lapas
+    type: collection
+    path: src/content/guides
+    filename: '{primary}.yaml'
+    format: yaml
+    operations:
+      create: false
+      rename: false
+      delete: false
+    view:
+      fields: [name]
+      primary: name
+    fields:
+      - name: name
+        label: Lapa
+        type: string
+        readonly: true
+      - name: title
+        label: Virsraksts
+        component: bilingual
+      - name: kicker
+        label: Rinda virs virsraksta
+        component: bilingual
+      - name: intro
+        label: Ievads
+        component: bilingualLong
+      - name: photo
+        label: Attēls lapas sākumā
+        type: object
+        fields: &guidePicture
+          - name: src
+            label: Attēls
+            type: image
+            required: true
+            options:
+              media: images
+          - name: alt
+            label: Attēla apraksts
+            component: pictureDescription
+          - name: caption
+            label: Paraksts zem attēla
+            component: bilingual
+      - name: principles
+        label: Pamatprincipi
+        type: object
+        fields: &guideSection
+          - name: title
+            label: Sadaļas virsraksts
+            component: bilingual
+          - name: intro
+            label: Sadaļas ievads
+            component: bilingualLong
+          - &guideEntries
+            name: items
+            label: Ieraksti
+            type: object
+            list:
+              min: 1
+              collapsible:
+                collapsed: true
+                summary: 'Ieraksts {index}'
+            fields:
+              - name: title
+                label: Nosaukums
+                component: bilingual
+              - name: text
+                label: Teksts
+                component: bilingualLong
+      - name: character
+        label: Kas korporāciju atšķir
+        type: object
+        fields: *guideSection
+      - name: path
+        label: Ceļš korporācijā
+        type: object
+        fields: *guideSection
+      - name: joining
+        label: Kā iepazīt korporāciju
+        type: object
+        fields:
+          - name: title
+            label: Virsraksts
+            component: bilingual
+          - name: text
+            label: Teksts
+            component: bilingualLong
+          - name: sororitiesUrl
+            label: Studenšu korporāciju vietnes adrese
+            type: string
+            required: true
+            pattern:
+              regex: '^https?://\S+$'
+              message: Adresei jāsākas ar https://
+      - name: symbols
+        label: Krāsas un simboli
+        description: Piemēram lapa pati rāda prezidējošā konventa simboliku; to maina sadaļā “Sākumlapa”.
+        type: object
+        fields: *guideSection
+      - name: life
+        label: Dzīve korporācijā
+        type: object
+        fields:
+          - name: title
+            label: Sadaļas virsraksts
+            component: bilingual
+          - name: intro
+            label: Sadaļas ievads
+            component: bilingualLong
+          - name: photo
+            label: Attēls
+            type: object
+            fields: *guidePicture
+          - *guideEntries
+      - name: questions
+        label: Biežāk uzdotie jautājumi
+        type: object
+        list:
+          min: 1
+          collapsible:
+            collapsed: true
+            summary: 'Jautājums {index}'
+        fields:
+          - name: question
+            label: Jautājums
+            component: bilingual
+          - name: answer
+            label: Atbilde
+            component: bilingualLong
+      - name: terms
+        label: Vārdnīca
+        type: object
+        list:
+          min: 1
+          collapsible:
+            collapsed: true
+            summary: '{word}'
+        fields:
+          - name: word
+            label: Jēdziens
+            type: string
+            required: true
+          - name: text
+            label: Skaidrojums
+            component: bilingualLong
+      - name: sources
+        label: Avoti
+        description: Katram apgalvojumam, kura nav pilnajā tekstā, šeit jābūt avotam.
+        type: object
+        list:
+          min: 1
+          collapsible:
+            collapsed: true
+            summary: '{title}'
+        fields:
+          - name: title
+            label: Avots
+            description: Autors vai izdevējs, nosaukums, gads.
+            type: string
+            required: true
+          - name: note
+            label: Kas no tā ņemts
+            component: bilingual
+          - name: url
+            label: Saite
+            type: string
+            pattern:
+              regex: '^(https?://\S+)?$'
+              message: Adresei jāsākas ar https://
+
   - name: fraternities
     label: Korporācijas
     type: collection

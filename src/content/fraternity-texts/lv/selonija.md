@@ -38,12 +38,17 @@ Uz 25 gadu jubileju izdots: SELONIJAS ALBUMS, 1880 -1905, kurā ievietotas 314 s
 
 Vācu vara 1918. g. rudeni atjaunoja agrākā Politehniskā institūta darbību ar nosaukumu Baltische Technische Hochschule, kurā turpināja studijas prāvs skaits kommilitoņu, un Selonijas Konvents atsāka darbību Rīgā.
 
-1918.  g. 18. novembri seloņi piedalījās Latvijas valsts pasludināšanas aktā. Otrā dienā Selonijas krustdēli uzvilka Latvijas karogus pie augstskolas vecās ēkas galvenās ieejas.
-1919.  g. 29. novembri Selonijas Generālsapulce vienbalsīgi nolēma, ka visi aktīvie kommilitoņi nodod sevi Apsardzības ministra rīcībā. Atbrīvošanas cīņās seloņi galvenokārt ir saistīti ar Kalpaka bataljona Atsevišķās studentu rotas gaitām. Studentu rotas karavīri par savu pirmo komandieri ievēlēja seloņi kapteini Nikolaju Grundmani. Par varonību Latvijas atbrīvošanas cīņās 40 seloņi ir apbalvoti ar Lāčplēša kara ordeni.
-1920.  g. Selonija piedalījās Prezidiju Konventa dibināšanā.
-1921.  g. Selonija iegūst 2 stāvu namu Stabu ielā 17. Pirmajā stāvā – konventa telpas, otrajā – Filistru biedrība. Puspagrabā izbūvē telpu sabiedriskai dzīvei un nelielu skatuvi krustdēlu teātrim. Pie Selonijas pastāvēja simfoniskais orķestris ar 30 dalībniekiem.
-1922.  g. S!F!P!B! iepērk Meža kapos Selonijas nodalījumu, ietverot fil! Poruku Jāņa atdusas vietu ar pieminekli.
-1923.  g. 31. augusta sanāksmē Eslingenā, Vācijā nodibina Selonijas Apvienoto Konventu, kas pārņēma Selonijas vadību trimdā. Tas sastādījās no filistriem un aktīviem k!ta locekļiem. Brīvajā pasaulē darbojas 19 Selonijas kopas. Brāļu kapos Katskiļos, Ņujorkas pavalstī ir Selonijas nodalījums ar 120 urnu vietām.
+1918\. g. 18. novembri seloņi piedalījās Latvijas valsts pasludināšanas aktā. Otrā dienā Selonijas krustdēli uzvilka Latvijas karogus pie augstskolas vecās ēkas galvenās ieejas.
+
+1918\. g. 29. novembri Selonijas Generālsapulce vienbalsīgi nolēma, ka visi aktīvie kommilitoņi nodod sevi Apsardzības ministra rīcībā. Atbrīvošanas cīņās seloņi galvenokārt ir saistīti ar Kalpaka bataljona Atsevišķās studentu rotas gaitām. Studentu rotas karavīri par savu pirmo komandieri ievēlēja seloņi kapteini Nikolaju Grundmani. Par varonību Latvijas atbrīvošanas cīņās 40 seloņi ir apbalvoti ar Lāčplēša kara ordeni.
+
+1920\. g. Selonija piedalījās Prezidiju Konventa dibināšanā.
+
+1923\. g. Selonija iegūst 2 stāvu namu Stabu ielā 17. Pirmajā stāvā – konventa telpas, otrajā – Filistru biedrība. Puspagrabā izbūvē telpu sabiedriskai dzīvei un nelielu skatuvi krustdēlu teātrim. Pie Selonijas pastāvēja simfoniskais orķestris ar 30 dalībniekiem.
+
+1927\. g. S!F!P!B! iepērk Meža kapos Selonijas nodalījumu, ietverot fil! Poruku Jāņa atdusas vietu ar pieminekli.
+
+1946\. g. 31. augusta sanāksmē Eslingenā, Vācijā nodibina Selonijas Apvienoto Konventu, kas pārņēma Selonijas vadību trimdā. Tas sastādījās no filistriem un aktīviem k!ta locekļiem. Brīvajā pasaulē darbojas 19 Selonijas kopas. Brāļu kapos Katskiļos, Ņujorkas pavalstī ir Selonijas nodalījums ar 120 urnu vietām.
 
 Selonija ir noslēgusi draudzības karteli ar Lettoniu 1907. g. un ar Rīgā dibināto vēlāko Tērbatas universitātes igauņu korporāciju Vironia 1924. g.
 

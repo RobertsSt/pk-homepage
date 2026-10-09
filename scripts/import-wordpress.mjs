@@ -129,6 +129,43 @@ function lines(el) {
   return parse(html).text.split('\n').map(clean).filter(Boolean);
 }
 
+/** How many non-breaking spaces a run of white space holds, typed out or as an entity. */
+const hardSpaces = (run) =>
+  (run.match(/&nbsp;/g)?.length ?? 0) + [...run].filter((char) => char.charCodeAt(0) === 160).length;
+
+/** True when no inline element is left open at the end of a piece of HTML. */
+const closed = (piece) =>
+  (piece.match(/<(?!br\b|img\b|hr\b|\/)[a-z][^>]*>/gi)?.length ?? 0) ===
+  (piece.match(/<\/[a-z][^>]*>/gi)?.length ?? 0);
+
+const PARAGRAPH_BREAK = '<!--paragraph-->';
+
+/**
+ * Takes hand-made indents out of text before it becomes Markdown.
+ *
+ * In WordPress a paragraph is often indented with a row of non-breaking
+ * spaces, and the next one begun with a line break and another indent.
+ * Markdown shows a line indented that far as a block of code, and an indent
+ * hides a sentence that begins "1922." from the escaping that keeps it from
+ * turning into a numbered list. So indents are dropped, and a line break
+ * followed by one becomes the new paragraph it stands for.
+ */
+function straighten(html) {
+  const root = parse(html);
+  for (const block of root.querySelectorAll('p, li')) {
+    const pieces = block.innerHTML
+      .replace(/^(?:\s|&nbsp;)+/, '')
+      .replace(/<br\s*\/?>((?:\s|&nbsp;)+)/gi, (_, run) => (hardSpaces(run) >= 2 ? PARAGRAPH_BREAK : '<br>'))
+      .split(PARAGRAPH_BREAK);
+    if (block.tagName === 'P' && pieces.length > 1 && pieces.every(closed)) {
+      block.replaceWith(pieces.map((piece) => `<p>${piece}</p>`).join('\n'));
+    } else {
+      block.innerHTML = pieces.join('<br>');
+    }
+  }
+  return root.toString();
+}
+
 const extension = (url) => path.extname(new URL(url).pathname).toLowerCase().replace('.jpeg', '.jpg');
 
 function createImageResolver(media) {
@@ -178,14 +215,25 @@ function frontmatter(data) {
 // ---------------------------------------------------------------------------
 // Fraternities
 
-/** Reads one entry of the list page: name, mottos, contacts and heraldry. */
-function parseListEntry(entry) {
-  const [nameBlock, contactBlock] = entry.querySelectorAll('p');
-  const [name, ...mottos] = lines(nameBlock);
+/**
+ * Reads the two paragraphs that head an entry of the list page, and a
+ * fraternity's own page: the name with the mottos, then the contacts.
+ * On its own page the name may be missing, printed by the page template
+ * instead; pass it in so that the first motto is not taken for it.
+ */
+function parseFacts(container, knownName) {
+  const [nameBlock, contactBlock] = container.querySelectorAll('p').filter((p) => clean(p.text));
+  const heading = nameBlock ? lines(nameBlock) : [];
+  const name = knownName ?? heading[0];
+  const mottos = heading[0] === name ? heading.slice(1) : heading;
 
   const website = contactBlock?.querySelector('a[href^="http"]');
   const mail = contactBlock?.querySelector('a[href^="mailto:"]');
-  const email = mail?.getAttribute('href').replace('mailto:', '').trim();
+  // The address a visitor reads counts: a link copied from another entry may still open the old one.
+  const shown = mail ? clean(mail.text) : '';
+  const linked = mail?.getAttribute('href').replace('mailto:', '').trim();
+  const email = /^\S+@\S+\.\S+$/.test(shown) ? shown : linked;
+  if (email && linked && linked !== email) warn(`${name}: an e-mail link shows ${email} but opens ${linked}`);
   const linkTexts = new Set([website, mail].filter(Boolean).map((a) => clean(a.text)));
 
   let phone;
@@ -204,8 +252,41 @@ function parseListEntry(entry) {
     address: address.join(', ') || undefined,
     phone,
     email,
+  };
+}
+
+/** Reads one entry of the list page: name, mottos, contacts and heraldry. */
+function parseListEntry(entry) {
+  return {
+    ...parseFacts(entry),
     images: entry.querySelectorAll('figure img').slice(0, HERALDRY_SLOTS.length),
   };
+}
+
+const sameText = (a, b) =>
+  JSON.stringify(a).replace(/[–—]/g, '-') === JSON.stringify(b).replace(/[–—]/g, '-');
+
+/**
+ * A fraternity's mottos and contacts stand on the list and again on its own
+ * page, and the two are edited separately. Each fills in what the other
+ * lacks; where they disagree, the page that was edited last is believed.
+ * The website is the exception: its address is not read by anyone, so the
+ * list, where every link has been tried, keeps it.
+ */
+function mergeFacts(name, onList, onOwnPage, ownPageIsNewer) {
+  const [first, second] = ownPageIsNewer ? [onOwnPage, onList] : [onList, onOwnPage];
+  const merged = { website: onList.website ?? onOwnPage.website };
+  for (const key of ['mottos', 'address', 'phone', 'email']) {
+    const filled = (facts) => (Array.isArray(facts[key]) ? facts[key].length > 0 : Boolean(facts[key]));
+    merged[key] = filled(first) ? first[key] : second[key];
+    if (filled(first) && filled(second) && !sameText(first[key], second[key])) {
+      const where = ownPageIsNewer ? 'its own page' : 'the list';
+      warn(
+        `${name}: ${key} differs between the list (${JSON.stringify(onList[key])}) and its own page (${JSON.stringify(onOwnPage[key])}); ${where} was edited last and is used`,
+      );
+    }
+  }
+  return merged;
 }
 
 function parseFraternityList(html) {
@@ -251,13 +332,15 @@ function parseFraternityPage(html, name) {
 
   return {
     heraldry: header?.querySelectorAll('img').slice(0, HERALDRY_SLOTS.length) ?? [],
+    facts: header ? parseFacts(header, name) : { mottos: [] },
     sections: sections.filter((s) => s.title !== name || s.image),
   };
 }
 
 async function importFraternities(pages, resolveImage, overrides) {
   const td = createTurndown();
-  const list = parseFraternityList(pages.get(INDEX_SLUG).content.rendered);
+  const listPage = pages.get(INDEX_SLUG);
+  const list = parseFraternityList(listPage.content.rendered);
 
   for (const item of list) {
     const page = pages.get(item.id);
@@ -300,12 +383,16 @@ async function importFraternities(pages, resolveImage, overrides) {
         if (!alt) warn(`${item.name}: ${file} has no description for screen readers`);
         parts.push(`![${alt.replace(/[[\]]/g, '')}](${ASSET_ALIAS}/${asset})`);
       }
-      const md = tidyMarkdown(td.turndown(section.html));
+      const md = tidyMarkdown(td.turndown(straighten(section.html)));
       if (md) parts.push(md);
     }
     if (!parts.length) warn(`${item.name}: page has no body text`);
 
-    const { images: _images, id, ...facts } = item;
+    const { images: _images, id, ...listed } = item;
+    const facts = {
+      ...listed,
+      ...mergeFacts(item.name, listed, detail.facts, page.modified > listPage.modified),
+    };
     const extra = overrides.fraternities?.[id] ?? {};
     // An override may replace single heraldry images, e.g. with a larger file.
     const data = { ...facts, ...extra, heraldry: { ...heraldry, ...extra.heraldry } };
@@ -337,7 +424,7 @@ async function importTextPages(pages, skip, resolveImage) {
       img.removeAttribute('srcset');
     }
     const title = clean(parse(page.title.rendered).text);
-    const body = tidyMarkdown(td.turndown(root.innerHTML));
+    const body = tidyMarkdown(td.turndown(straighten(root.innerHTML)));
     await writeText(
       path.join(CONTENT, 'pages/lv', `${page.slug}.md`),
       `${frontmatter({ title, wpModified: page.modified })}\n${body}`,

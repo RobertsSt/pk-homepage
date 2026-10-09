@@ -48,15 +48,12 @@ test('all content shows without JavaScript', async ({ browser }) => {
 
 test('the page does not scroll sideways on a narrow screen', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 640 });
-  for (const path of [
-    '/',
-    '/studentu-korporacijas/fraternitas-metropolitana/',
-    '/latvijas-korporaciju-apvieniba/',
-    '/pk-vesture/',
-    '/vesture/',
-    '/en/vesture/',
-  ]) {
+  // One page of every kind, and the fraternity with the longest name.
+  const paths = [...PAGES.map(({ path }) => path), '/studentu-korporacijas/fraternitas-metropolitana/'];
+  for (const path of paths) {
     await page.goto(path);
+    // A paragraph typed with an indent would be drawn as a box of code as wide as its longest line.
+    expect(await page.locator('main pre').count(), path).toBe(0);
     // A heading may not run past the space it is given either; it would be cut off there.
     const overflowing = await page.evaluate(() =>
       [...document.querySelectorAll<HTMLElement>('h1')]

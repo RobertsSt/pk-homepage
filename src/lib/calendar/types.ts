@@ -13,6 +13,8 @@ export interface CalendarEvent {
   end?: string;
   allDay: boolean;
   location?: string;
+  /** What the entry says beyond its title, as plain text. */
+  description?: string;
   kind: EventKind;
   /** Anniversaries only: whose founding day it is. */
   subject?: string;

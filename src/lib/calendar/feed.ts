@@ -67,6 +67,23 @@ function classify(title: string): Pick<CalendarEvent, 'kind' | 'subject' | 'foun
   return { kind };
 }
 
+/** Google keeps a description as text or as simple HTML; the site shows plain text. */
+function plainText(value: string | null | undefined): string | undefined {
+  const text = (value ?? '')
+    .replace(/<br\s*\/?>|<\/p>/gi, '\n')
+    .replace(/<[^>]+>/g, '')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&amp;/g, '&')
+    .replace(/[ \t]+\n/g, '\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+  return text || undefined;
+}
+
 function toEvent(
   source: IcalEvent,
   startTime: Time,
@@ -79,6 +96,7 @@ function toEvent(
   // An all-day entry ends on the morning after its last day.
   const end = allDay ? addDays(toRiga(endTime), -1) : toRiga(endTime);
   const details = classify(title);
+  const description = plainText(source.description);
   return {
     id: `${source.uid}:${start}`,
     title,
@@ -86,6 +104,8 @@ function toEvent(
     end: end > start ? end : undefined,
     allDay,
     location: source.location?.trim() || undefined,
+    // Many entries repeat their title as the description; that says nothing new.
+    description: description?.toLowerCase() === title.toLowerCase() ? undefined : description,
     ...details,
     fraternityId: details.subject ? fraternityIds.get(details.subject.toLowerCase()) : undefined,
   };

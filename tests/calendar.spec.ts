@@ -68,3 +68,29 @@ test('picking a day lists its events and says so', async ({ page }) => {
   await page.keyboard.press('Enter');
   await expect(grid.locator('[role="gridcell"][aria-selected="true"]')).toHaveCount(0);
 });
+
+test("an event in the list opens to a link that copies it into one's own calendar", async ({ page }) => {
+  await page.goto('/');
+  await calendarReady(page);
+  const entry = page.locator('.cal-entry').first();
+  const copy = entry.locator('a[href^="https://calendar.google.com/calendar/render"]');
+  await expect(copy).toBeHidden();
+
+  await entry.locator('summary').focus();
+  await page.keyboard.press('Enter');
+  await expect(copy).toBeVisible();
+  await expect(copy).toHaveAttribute('target', '_blank');
+  await expect(copy.locator('.sr-only')).not.toBeEmpty();
+
+  const link = new URL((await copy.getAttribute('href'))!);
+  expect(link.searchParams.get('action')).toBe('TEMPLATE');
+  expect(link.searchParams.get('text')).toBeTruthy();
+  // A day, or a day and a time, for both the start and the end.
+  expect(link.searchParams.get('dates')).toMatch(/^\d{8}(T\d{6})?\/\d{8}(T\d{6})?$/);
+  expect(link.searchParams.get('ctz')).toBe('Europe/Riga');
+
+  // Where the calendar names a place, the entry leads to it on a map.
+  for (const map of await page.locator('.cal-entry a[href*="/maps/search/"]').all()) {
+    expect(new URL((await map.getAttribute('href'))!).searchParams.get('query')).toBeTruthy();
+  }
+});

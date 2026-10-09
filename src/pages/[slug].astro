@@ -1,17 +1,14 @@
 ---
+import GuidePage from '@/components/pages/GuidePage.astro';
 import HistoryPage from '@/components/pages/HistoryPage.astro';
 import TextPage from '@/components/pages/TextPage.astro';
-import { getTextPageSlugs } from '@/lib/content';
+import { getTextPagePaths } from '@/lib/content';
 
-export async function getStaticPaths() {
-  return (await getTextPageSlugs()).map((slug) => ({ params: { slug } }));
-}
+export const getStaticPaths = getTextPagePaths;
 
-const { slug } = Astro.params;
+const page = Astro.props;
 ---
 
-{slug === 'pk-vesture' || slug === 'vesture' ? (
-  <HistoryPage locale="lv" slug={slug} />
-) : (
-  <TextPage locale="lv" slug={slug} />
-)}
+{page.kind === 'history' && <HistoryPage locale="lv" slug={page.slug} />}
+{page.kind === 'guide' && <GuidePage locale="lv" slug={page.slug} />}
+{page.kind === 'text' && <TextPage locale="lv" slug={page.slug} />}

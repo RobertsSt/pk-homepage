@@ -1,6 +1,6 @@
 # pk.lv rebuild: spec
 
-Last updated 2026-10-08. This is the one document that records what we are building and what has been
+Last updated 2026-10-09. This is the one document that records what we are building and what has been
 decided. Change it when a decision changes; do not let the code and the spec disagree.
 
 ## Goal
@@ -14,7 +14,8 @@ maintain on the server.
 In scope:
 
 - A new homepage and the three other page types the site has today: text page (10), fraternity list (1)
-  and fraternity page (23).
+  and fraternity page (23). Three of the ten text pages have since been given a layout of their own: the
+  two histories and the guide to student fraternities.
 - Everything in Latvian and English, with a language switch on every page.
 - The P!K! Google Calendar shown in the site's own design.
 - An editing tool for people who do not write code.
@@ -42,6 +43,15 @@ Out of scope for the first version: news or blog posts, member login, forms, sea
 The calendar trade-off: a new event appears on the site after the next build, so within a day, or at once
 if someone presses "Run workflow" in GitHub. If that proves too slow, a live refresh in the browser can be
 added later without changing the design. Its weeks always start on Monday; a test holds that in place.
+
+What the calendar shows, compared with the Google box it replaced (settled 2026-10-09):
+
+- Each event in the list opens on a press. It then gives the place as Google has it, a link to that
+  place on a map, and a link that copies this one event into the visitor's Google Calendar. The line
+  itself shows the time from start to end and the street with the town.
+- A description is shown when it says more than the title.
+- The months on offer run from last month to thirteen months ahead. Older events stay in Google
+  Calendar, which the link under the list opens; they are not on the site.
 
 Two of these changed on 2026-10-08, during the speed pass. The calendar moved from React to Preact: it
 is the only interactive component, and React was 66 KB of script for it where Preact is 13 KB. The Motion
@@ -84,6 +94,23 @@ CMS. The complete imported Markdown texts remain available in an expandable sect
 WordPress imports do not overwrite the new narrative. Existing photographs are reused with captions
 that do not assign an undocumented date to them.
 
+## The guide to student fraternities
+
+“Kas ir studentu korporācijas?” is the page a newcomer reads first, so it is laid out as a guide: the
+four principles, what sets a fraternity apart, the path from fox to philister, the insignia, life in a
+fraternity, questions and a glossary. The insignia are shown on the fraternity that presides this
+year, so the example changes with the presidium and no fraternity is singled out.
+
+The sections are content, in `src/content/guides/*.yaml`, edited under “Skaidrojošās lapas” in Pages
+CMS. Two rules keep the page honest:
+
+- The complete text imported from WordPress stays on the page, in a section that opens on request.
+  The guide shortens that text; it does not replace it.
+- A statement that is not in that text names its source in the list at the foot of the page. The
+  sources used are Latvian and of standing: the University of Latvia, Latvijas Vēstnesis, LSM, the Tēzaurs
+  dictionary, a University of Latvia thesis on heraldry and the sororities' own union. Wikipedia was
+  read to compare, not cited.
+
 ## Speed
 
 Measured with Lighthouse on a simulated mid-range phone on slow 4G, before and after the pass of
@@ -114,7 +141,10 @@ scripts for 30 days, which suits files whose names change whenever their content
 An English page may later be given its own English slug; until then it reuses the Latvian one.
 
 Every current address under `/WordPress/` redirects to its new address, so existing links and search
-results keep working. The build writes these as small redirect pages, which work on any static host.
+results keep working. The build writes each redirect twice: as a rule for the hosting's server, which
+answers "moved permanently" in one step and drops whatever followed a `?`, and as a small redirect
+page, which does the same on a host that ignores the rules (the preview). Addresses of pictures under
+`/WordPress/wp-content/uploads/` are not carried over; they end at the "page not found" page.
 
 ## Where content lives
 
@@ -123,6 +153,7 @@ results keep working. The build writes these as small redirect pages, which work
 | Facts about each fraternity                          | `src/content/fraternities/<name>.yaml`  | Shared by both languages    |
 | Long text about each fraternity                      | `src/content/fraternity-texts/{lv,en}/` | One file per language       |
 | History story chapters and term explanations         | `src/content/histories/*.yaml`          | Both languages side by side |
+| Guide sections, questions, glossary and sources      | `src/content/guides/*.yaml`             | Both languages side by side |
 | Text pages                                           | `src/content/pages/{lv,en}/`            | One file per language       |
 | Homepage: officers, About photo, milestones, contact | `src/content/site/home.yaml`            | Both languages side by side |
 | Menu                                                 | `src/data/navigation.ts`                | Both languages side by side |
@@ -145,7 +176,18 @@ The WordPress site is still being edited, so the import is built to be run again
 - English files are never touched by the import. Each records, as `translatedFrom`, the date of the
   Latvian text it was made from, and the import ends by listing the English texts that have fallen behind
   (`npm run check:translations` gives the same list at any time).
-- `src/content/site/home.yaml` is maintained by hand.
+- `src/content/site/home.yaml` and the files in `src/content/histories` and `src/content/guides` are
+  maintained by hand.
+- A fraternity's mottos and contacts stand in WordPress twice, on the list and on its own page, and the
+  two are edited separately. The import reads both: each fills in what the other lacks, and where they
+  disagree the page edited last is used and the import says so.
+- Indents typed as rows of spaces are taken out, and a line break followed by an indent becomes a new
+  paragraph. Left in, Markdown drew such a paragraph as a box of code that ran off the screen.
+
+Long texts are prose, and a check in `npm test` keeps them so (`src/lib/markdown-traps.ts`): a paragraph
+that begins with four spaces, or with a number and a full stop ("1922. gadā …", which Markdown reads as
+item 1922 of a list), fails the checks with the file, the line and the remedy. This guards hand edits
+after launch as much as the import.
 
 So until launch, edit Latvian text in WordPress, not in this repository. The last import happens on launch
 day; after that WordPress is retired and the import script is deleted.
@@ -155,10 +197,12 @@ day; after that WordPress is retired and the import script is deleted.
 1. **Foundation and content import.** Done. Project, checks, CI, repeatable import of 23 fraternities and
    10 text pages, calendar reader, both languages wired up.
 2. **Design.** Done. Two drafts were reviewed; B was chosen with four sections taken from A.
-3. **Pages.** Done, apart from one thing a person has to do. Built: homepage, text page, fraternity list,
-   fraternity page, image credits, 404, working menu, redirects from the old addresses, page titles,
-   descriptions and share images. The accessibility and speed passes are done (see above). Still to do:
-   listen to the site once with a screen reader.
+3. **Pages.** Done, apart from one thing a person has to do. Built: homepage, text page, the two history
+   pages, the guide to student fraternities, fraternity list, fraternity page, image credits, 404,
+   working menu, redirects from the old addresses, page titles, descriptions and share images. The
+   accessibility and speed passes are done (see above). On 2026-10-09 every page of the WordPress site
+   was compared with its new page, word by word and picture by picture; what that found has been put
+   right. Still to do: listen to the site once with a screen reader.
 4. **English.** Translated, not yet reviewed. The homepage, menu, labels, the ten text pages and the 23
    fraternity texts are in English (about 33,000 words). The translation was made by Claude on 2026-10-08
    and nobody from P!K! has read it yet; that review is the part still to do. The word choices are listed
@@ -199,14 +243,21 @@ in the branch `accessibility-and-speed`, the English texts in `english-texts`.
    they need correcting; the English text already has what was clearly meant, and says nothing where the
    meaning could not be recovered.
    - Ventonia's founding year: corrected to 1917 here, still to fix in WordPress.
+   - Fraternitas Lettica: the list gives a phone and "Lāčplēša ielā 5", its own page an e-mail and
+     "Lāčplēša iela 5". The site shows the phone, the e-mail and the address of its own page, which
+     was edited last. Ventonia's second motto is likewise only on its own page.
+   - Vendia: on its own page the e-mail link opens seniors@beveronija.lv, though it shows Vendia's
+     address. The site uses the address that is shown.
    - Mottos: Fraternitas Imantica's reads "Sclentiae" and Fraternitas Lataviensis's "lustitia" in the list.
    - P!K! history: "24.11.1997" for Selonija's admission to the C!C! (1897) and "Vironia (1990.)" (1900);
      "apliecinājusi" where "apcietinājusi" is meant; the entry for the 1st semester of 1927 ends in the
      stray words "Marta menesi"; in the list of fraternities, "saluten", "Actilabores", "Mit Eort" and
      "niebei".
    - Selonija: WordPress turned six dated paragraphs into a numbered list that starts at 1918, so it shows
-     the years 1918 to 1923 one after another; only the first is right. The English text gives a year only
-     where it is certain.
+     the years 1918 to 1923 one after another. The earlier copy of the page (`selonija-3`, still
+     published) has the years as they were written: 1918, 1918, 1920, 1923, 1927 and 1946; Selonija's own
+     website confirms the last. Both languages give those years here (`textFixes` in the overrides);
+     WordPress still shows the list.
    - Lettgallia: two paragraphs begin "gadā …" and "gada 27. septembri …" with the year missing (1919).
    - Fraternitas Lettica: "1960. gadu beigās" for the national awakening of the 1860s.
    - Fraternitas Imantica: a sentence is split in two after "1947."
@@ -217,6 +268,15 @@ in the branch `accessibility-and-speed`, the English texts in `english-texts`.
      "Laiviņas", "Pīki") and breaks off in the middle of its last sentence.
    - Scanning slips elsewhere: "Gersicamu", "Eslmgenā" (Gersicania), "Philvroniu" (Philyronia), "kāp" for
      "kara" (Patria, Vendia).
+
+7. Visitor statistics. WordPress counted visits with Jetpack; the new site counts nothing. The hosting's
+   own log statistics (cPanel, Awstats) need no change to the site and no consent banner. A counter in
+   the page is a decision for P!K!: it means an account with a service, and one that sets cookies means
+   a consent banner as well. Nothing is built until that is decided.
+8. The archive at `pk.lv/old/`. A copy of the site as it was before WordPress, made in December 2016:
+   news, press releases, photo galleries, about 390 pages. Nothing on WordPress or on the new site
+   links to it, and none of it has been carried over. Roberts plans to delete it with WordPress; a copy
+   should be kept off the server first, because that history exists nowhere else.
 
 ## English wording
 
@@ -292,9 +352,13 @@ How publishing works:
   the site. A commit whose checks fail is not published. It can also be started by hand.
 - GitHub switches a schedule off after 60 days without a commit. The nightly run asks for the workflow
   to stay enabled, which restarts that count; if events ever stop appearing, look there first.
-- The build writes two files for the host beside the pages: `.htaccess`, which makes
-  `https://pk.lv` the one address (plain http, www and other names are forwarded to it) and shows our own
-  "page not found", and `robots.txt`, which points search engines to the list of pages.
+- The build writes two files for the host beside the pages: `.htaccess`, which moves every old
+  WordPress address to its new page, makes `https://pk.lv` the one address (plain http, www and other
+  names are forwarded to it) and shows our own "page not found", and `robots.txt`, which points search
+  engines to the list of pages.
+- The rules can be tried without the host: macOS has Apache (`/usr/sbin/httpd`), which reads `.htaccess`
+  when it is pointed at `dist/` with `AllowOverride All`. They were tried that way on 2026-10-09 with the
+  site at `/` and at `/jauna/`.
 
 The site is published in two steps, so that the first upload cannot touch the live site:
 
@@ -313,13 +377,16 @@ Trial folder:
 - [x] `Deploy` run; `https://pk.lv/jauna/` checked in two browser engines: eight pages in both languages,
       images, fonts, calendar, menu, old addresses.
 - [x] What is in the folder pk.lv is served from: seen.
-- [ ] The server rules checked in the trial folder: http and www are forwarded once and without a loop,
-      and a missing address shows our own page.
+- [x] The server rules checked in the trial folder (2026-10-08): http and www are forwarded once and
+      without a loop, and a missing address shows our own page.
+- [ ] Old addresses checked in the trial folder once the rules for them are published:
+      `https://pk.lv/jauna/WordPress/lettonia/` must answer 301, not a page that forwards.
 
 The switch:
 
 - [ ] Final `npm run import:wordpress`, reviewed as a pull request.
-- [ ] A full backup of files and database made in cPanel and downloaded.
+- [ ] A full backup of files and database made in cPanel and downloaded to a computer. A backup that
+      stays on the server is deleted with the server's files. It has to include the folder `old`.
 - [ ] WordPress moved out of the folder pk.lv is served from, to a folder beside it that the web cannot
       reach: the loose WordPress files, hidden ones such as `.htaccess` included, and the folders
       `WordPress`, `wp-admin`, `wp-content`, `wp-includes` and `old`. The new site needs the name

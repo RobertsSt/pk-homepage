@@ -563,6 +563,11 @@
     }
   }
 
+  /* An event in the list opens on a press; the plus sign beside it says so, not the browser's triangle. */
+  .cal-entry summary::-webkit-details-marker {
+    display: none;
+  }
+
   /* "+2": the events a cell has no room to name. */
   .cal-more {
     display: none;
@@ -695,6 +700,40 @@
     }
   }
 
+  /*
+   * A line that opens on a press to show what is under it: a question and its
+   * answer, or a long text. The plus sign at its end turns into a cross.
+   */
+  .disclosure > summary {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-block: 1.35rem;
+    cursor: pointer;
+    list-style: none;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    & .plus {
+      flex: none;
+      color: var(--color-ink-soft);
+      font-size: 1.5rem;
+      line-height: 1;
+      transition: rotate 0.25s;
+    }
+
+    &:hover .plus {
+      color: var(--color-wine);
+    }
+  }
+
+  .disclosure[open] > summary .plus {
+    rotate: 45deg;
+  }
+
   /* A fraternity's three colours as one bar; set --c1 to --c3 on an ancestor. */
   .tricolour {
     background: linear-gradient(to right, var(--c1) 0 33.34%, var(--c2) 33.34% 66.67%, var(--c3) 66.67%);
@@ -733,6 +772,17 @@
   .reading-progress,
   .seal-toggle {
     display: none;
+  }
+
+  /* What a press would open is printed open. */
+  .disclosure::details-content,
+  .cal-entry::details-content {
+    content-visibility: visible;
+  }
+
+  .disclosure > :not(summary),
+  .cal-entry > :not(summary) {
+    display: block !important;
   }
 }
 
