@@ -1,0 +1,86 @@
+---
+import type { Locale } from '@/i18n/config';
+import { historyLabels } from '@/lib/history';
+
+export interface Era {
+  year: string;
+  title: string;
+  text: string;
+  href: string;
+}
+
+interface Props {
+  id: string;
+  locale: Locale;
+  eras: Era[];
+  illustrated?: boolean;
+}
+
+const { id, locale, eras, illustrated = false } = Astro.props;
+const labels = historyLabels[locale];
+---
+
+<div class:list={['era-explorer', { 'era-explorer--illustrated': illustrated }]} data-era-explorer>
+  <div class="era-toolbar" data-era-controls hidden>
+    <p id={`${id}-label`} class="era-hint">
+      {labels.select}
+    </p>
+    <div class="era-arrows">
+      <span class="era-count" data-era-count aria-live="polite" aria-atomic="true">
+        01 / {String(eras.length).padStart(2, '0')}
+      </span>
+      <button type="button" data-era-previous aria-label={labels.previous} disabled>
+        ←
+      </button>
+      <button type="button" data-era-next aria-label={labels.next}>
+        →
+      </button>
+    </div>
+  </div>
+  <div class="era-stage">
+    {illustrated && (
+      <div class="era-visual">
+        <slot />
+      </div>
+    )}
+    <div class="era-panels">
+      {eras.map((era, index) => (
+        <div class="era-panel" id={`${id}-panel-${index}`} data-era-panel>
+          <p class="era-year" aria-hidden="true">
+            {era.year}
+          </p>
+          <div class="era-copy">
+            <p class="era-date">{era.year}</p>
+            <h3>{era.title}</h3>
+            <p class="era-description">{era.text}</p>
+            <a class="era-link" href={era.href}>
+              {labels.readChapter} <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+  <ol class="era-track" aria-labelledby={`${id}-label`} data-era-controls hidden>
+    {eras.map((era, index) => (
+      <li>
+        <button
+          type="button"
+          class="era-stop"
+          data-era-select={index}
+          aria-pressed={index === 0 ? 'true' : 'false'}
+          aria-controls={`${id}-panel-${index}`}
+        >
+          <span class="era-stop-number">{String(index + 1).padStart(2, '0')}</span>
+          <span class="era-stop-year">{era.year}</span>
+          <span class="era-stop-title">{era.title}</span>
+        </button>
+      </li>
+    ))}
+  </ol>
+</div>
+
+<script>
+  import { initEraExplorers } from '@/scripts/history';
+  initEraExplorers();
+</script>

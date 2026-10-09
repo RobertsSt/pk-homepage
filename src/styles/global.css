@@ -601,44 +601,6 @@
     }
   }
 
-  /* History milestones: a line with a dot per entry; upright on small screens. */
-  .timeline {
-    position: relative;
-    display: grid;
-    gap: 2.25rem;
-
-    @media (width >= 64rem) {
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 2.5rem;
-    }
-
-    & li {
-      position: relative;
-      padding-left: 1.9rem;
-
-      @media (width >= 64rem) {
-        padding-top: 2.4rem;
-        padding-left: 0;
-      }
-
-      &::before {
-        content: '';
-        position: absolute;
-        top: 0.55rem;
-        left: 0;
-        width: 0.7rem;
-        height: 0.7rem;
-        border-radius: 999px;
-        background: var(--color-brass);
-        box-shadow: 0 0 0 5px var(--color-ink);
-
-        @media (width >= 64rem) {
-          top: 0;
-        }
-      }
-    }
-  }
-
   /* Long-form text rendered from Markdown. */
   .prose {
     font-family: var(--font-display);
@@ -741,24 +703,6 @@
   /* Heraldry is scanned on white; multiply lets the paper show through. */
   .on-paper {
     mix-blend-mode: multiply;
-  }
-
-  .timeline-line {
-    position: absolute;
-    top: 0.6rem;
-    bottom: 0.6rem;
-    left: 0.32rem;
-    width: 1px;
-    background: color-mix(in srgb, var(--color-paper) 32%, transparent);
-
-    @media (width >= 64rem) {
-      top: 0.32rem;
-      right: 0;
-      bottom: auto;
-      left: 0;
-      width: auto;
-      height: 1px;
-    }
   }
 }
 

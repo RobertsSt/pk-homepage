@@ -4,7 +4,9 @@ import type { Page } from '@playwright/test';
 export const PAGES = [
   { name: 'homepage', path: '/' },
   { name: 'English homepage', path: '/en/' },
-  { name: 'long text page', path: '/pk-vesture/' },
+  { name: 'P!K! history', path: '/pk-vesture/' },
+  { name: 'fraternity history', path: '/vesture/' },
+  { name: 'English P!K! history', path: '/en/pk-vesture/' },
   { name: 'short text page', path: '/rekviziti/' },
   { name: 'English text page', path: '/en/vesture/' },
   { name: 'fraternity list', path: '/studentu-korporacijas/' },

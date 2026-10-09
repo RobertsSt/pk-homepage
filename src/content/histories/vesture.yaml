@@ -1,0 +1,112 @@
+name: Studentu korporāciju vēsture
+title:
+  lv: Studentu korporāciju vēsture
+  en: A history of student fraternities
+kicker:
+  lv: No Eiropas universitātēm līdz Latvijai
+  en: From Europe’s universities to Latvia
+intro:
+  lv: Kā studentu vēlme turēties kopā kļuva par mūža draudzības tradīciju? Ceļš ved cauri viduslaiku universitātēm, novadniecībām un Baltijas akadēmiskajai dzīvei.
+  en: How did students’ wish to stand together become a tradition of lifelong friendship? The journey leads through medieval universities, regional societies and academic life in the Baltic.
+range:
+  lv: 12. gadsimts — mūsdienas
+  en: 12th century — present
+chapters:
+  - id: akademiska-briviba
+    year: { lv: '1158', en: '1158' }
+    title:
+      lv: Svešumā turēties kopā
+      en: Standing together abroad
+    summary:
+      lv: Akadēmiskā brīvība un studentu novadnieciskās apvienības liek pamatus gadsimtiem ilgai biedrošanās tradīcijai.
+      en: Academic freedom and associations of students from the same region lay the foundations for centuries of fellowship.
+    paragraphs:
+      lv:
+        - Viduslaiku universitātēs mācījās studenti no dažādām zemēm. Svešā pilsētā kopīga izcelsme palīdzēja atrast sabiedrotos — aizstāvēt savas intereses, rūpēties par draugiem un justies piederīgam.
+        - 1158. gadā izsludinātā privilēģija Authentica habita ir viens no akadēmiskās brīvības vēsturiskajiem pamatiem. Studentu apvienības, ko sauca par nationes, pulcēja viena novada vai zemes studentus.
+        - Boloņā nozīmīga loma bija pašu studentu pilnsapulcei — conventus publicus. Ievēlētajiem pārstāvjiem uzticēja lielākas tiesības un prasīja lielāku atbildību. Parīzē savukārt studentu dzīvi vairāk noteica universitātes un garīdzniecības autoritāte.
+      en:
+        - Medieval universities drew students from many lands. In an unfamiliar city, a shared place of origin helped them find allies, defend their interests, care for friends and feel that they belonged.
+        - The privilege Authentica habita, proclaimed in 1158, is one of the historical foundations of academic freedom. Student associations called nationes brought together students from the same region or country.
+        - In Bologna, the students’ own general assembly — conventus publicus — played an important role. Elected representatives received greater rights and carried greater responsibility. In Paris, university and clerical authorities exercised more control over student life.
+  - id: novadniecibas
+    year: { lv: '16.–18. gs.', en: '16th–18th c.' }
+    title:
+      lv: No kopmītnes līdz brālībai
+      en: From shared lodgings to fellowship
+    summary:
+      lv: Novadniecības, ordeņi un studentu pulciņi veido paražas, simbolus un priekšstatu par mūža draudzību.
+      en: Regional societies, orders and student circles shape customs, symbols and the idea of lifelong friendship.
+    paragraphs:
+      lv:
+        - Vācu universitāšu kopmītnēs un vēlāk patstāvīgās studentu sabiedrībās veidojās sava sadzīves kārtība. Novadniecības jeb Landsmannschaften palīdzēja biedriem, rūpējās par slimajiem un kopa draudzību.
+        - Sabiedrību organizācijā ienāca arī amatu cunftēm raksturīgas biedru pakāpes. Daļa no šīs vēstures atbalsojas korporāciju vārdos un tradīcijās vēl šodien.
+        - 18. gadsimta beigās mazāki studentu pulciņi jeb Kränzchen īpašu uzmanību pievērsa personības izkopšanai, goda izpratnei un disciplīnai. No ordeņiem tie pārņēma brālības un mūža draudzības ideju; šajā vidē meklējami arī cirķeļa pirmsākumi.
+      en:
+        - Shared lodgings at German universities, and later independent student societies, developed their own rules of social life. Regional societies, or Landsmannschaften, helped members, cared for the sick and cultivated friendship.
+        - Ranks of membership modelled on craft guilds also entered these societies. Echoes of this history remain in fraternity vocabulary and traditions today.
+        - At the end of the 18th century, smaller student circles, or Kränzchen, placed particular emphasis on personal development, honour and discipline. They adopted the ideals of fellowship and lifelong friendship from the orders; the origins of the zirkel can also be traced to this setting.
+  - id: baltija
+    year: { lv: '1802', en: '1802' }
+    title:
+      lv: Tradīcija nonāk Baltijā
+      en: The tradition takes root in the Baltic
+    summary:
+      lv: Tērbatas Universitātes darbības atjaunošana kļūst par tiltu starp Vācijas studentu dzīvi un Baltiju.
+      en: The reopening of the University of Tartu becomes a bridge between German student life and the Baltic.
+    paragraphs:
+      lv:
+        - Kad 1802. gadā Tērbatas Universitāte atjaunoja darbību, Baltijas studenti no Vācijas universitātēm atgriezās Tērbatā. Līdzi viņi atveda pazīstamas akadēmiskās sadzīves formas.
+        - 1808. gadā Tērbatā nodibināja Curonia, kas sākotnēji uzņēma kurzemniekus. Vēlāk radās arī citas korporācijas, un 1832. gadā baltvācu korporācijas apvienojās Tērbatas Šaržēto konventā.
+        - Rīgā korporāciju dzīve saistījās ar Politehnikumu. 1865. gadā dibināja Fraternitas Baltica, bet 1871. gadā izveidoja Rīgas Šaržēto konventu. Abu pilsētu apvienības 1873. gadā noslēdza savstarpēju karteli — atzīšanas un draudzības līgumu.
+      en:
+        - When the University of Tartu reopened in 1802, Baltic students returned from German universities, bringing familiar forms of academic social life with them.
+        - Curonia was founded in Tartu in 1808, initially admitting students from Courland. Other fraternities followed, and in 1832 the Baltic German fraternities formed the Chargierten-Convent of Tartu.
+        - In Riga, fraternity life developed around the Polytechnic. Fraternitas Baltica was founded in 1865, followed by the Riga Chargierten-Convent in 1871. The unions of the two cities concluded a cartel — an agreement of recognition and friendship — in 1873.
+  - id: muza-draudziba
+    year: { lv: '1815', en: '1815' }
+    title:
+      lv: Piederība uz mūžu
+      en: Belonging for life
+    summary:
+      lv: Vācijas Corps apvieno agrākās tradīcijas. Draudzība un piederība vairs nebeidzas ar studiju gadiem.
+      en: The German Corps bring earlier traditions together. Friendship and membership extend beyond the years of study.
+    paragraphs:
+      lv:
+        - 19. gadsimta sākumā Vācijā attīstījās Corps — studentu sabiedrības, kuru uzbūve un ideāli kļuva nozīmīgi arī mūsdienu korporācijām. Tajās savienojās akadēmiskās paražas, krāsu nēsāšana, goda izpratne un brālības ideja.
+        - Seniors kļuva par ievēlētu savas sabiedrības vadītāju un pārstāvi. Piederībai vairs nebija obligāti vajadzīga izcelsme no viena novada.
+        - 19. gadsimta vidū nostiprinājās Lebenscorps princips — cilvēks uz mūžu pieder vienai korporācijai. Tā studiju laikā aizsākta draudzība kļuva par saikni starp dažādām paaudzēm.
+      en:
+        - In early 19th-century Germany, the Corps developed as student societies whose organisation and ideals became important to modern fraternities. They brought together academic customs, the wearing of colours, a sense of honour and fellowship.
+        - The senior became an elected leader and representative. Membership no longer necessarily depended on coming from the same region.
+        - "By the middle of the 19th century, the Lebenscorps principle had taken hold: a person belonged to one fraternity for life. Friendships begun during university became a bond between generations."
+  - id: latviesu-korporacijas
+    year: { lv: '1870', en: '1870' }
+    title:
+      lv: Sākas latviešu korporāciju stāsts
+      en: The Latvian fraternity story begins
+    summary:
+      lv: Tērbatā nodibina Lettonia — pirmo latviešu studentu korporāciju. Tai seko konventi Rīgā un citās universitāšu pilsētās.
+      en: Lettonia, the first Latvian student fraternity, is founded in Tartu. Convents follow in Riga and other university cities.
+    paragraphs:
+      lv:
+        - 1870. gadā Tērbatā nodibināja Lettonia — pirmo latviešu studentu korporāciju. Rīgā 1880. gadā tai sekoja Selonija, bet gadsimtu mijā — Lettgallia Tērbatā un Talavija Rīgā.
+        - Baltijas akadēmiskā vide bija daudzvalodīga. Līdzās latviešu un vācu korporācijām darbojās arī poļu, krievu un ebreju korporācijas; korporāciju ideja sasniedza arī citas universitāšu pilsētas.
+        - Pēc Latvijas valsts dibināšanas piecas latviešu korporācijas 1919. gada 27. septembrī Rīgā uzsāka kopīgu sadarbību. No tās izauga Prezidiju Konvents — nākamā nodaļa šajā vēsturē.
+      en:
+        - In 1870, Lettonia was founded in Tartu as the first Latvian student fraternity. Selonija followed in Riga in 1880, then Lettgallia in Tartu and Talavija in Riga around the turn of the century.
+        - Baltic academic life was multilingual. Alongside Latvian and German fraternities were Polish, Russian and Jewish fraternities; the idea also spread to other university cities.
+        - After Latvia became a state, five Latvian fraternities began working together in Riga on 27 September 1919. Their cooperation grew into the Presidium Convent — the next chapter in this history.
+terms:
+  - word: Nationes
+    text:
+      lv: Viduslaiku universitāšu studentu apvienības, kuru biedrus vienoja izcelsme no viena novada vai zemes. Tās palīdzēja aizstāvēt studentu intereses svešumā.
+      en: Associations at medieval universities whose members came from the same region or country. They helped students defend their interests while living abroad.
+  - word: Cirķelis
+    text:
+      lv: Korporācijas pazīšanās zīme, kurā apvienoti burti un līnijas. Tā pirmsākumi saistīti ar studentu ordeņu un pulciņu simboliem.
+      en: A fraternity’s identifying monogram, combining letters and lines. Its origins are connected with the symbols of student orders and circles.
+  - word: Filistrs
+    text:
+      lv: Korporācijas biedrs, kurš ir pabeidzis studijas. Mūža piederības princips saglabā saikni ar konventu arī pēc universitātes absolvēšanas.
+      en: A fraternity member who has completed his studies. Lifelong membership maintains the connection with the convent after graduation.

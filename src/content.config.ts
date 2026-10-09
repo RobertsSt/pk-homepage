@@ -133,4 +133,28 @@ const home = defineCollection({
     }),
 });
 
-export const collections = { fraternities, fraternityTexts, pages, home };
+/** Edited story chapters; the complete imported histories remain in `pages`. */
+const histories = defineCollection({
+  loader: glob({ base: './src/content/histories', pattern: '*.yaml' }),
+  schema: z.object({
+    name: z.string(),
+    title: localized,
+    kicker: localized,
+    intro: localized,
+    range: localized,
+    chapters: z
+      .array(
+        z.object({
+          id: z.string().regex(/^[a-z0-9-]+$/),
+          year: localized,
+          title: localized,
+          summary: localized,
+          paragraphs: z.object({ lv: z.array(z.string()), en: z.array(z.string()) }),
+        }),
+      )
+      .min(1),
+    terms: z.array(z.object({ word: z.string(), text: localized })),
+  }),
+});
+
+export const collections = { fraternities, fraternityTexts, pages, home, histories };

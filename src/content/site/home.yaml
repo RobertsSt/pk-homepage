@@ -64,19 +64,13 @@ officers:
 history:
   teaser:
     lv: >-
-      1919. g. 27. septembrī Rīgā, pie Latvijas Universitātes nodibinājās studentu korporāciju
-      apvienība – Latvijas Universitātes Prezidiju Konvents – P!K! Prezidiju Konvents ar savām
-      institūcijām: Prezidiju Konventu (visu P!K! ieejošo studentu korporāciju prezidiju locekļu
-      kopsapulce), G!T! un P!K!T!, pieņemot lēmumus un izdodot noteikumus, vadīja un regulēja visu
-      korporāciju savstarpējo sadzīvi un attiecības. P!K! tā tad bija Latvijas Universitātes studentu
-      korporāciju augstākais pārvaldes orgāns.
+      1919. gadā piecas korporācijas Rīgā vienojās kopīgai darbībai. Kopš tā laika mainījušās
+      paaudzes un pārvarēti pārtraukumi, bet saglabājusies ideja — turēties kopā. Iepazīsti
+      nozīmīgākos mirkļus Prezidiju Konventa vēsturē.
     en: >-
-      On 27 September 1919 in Riga, a union of student fraternities was founded at the University of
-      Latvia: the Presidium Convent of the University of Latvia, P!K!. Through its institutions,
-      namely the Presidium Convent (the general assembly of the presidium members of all member
-      fraternities), G!T! and P!K!T!, it adopted decisions and issued rules that guided and
-      regulated relations among all the fraternities. P!K! was thus the highest governing body of
-      the student fraternities of the University of Latvia.
+      In 1919, five fraternities in Riga agreed to work together. Generations have changed and
+      interruptions have been overcome, but the idea of standing together remains. Discover
+      the defining moments in the history of the Presidium Convent.
   # Each line is taken from the history page (pk-vesture); keep the two in step.
   milestones:
     - year: '1919'

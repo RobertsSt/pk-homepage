@@ -16,6 +16,7 @@ Redaktora pogas ir angliski, bet sadaļu un lauku nosaukumi ir latviski.
 | Sadaļa                 | Ko tajā maina                                                                                 |
 | ---------------------- | --------------------------------------------------------------------------------------------- |
 | **Sākumlapa**          | P!K! amatpersonas, prezidējošo konventu, sākumlapas tekstus, vēstures laika līniju, kontaktus |
+| **Vēstures stāsti**    | Abu vēstures lapu ievadus, nodaļas, laika līniju un jēdzienu skaidrojumus abās valodās        |
 | **Korporācijas**       | Katras korporācijas adresi, tālruni, e-pastu, mājaslapu, devīzes, simboliku un fotogrāfijas   |
 | **Korporāciju teksti** | Garo aprakstu par katru korporāciju, atsevišķi latviski un angliski                           |
 | **Lapas**              | Pārējās lapas (P!K! vēsture, mērķi, rekvizīti un citas), atsevišķi latviski un angliski       |
@@ -71,3 +72,11 @@ Notikumus pievieno un labo P!K! Google kalendārā, nevis redaktorā. Lapā tie 
 
 Jaunu lapu, izmaiņas izvēlnē vai jaunu korporāciju redaktorā pievienot nevar. To izdara lapas
 uzturētājs.
+
+## Vēstures stāsti
+
+Sadaļā **Vēstures stāsti** var rediģēt abu vēstures lapu ievadu, nodaļas, laika līnijas
+īso tekstu un jēdzienu skaidrojumus abās valodās. Nodaļas saites identifikatoru nemainiet.
+Gadus un laikposmu apzīmējumus aizpildiet abās valodās. Sākumlapas
+vēstures ievads un īsie notikumu teksti joprojām ir sadaļā **Sākumlapa → Vēsture**.
+Pilnais vēsturiskais teksts vēstures lapā ir izvēršams; tas nāk no sadaļas **Lapas**.

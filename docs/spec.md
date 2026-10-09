@@ -71,6 +71,19 @@ through the menu and the calendar run with every pull request; see `tests/`.
 What has not been done: nobody has yet listened to the site with a screen reader (VoiceOver, NVDA). The
 structure a screen reader is given was read and looks right, but that is not the same as using one.
 
+## History reading experience
+
+The two history routes use a shared editorial layout with archival photographs, five readable
+chapters, a sticky chapter guide, an interactive overview and expandable term explanations. The
+homepage history section uses the same manual timeline controls. Arrow keys, Home and End also
+select milestones; nothing advances automatically. Transitions respect reduced motion, and the
+chapters and timeline summaries remain readable without JavaScript.
+
+The new narrative is maintained in `src/content/histories/*.yaml` through “Vēstures stāsti” in Pages
+CMS. The complete imported Markdown texts remain available in an expandable section on each page;
+WordPress imports do not overwrite the new narrative. Existing photographs are reused with captions
+that do not assign an undocumented date to them.
+
 ## Speed
 
 Measured with Lighthouse on a simulated mid-range phone on slow 4G, before and after the pass of
@@ -109,6 +122,7 @@ results keep working. The build writes these as small redirect pages, which work
 | ---------------------------------------------------- | --------------------------------------- | --------------------------- |
 | Facts about each fraternity                          | `src/content/fraternities/<name>.yaml`  | Shared by both languages    |
 | Long text about each fraternity                      | `src/content/fraternity-texts/{lv,en}/` | One file per language       |
+| History story chapters and term explanations         | `src/content/histories/*.yaml`          | Both languages side by side |
 | Text pages                                           | `src/content/pages/{lv,en}/`            | One file per language       |
 | Homepage: officers, About photo, milestones, contact | `src/content/site/home.yaml`            | Both languages side by side |
 | Menu                                                 | `src/data/navigation.ts`                | Both languages side by side |

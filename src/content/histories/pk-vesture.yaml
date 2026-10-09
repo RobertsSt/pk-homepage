@@ -1,0 +1,110 @@
+name: P!K! vēsture
+title:
+  lv: P!K! vēsture
+  en: History of P!K!
+kicker:
+  lv: Kopš 1919. gada · Rīga
+  en: Since 1919 · Riga
+intro:
+  lv: Piecas korporācijas. Viena kopīga balss. No Latvijas Universitātes dibināšanas laika līdz mūsdienām — stāsts par sadarbību, pārtrauktu darbību un atjaunotu tradīciju.
+  en: Five fraternities. One shared voice. From the founding of the University of Latvia to the present — a story of cooperation, interrupted activity and a tradition restored.
+range:
+  lv: 1919 — šodien
+  en: 1919 — today
+chapters:
+  - id: dibinasana
+    year: { lv: '1919', en: '1919' }
+    title:
+      lv: Piecas korporācijas, kopīgs sākums
+      en: Five fraternities, a shared beginning
+    summary:
+      lv: 27. septembrī, dienu pirms Latvijas Augstskolas atklāšanas, Rīgā satiekas piecu latviešu korporāciju pārstāvji.
+      en: On 27 September, the day before the University of Latvia opens, representatives of five Latvian fraternities meet in Riga.
+    paragraphs:
+      lv:
+        - Korporāciju sadarbība Baltijā bija sākusies jau Tērbatā un Rīgas Politehnikumā. Taču jaunajai Latvijas valstij un tās augstskolai bija vajadzīgs jauns kopīgas darbības pamats.
+        - 1919. gada 27. septembrī Talavijas konventa dzīvoklī sanāca Lettonia, Selonija, Lettgallia, Talavija un Fraternitas Moscoviensis — vēlākās Fraternitas Lettica — pārstāvji. Viņi vienojās Latvijas Augstskolas atklāšanā atkal publiski nēsāt savas krāsas. Šo tikšanos uzskata par P!K! dibināšanu.
+        - Kopdarbība sākās laikā, kad vēl turpinājās Latvijas Neatkarības karš. Studentu korporāciju biedri piedalījās Atsevišķajā Studentu rotā un vēlāk Studentu bataljonā; studijas un konventu dzīvi nācās saskaņot ar valsts aizstāvēšanu.
+      en:
+        - Cooperation among Baltic fraternities had already begun in Tartu and at Riga Polytechnic. The new Latvian state and its university, however, needed a new basis for working together.
+        - On 27 September 1919, representatives of Lettonia, Selonija, Lettgallia, Talavija and Fraternitas Moscoviensis — later Fraternitas Lettica — met in Talavija’s convent quarters. They agreed to wear their colours publicly again at the university’s opening. This meeting is regarded as the founding of P!K!.
+        - Cooperation began while Latvia’s War of Independence was still being fought. Fraternity members served in the Separate Student Company and later the Student Battalion, balancing their studies and convent life with the defence of the country.
+  - id: kopdarbiba
+    year: { lv: '1920', en: '1920' }
+    title:
+      lv: Kopdarbība iegūst savu vārdu
+      en: Cooperation gains a name
+    summary:
+      lv: Apvienība pieņem nosaukumu Prezidiju Konvents un kopīgus noteikumus. Prezidēšanu ik semestri pārņem nākamā korporācija.
+      en: The union takes the name Prezidiju Konvents and adopts common rules. A different fraternity takes the chair each semester.
+    paragraphs:
+      lv:
+        - 1920. gada rudenī apvienība pieņēma nosaukumu Prezidiju Konvents — P!K!. Latvijas Augstskolas Organizācijas padome 13. oktobrī apstiprināja Kopējo Korporāciju Komānu, nostiprinot apvienības darbības pamatu.
+        - Katrai korporācijai lēmumu pieņemšanā bija viena balss. Prezidējošais prezidijs nāca no vienas korporācijas, un prezidēšanu nodeva tālāk vecākuma secībā, katrai korporācijai pa vienam semestrim. Šī rotācija kļuva par kopīgas atbildības principu.
+        - Starpkaru gados izveidojās P!K! tiesa un Goda tiesas kārtība, sporta sekcija un vīru koris. Apvienība kļuva par vietu, kur korporācijas risināja savstarpējās attiecības un īstenoja kopīgas ieceres.
+      en:
+        - In autumn 1920, the union adopted the name Prezidiju Konvents — P!K!. On 13 October, the university’s Organising Council approved the Common Fraternity Comment, establishing the basis of the union’s work.
+        - Each fraternity had one vote. The presiding officers came from a single fraternity, with the chair passing in seniority order for one semester at a time. This rotation became a principle of shared responsibility.
+        - The interwar years saw the establishment of the P!K! court, procedures for the Court of Honour, a sports section and a men’s choir. The union became a place for fraternities to manage their relationships and pursue common projects.
+  - id: partraukums
+    year: { lv: '1940', en: '1940' }
+    title:
+      lv: Darbība tiek pārtraukta
+      en: Activity is brought to a halt
+    summary:
+      lv: 13. jūlijā padomju okupācijas vara slēdz korporācijas un to filistru biedrības, konfiscējot mantu.
+      en: On 13 July, the Soviet occupation authorities close the fraternities and their alumni societies, confiscating their property.
+    paragraphs:
+      lv:
+        - Pēc Padomju Savienības karaspēka iebrukuma Latvijā 1940. gada 17. jūnijā korporāciju publiskā darbība drīz tika izbeigta. 13. jūlijā okupācijas vara slēdza korporācijas un filistru biedrības.
+        - No 1919. līdz 1940. gadam P!K! bija darbojies 42 semestrus. Pēdējā semestrī tā sastāvā bija 19 latviešu un divas krievu studentu korporācijas; prezidēja Fraternitas Livonica.
+        - Turpmākajās desmitgadēs korporāciju tradīcijas turpinājās arī ārpus Latvijas. Trimdā dibinātās korporācijas vēlāk kļuva par daļu no Latvijā atjaunotās korporāciju dzīves.
+      en:
+        - Following the Soviet invasion of Latvia on 17 June 1940, the fraternities’ public activity was soon ended. On 13 July, the occupation authorities closed the fraternities and their alumni societies.
+        - Between 1919 and 1940, P!K! had been active for 42 semesters. In its final semester it comprised 19 Latvian and two Russian fraternities, with Fraternitas Livonica presiding.
+        - In the decades that followed, fraternity traditions also continued outside Latvia. Fraternities founded in exile would later become part of the restored fraternity life in Latvia.
+  - id: atjaunosana
+    year: { lv: '1990', en: '1990' }
+    title:
+      lv: Atkal pie viena galda
+      en: Together again
+    summary:
+      lv: 15. martā piecpadsmit korporācijas atjauno Prezidiju Konventa darbību Latvijā.
+      en: On 15 March, fifteen fraternities restore the work of the Presidium Convent in Latvia.
+    paragraphs:
+      lv:
+        - 1990. gada 15. martā P!K! darbību atjaunoja piecpadsmit korporācijas. Pēc pusgadsimta pārtraukuma tām atkal bija kopīga apvienība Latvijā.
+        - Atjaunotajai sadarbībai pievienojās arī citas korporācijas. 1991. gadā uzņēma Gersicania un Fraternitas Imantica, 1992. gadā — Fraternitas Cursica, bet 1993. gadā — Fraternitas Vanenica. Visas četras bija dibinātas Vācijā 1947. gadā.
+        - Atjaunošana savienoja pirmskara pieredzi, trimdā saglabātās tradīcijas un jaunu studentu paaudzi.
+      en:
+        - On 15 March 1990, fifteen fraternities restored P!K!. After a half-century interruption, they once again had a common union in Latvia.
+        - Other fraternities joined the renewed cooperation. Gersicania and Fraternitas Imantica were admitted in 1991, Fraternitas Cursica in 1992 and Fraternitas Vanenica in 1993. All four had been founded in Germany in 1947.
+        - Restoration brought together pre-war experience, traditions preserved in exile and a new generation of students.
+  - id: sodien
+    year: { lv: 'Šodien', en: 'Today' }
+    title:
+      lv: Vēsture turpinās
+      en: The story continues
+    summary:
+      lv: Kopīgās tradīcijas dzīvo korporāciju sadarbībā, akadēmiskajā dzīvē un nākamajās paaudzēs.
+      en: Shared traditions live on through cooperation, academic life and the generations that follow.
+    paragraphs:
+      lv:
+        - Prezidiju Konvents vieno studentu korporācijas un pārstāv to kopīgās intereses. Prezidējošais konvents mainās ik semestri, turpinot 1920. gadā iedibināto rotācijas principu.
+        - Aiz katra nosaukuma un krāsu salikuma ir cilvēki, draudzība un sava pieredze. Šo vēsturi var iepazīt arī katras korporācijas stāstā — no senākajiem konventiem līdz trimdā dibinātajām korporācijām.
+      en:
+        - The Presidium Convent brings student fraternities together and represents their shared interests. The presiding convent changes each semester, continuing the rotation established in 1920.
+        - Behind every name and set of colours are people, friendships and individual experiences. This history can also be explored through each fraternity’s own story, from the oldest convents to those founded in exile.
+terms:
+  - word: P!K!
+    text:
+      lv: Prezidiju Konvents — studentu korporāciju apvienība, kurā katru korporāciju pārstāv tās prezidijs.
+      en: Prezidiju Konvents, the Presidium Convent — a union of student fraternities in which each fraternity is represented by its presidium.
+  - word: Komāns
+    text:
+      lv: Korporāciju sadzīves noteikumu un paražu kopums. Apvienoto Korporāciju Komāns jeb A!K!K! regulē korporāciju savstarpējās attiecības.
+      en: A fraternity’s code of customs and rules of social life, also called the comment. The Joint Fraternity Comment, A!K!K!, governs relations between fraternities.
+  - word: G!T! · P!K!T!
+    text:
+      lv: Goda tiesa un Prezidiju Konventa tiesa — vēsturiskās institūcijas goda lietu un kopīgo noteikumu pārkāpumu izskatīšanai.
+      en: The Court of Honour and the Court of the Presidium Convent — historical bodies for dealing with matters of honour and breaches of the common rules.

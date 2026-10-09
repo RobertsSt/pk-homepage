@@ -227,6 +227,87 @@ content:
         type: string
         readonly: true
 
+  - name: histories
+    label: Vēstures stāsti
+    type: collection
+    path: src/content/histories
+    filename: '{primary}.yaml'
+    format: yaml
+    operations:
+      create: false
+      rename: false
+      delete: false
+    view:
+      fields: [name]
+      primary: name
+    fields:
+      - name: name
+        label: Stāsts
+        type: string
+        readonly: true
+      - name: title
+        label: Virsraksts
+        component: bilingual
+      - name: kicker
+        label: Rinda virs virsraksta
+        component: bilingual
+      - name: intro
+        label: Ievads
+        component: bilingualLong
+      - name: range
+        label: Laikposms
+        component: bilingual
+      - name: chapters
+        label: Nodaļas un laika līnija
+        type: object
+        list:
+          min: 1
+          collapsible:
+            collapsed: true
+            summary: '{id}'
+        fields:
+          - name: id
+            label: Nodaļas saites identifikators
+            description: Nemainiet — uz šo identifikatoru ved arī sākumlapas saites.
+            type: string
+            required: true
+            readonly: true
+          - name: year
+            label: Gads vai laikposms
+            component: bilingual
+          - name: title
+            label: Virsraksts
+            component: bilingual
+          - name: summary
+            label: Īsais ievads
+            component: bilingualLong
+          - name: paragraphs
+            label: Nodaļas teksts
+            type: object
+            fields:
+              - name: lv
+                label: Rindkopas latviski
+                type: text
+                list: true
+                required: true
+              - name: en
+                label: Rindkopas angliski
+                type: text
+                list: true
+                required: true
+      - name: terms
+        label: Vārdi ar vēsturi
+        type: object
+        list: true
+        fields:
+          - name: word
+            label: Jēdziens
+            type: string
+            required: true
+          - name: text
+            label: Skaidrojums
+            component: bilingualLong
+
   - name: fraternities
     label: Korporācijas
     type: collection

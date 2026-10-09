@@ -27,8 +27,8 @@ for (const { name, path } of PAGES) {
 
 test('a long article can be read as soon as its page opens', async ({ page }) => {
   await page.goto('/pk-vesture/');
-  await expect(page.locator('.prose')).toHaveCSS('opacity', '1');
-  await expect(page.locator('.prose p').first()).toBeInViewport();
+  await expect(page.locator('.history-intro')).toHaveCSS('opacity', '1');
+  await expect(page.locator('.history-intro')).toBeInViewport();
 });
 
 test('all content shows without JavaScript', async ({ browser }) => {
@@ -52,6 +52,9 @@ test('the page does not scroll sideways on a narrow screen', async ({ page }) =>
     '/',
     '/studentu-korporacijas/fraternitas-metropolitana/',
     '/latvijas-korporaciju-apvieniba/',
+    '/pk-vesture/',
+    '/vesture/',
+    '/en/vesture/',
   ]) {
     await page.goto(path);
     // A heading may not run past the space it is given either; it would be cut off there.

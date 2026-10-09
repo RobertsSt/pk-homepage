@@ -1,4 +1,5 @@
 ---
+import HistoryPage from '@/components/pages/HistoryPage.astro';
 import TextPage from '@/components/pages/TextPage.astro';
 import { getTextPageSlugs } from '@/lib/content';
 
@@ -9,4 +10,8 @@ export async function getStaticPaths() {
 const { slug } = Astro.params;
 ---
 
-<TextPage locale="en" slug={slug} />
+{slug === 'pk-vesture' || slug === 'vesture' ? (
+  <HistoryPage locale="en" slug={slug} />
+) : (
+  <TextPage locale="en" slug={slug} />
+)}

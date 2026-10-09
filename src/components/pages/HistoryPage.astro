@@ -1,0 +1,233 @@
+---
+import { Image } from 'astro:assets';
+import { render } from 'astro:content';
+import oldSelonija from '@/assets/fraternities/selonija/photo-3.jpg';
+import oldBeveronija from '@/assets/fraternities/beveronija/photo-3.jpg';
+import procession from '@/assets/site/procession.jpg';
+import EraExplorer from '@/components/history/EraExplorer.astro';
+import { Shield } from '@/components/Shield';
+import type { Locale } from '@/i18n/config';
+import Layout from '@/layouts/Layout.astro';
+import { getTextPage } from '@/lib/content';
+import { historyLabels, loadHistory, type HistorySlug } from '@/lib/history';
+import { fraternitiesUrl, fraternityUrl, pageUrl } from '@/lib/routes';
+import { getFraternities } from '@/lib/site';
+import '@/styles/history.css';
+
+interface Props {
+  locale: Locale;
+  slug: HistorySlug;
+}
+const { locale, slug } = Astro.props;
+const isPk = slug === 'pk-vesture';
+const [story, original, fraternities] = await Promise.all([
+  loadHistory(locale, slug),
+  getTextPage(locale, slug),
+  getFraternities(),
+]);
+const { Content } = await render(original.entry);
+const labels = historyLabels[locale];
+const foundingIds = ['lettonia', 'selonija', 'lettgallia', 'talavija', 'fraternitas-lettica'];
+const founders = foundingIds.map((id) => fraternities.find((f) => f.id === id)!);
+const members = fraternities.filter((f) => f.data.membership === 'pk');
+const otherSlug = isPk ? 'vesture' : 'pk-vesture';
+const eras = story.chapters.map((chapter) => ({
+  year: chapter.year,
+  title: chapter.title,
+  text: chapter.summary,
+  href: `#${chapter.id}`,
+}));
+---
+
+<Layout locale={locale} path={slug} title={story.title} description={story.intro}>
+  <div class="reading-progress" aria-hidden="true"></div>
+  <div class="history-page" id="history-top">
+    <header class="shell history-hero">
+      <div class="history-hero-copy">
+        <p class="kicker" data-enter>
+          {story.kicker}
+        </p>
+        <h1 data-enter style="--reveal-order:1">
+          {story.title}
+        </h1>
+        <p class="history-intro" data-enter style="--reveal-order:2">
+          {story.intro}
+        </p>
+        <a class="btn history-begin" href={`#${story.chapters[0]!.id}`} data-enter style="--reveal-order:3">
+          {labels.begin} <span aria-hidden="true">↓</span>
+        </a>
+        <p class="history-range" data-enter style="--reveal-order:4">
+          <span aria-hidden="true"></span>
+          {story.range}
+        </p>
+      </div>
+      <figure class="history-hero-photo" data-enter style="--reveal-order:2">
+        <div class="history-photo-frame">
+          <Image
+            src={isPk ? oldSelonija : oldBeveronija}
+            alt={isPk ? labels.photoAltPk : labels.photoAltRoots}
+            widths={[480, 720, 1000]}
+            sizes="(min-width: 1024px) 45vw, 100vw"
+            loading="eager"
+          />
+          <span class="history-photo-corner" aria-hidden="true">
+            P!K! <span>·</span> {locale === 'lv' ? 'Arhīvs' : 'Archive'}
+          </span>
+        </div>
+        <figcaption>{isPk ? labels.photoPk : labels.photoRoots}</figcaption>
+      </figure>
+    </header>
+
+    <section class="on-ink history-overview" aria-labelledby="history-overview-title">
+      <div class="shell">
+        <h2 id="history-overview-title" class="kicker">
+          {labels.explore}
+        </h2>
+        <EraExplorer id="history-eras" locale={locale} eras={eras} />
+      </div>
+    </section>
+
+    <div class="shell history-reading">
+      <aside class="history-contents">
+        <nav aria-label={labels.chapters}>
+          <p class="kicker">{labels.chapters}</p>
+          <ol>
+            {story.chapters.map((chapter, index) => (
+              <li>
+                <a href={`#${chapter.id}`} data-chapter-link>
+                  <span class="history-nav-index">{String(index + 1).padStart(2, '0')}</span>
+                  <span>
+                    <small>{chapter.year}</small>
+                    {chapter.title}
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ol>
+          <a class="history-back" href="#history-top">
+            ↑ {labels.back}
+          </a>
+        </nav>
+      </aside>
+
+      <article class="history-chapters" aria-label={story.title}>
+        {story.chapters.map((chapter, index) => (
+          <section id={chapter.id} class="history-chapter" aria-labelledby={`${chapter.id}-title`}>
+            <div class="history-chapter-meta" data-reveal>
+              <span>
+                {labels.chapter} {String(index + 1).padStart(2, '0')}
+              </span>
+              <span>
+                {chapter.id === 'sodien'
+                  ? `${members.length} ${locale === 'lv' ? 'korporācijas' : 'fraternities'}`
+                  : chapter.year}
+              </span>
+            </div>
+            <h2 id={`${chapter.id}-title`} data-reveal>
+              {chapter.title}
+            </h2>
+            <p class="history-chapter-lead">{chapter.summary}</p>
+            <div class="history-copy">
+              {chapter.paragraphs.map((paragraph) => (
+                <p>{paragraph}</p>
+              ))}
+            </div>
+            {isPk && index === 0 && (
+              <div class="history-founders">
+                <h3 class="kicker">{labels.founders}</h3>
+                <ul>
+                  {founders.map((founder) => (
+                    <li>
+                      <a href={fraternityUrl(locale, founder.id)}>
+                        <Shield colors={founder.data.colors} band={founder.data.band} />
+                        <span>{founder.data.name}</span>
+                        <span class="history-founder-arrow" aria-hidden="true">
+                          ↗
+                        </span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {index === 2 && (
+              <div class="history-note" data-reveal>
+                <span class="history-note-number">{isPk ? '42' : '1808'}</span>
+                <p>
+                  {isPk
+                    ? locale === 'lv'
+                      ? 'semestrus P!K! darbojās no dibināšanas līdz 1940. gadam.'
+                      : 'semesters of P!K! activity between its founding and 1940.'
+                    : locale === 'lv'
+                      ? 'Tērbatā nodibina Curonia — vienu no Baltijas korporāciju tradīcijas aizsācējām.'
+                      : 'Curonia is founded in Tartu, an early bearer of the Baltic fraternity tradition.'}
+                </p>
+              </div>
+            )}
+            {isPk && index === story.chapters.length - 1 && (
+              <a class="btn" href={fraternitiesUrl(locale)}>
+                {labels.members} <span aria-hidden="true">↗</span>
+              </a>
+            )}
+          </section>
+        ))}
+      </article>
+    </div>
+
+    <section class="shell history-extras" aria-labelledby="history-terms-title">
+      <div class="history-extra-heading">
+        <h2 id="history-terms-title">{labels.terms}</h2>
+        <p>{labels.termsHint}</p>
+      </div>
+      <div class="history-terms">
+        {story.terms.map((term) => (
+          <details>
+            <summary>
+              {term.word}
+              <span class="history-plus" aria-hidden="true">
+                +
+              </span>
+            </summary>
+            <p>{term.text}</p>
+          </details>
+        ))}
+      </div>
+      <div class="history-archive">
+        <div class="history-extra-heading">
+          <h2>{labels.archive}</h2>
+          <p>{labels.archiveHint}</p>
+        </div>
+        <details>
+          <summary>
+            <span>{labels.fullText}</span>
+            <span class="history-plus" aria-hidden="true">
+              +
+            </span>
+          </summary>
+          <div class="prose history-archive-text" lang={original.translated ? undefined : 'lv'}>
+            <Content />
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section class="history-related on-ink" aria-labelledby="history-related-title">
+      <div class="shell history-related-grid">
+        <Image src={procession} alt="" width={800} sizes="(min-width: 1024px) 40vw, 100vw" />
+        <div>
+          <p class="kicker">{labels.related}</p>
+          <h2 id="history-related-title">{isPk ? labels.rootsTitle : labels.pkTitle}</h2>
+          <p>{isPk ? labels.rootsText : labels.pkText}</p>
+          <a href={pageUrl(locale, otherSlug)} class="btn btn-light">
+            {labels.discover} <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<script>
+  import { initChapterNavigation } from '@/scripts/history';
+  initChapterNavigation();
+</script>

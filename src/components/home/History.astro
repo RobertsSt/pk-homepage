@@ -1,63 +1,63 @@
 ---
+import { Image } from 'astro:assets';
+import oldSelonija from '@/assets/fraternities/selonija/photo-3.jpg';
+import EraExplorer from '@/components/history/EraExplorer.astro';
 import SectionTitle from '@/components/SectionTitle.astro';
+import { historyLabels, loadHistory } from '@/lib/history';
 import { pageUrl } from '@/lib/routes';
 import type { Homepage } from '@/lib/site';
+import '@/styles/history.css';
 
 interface Props {
   page: Homepage;
 }
-
 const { page } = Astro.props;
 const { t, locale, members } = page;
-
-// The recorded milestones, then where things stand now.
+const story = await loadHistory(locale, 'pk-vesture');
+const labels = historyLabels[locale];
 const milestones = [
   ...page.milestones,
   { year: t('history.today'), text: t('history.todayText', { count: members.length }) },
 ];
+const eras = milestones.map((milestone) => {
+  const chapter = story.chapters.find((chapter) => chapter.year === milestone.year);
+  return {
+    year: milestone.year,
+    title: chapter?.title ?? milestone.year,
+    text: milestone.text,
+    href: `${pageUrl(locale, 'pk-vesture')}#${chapter?.id ?? story.chapters[0]!.id}`,
+  };
+});
 ---
 
-<section class="on-ink relative overflow-hidden py-24 lg:py-36">
-  <p
-    class="font-display text-paper/[0.06] pointer-events-none absolute top-[38%] -right-[2vw] -translate-y-1/2 text-[38vw] leading-none tracking-[-0.04em] select-none"
-    aria-hidden="true"
-    data-parallax="70"
-  >
-    {page.foundedYear}
-  </p>
-
-  <div class="shell relative">
-    <div class="grid gap-10 lg:grid-cols-12">
-      <div class="lg:col-span-5">
+<section id="vesture" class="on-ink history-home" aria-labelledby="home-history-title">
+  <div class="shell">
+    <div class="history-home-heading">
+      <div>
         <p class="kicker" data-reveal>
           {t('history.kicker')}
         </p>
-        <SectionTitle text={t('history.title')} class="mt-6" />
+        <div id="home-history-title">
+          <SectionTitle text={t('history.title')} />
+        </div>
       </div>
-      <div class="lg:col-span-6 lg:col-start-7">
-        <p class="text-paper/85 text-lg leading-relaxed" data-reveal>
-          {page.historyTeaser}
-        </p>
-        <p class="mt-10" data-reveal>
-          <a href={pageUrl(locale, 'pk-vesture')} class="btn btn-light">
-            {t('history.more')} <span aria-hidden="true">→</span>
-          </a>
-        </p>
+      <div class="history-home-intro" data-reveal>
+        <p>{page.historyTeaser}</p>
+        <a href={pageUrl(locale, 'pk-vesture')}>
+          {labels.discover} <span aria-hidden="true">↗</span>
+        </a>
       </div>
     </div>
-
-    <div class="relative mt-20 lg:mt-28">
-      <span class="timeline-line" data-reveal="line" aria-hidden="true"></span>
-      <ol class="timeline">
-        {milestones.map((milestone, index) => (
-          <li data-reveal style={`--reveal-order:${index * 3 + 2}`}>
-            <p class="font-display text-brass text-[2.6rem] leading-none tabular-nums lg:text-5xl">
-              {milestone.year}
-            </p>
-            <p class="text-paper/75 mt-3 max-w-[17rem] text-[0.95rem] leading-relaxed">{milestone.text}</p>
-          </li>
-        ))}
-      </ol>
-    </div>
+    <EraExplorer id="home-history" locale={locale} eras={eras} illustrated>
+      <figure class="history-home-photo">
+        <Image
+          src={oldSelonija}
+          alt={labels.photoAltPk}
+          widths={[480, 720, 1100]}
+          sizes="(min-width: 1024px) 45vw, 100vw"
+        />
+        <figcaption>{labels.photoHome}</figcaption>
+      </figure>
+    </EraExplorer>
   </div>
 </section>
