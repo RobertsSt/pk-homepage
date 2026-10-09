@@ -15,7 +15,7 @@ Aktīvo biedru skaits: 114 (2026 – II dati)
 
 ## Vēsture
 
-Korporācijas Fraternitas Lettica pirmsākumi atrodami Maskavā pirmās tautiskās atmodas laikā 1960. gadu beigās. Krišjāņa Valdemāra vadībā sanāca kopā vairāki Maskavā dzīvojoši latvieši, lai apzinātos un apkopotu latviešu tautas gara mantas, pētītu Latvijas vēsturi, attīstītu latviešu valodu un publicētu rakstus laikrakstiem. Tā radās t.s. Maskavas latviešu lasāmie vakari. Pirmā sanāksme bija 1870. gada 20. oktobrī.
+Korporācijas Fraternitas Lettica pirmsākumi atrodami Maskavā pirmās tautiskās atmodas laikā 1860. gadu beigās. Krišjāņa Valdemāra vadībā sanāca kopā vairāki Maskavā dzīvojoši latvieši, lai apzinātos un apkopotu latviešu tautas gara mantas, pētītu Latvijas vēsturi, attīstītu latviešu valodu un publicētu rakstus laikrakstiem. Tā radās t.s. Maskavas latviešu lasāmie vakari. Pirmā sanāksme bija 1870. gada 20. oktobrī.
 
 Vakara dalībnieku starpā bija ievērojami latvieši, kā Krišjānis Valdemārs, Krišjānis Barons, Fricis Brīvzemnieks, Krišjānis Kalniņš, Jānis Krodznieks, Frīdrihs Veinbergs, Andrejs Šlēziņš, Jānis Sietiņsons, Aleksandrs Vēbers, Jēkabs Velme, Ansis Bandrevičs.
 

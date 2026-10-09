@@ -110,5 +110,5 @@ abās valodās.
 - Lapas beigās ir izvēršams **pilnais teksts**; tas nāk no sadaļas **Lapas** un paliek nesaīsināts.
 - Ja pievienojat apgalvojumu, kura pilnajā tekstā nav, ierakstiet tā avotu laukā **Avoti**. Derīgi
   avoti ir, piemēram, Latvijas Universitāte, “Latvijas Vēstnesis”, vārdnīcas un grāmatas.
-- Simbolus lapa rāda uz prezidējošā konventa piemēra. To maina sadaļā **Sākumlapa**, kad mainās
-  prezidijs.
+- Simbolus lapa rāda uz vienas korporācijas piemēra. To izvēlas laukā **Krāsas un simboli →
+  Piemēra korporācija**.

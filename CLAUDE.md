@@ -16,12 +16,12 @@ Read [docs/spec.md](docs/spec.md) first: it holds the decisions, the milestones 
 - Never put anything from the hosting (FTP name, password, folder listing) into the repository. The
   `Deploy` workflow reads them from GitHub secrets; see the comment at its top.
 - Everything that passes CI on `main` is published by `Deploy` without anyone pressing a button: a merge,
-  an edit saved in the editing tool, the nightly run. So `main` is the live site; do not merge what is
-  not meant to be seen.
+  an edit saved in the editing tool, the nightly run. Since 2026-10-09 that is pk.lv itself. So `main`
+  is the live site; do not merge what is not meant to be seen.
 - `.htaccess` and `robots.txt` are written by the build (`astro.config.mjs`), not kept in `public/`,
   because they depend on the address the site is built for. A mistake in the rewrite rules can lock
-  visitors in a redirect loop: try a change in the trial folder first. Before that, try it on this
-  machine: macOS has Apache (`/usr/sbin/httpd`), which reads the file when pointed at `dist/` with
+  visitors in a redirect loop, and there is no trial folder any more: try a change on this machine
+  first. macOS has Apache (`/usr/sbin/httpd`), which reads the file when pointed at `dist/` with
   `AllowOverride All`.
 - `/WordPress/` is a page on purpose (`src/pages/WordPress`), not a redirect: browsers remember the old
   "pk.lv has moved to /WordPress/" for good, and redirecting it home again traps them in a loop. Never
@@ -33,8 +33,9 @@ Read [docs/spec.md](docs/spec.md) first: it holds the decisions, the milestones 
 - A running dev server can go stale when a build or a schema change happens underneath it: pages error or
   scripts return 504. Saving `astro.config.mjs` restarts it; a real edit to `src/content.config.ts` makes
   it re-read the schema.
-- `npm run import:wordpress` re-imports Latvian content from the live WordPress site, and ends by listing
-  English texts whose Latvian source has changed (`npm run check:translations` on its own does the same).
+- WordPress was removed on 2026-10-09. `scripts/import-wordpress.mjs` and `scripts/import-overrides.json`
+  have nothing left to read and are due to be deleted; do not run or extend them. `npm run
+check:translations` lists English texts whose Latvian source has changed, by the dates in the files.
 - `npm run build:fonts` rebuilds `src/assets/fonts` from the pinned sources. Needed only when the list of
   characters in `scripts/build-fonts.mjs` or the fonts change.
 - Optimised images are cached in `node_modules/.astro/assets`, and the cache does not notice a change to
@@ -46,8 +47,7 @@ Read [docs/spec.md](docs/spec.md) first: it holds the decisions, the milestones 
   so a hard-coded `/…` link breaks there.
 - Content is data: text and facts live in `src/content`, never in components. Interface labels live in
   `src/i18n/ui.ts`, in both languages.
-- Do not hand-edit imported Latvian files in `src/content` before launch; the next import overwrites them.
-  Corrections that must survive go in `scripts/import-overrides.json`.
+- The Latvian files in `src/content` are the source since launch; edit them directly.
 - Fraternities are shown in seniority order (`order`). Their colours are read top to bottom and `band` is
   the stripe direction; both are identity, not decoration, so never reorder or restyle them.
 - Dates and times are Riga wall-clock strings (`src/lib/calendar/dates.ts`); do not use the local time zone
@@ -60,8 +60,8 @@ Read [docs/spec.md](docs/spec.md) first: it holds the decisions, the milestones 
   field needs both. Pages CMS rejects keys it does not know, and a `list` written as an object must
   include `collapsible`. Optional fields in the schema go through `optional()`, because a form saves an
   empty field as an empty string or null.
-- An image from outside WordPress needs an entry in `src/data/image-credits.json` (source, author,
-  licence), and a path in `scripts/import-overrides.json` if it replaces an imported one.
+- An image that did not come from the old WordPress site needs an entry in
+  `src/data/image-credits.json` (source, author, licence).
 - Content arrives in one of two ways; see `src/styles/motion.css`. What is on screen when a page opens
   (hero, page header, the article of a text page) takes `data-enter`, a plain CSS animation that needs no
   script. Everything further down takes `data-reveal`, which the page script shows on scroll. Do not hide
@@ -75,8 +75,7 @@ Read [docs/spec.md](docs/spec.md) first: it holds the decisions, the milestones 
   opens: the two histories (`src/content/histories`) and the guide (`src/content/guides`). On a guide,
   a statement that is not in that text names its source in `sources`.
 - Accessibility target is WCAG 2.2 AA. A sign used as an icon (→, ↗) is wrapped in `aria-hidden`; a link
-  that opens a new tab says so in an `sr-only` span; every photograph has a description (`alt`), which for
-  imported content lives in `scripts/import-overrides.json`.
+  that opens a new tab says so in an `sr-only` span; every photograph has a description (`alt`).
 - The calendar is a Preact component: hooks come from `preact/hooks`, markup uses `class`, and SVG
   attributes are written as in SVG (`stroke-width`). Its month is an ARIA grid with one tab stop.
 - English texts follow the word list under "English wording" in the spec; change a term there and in

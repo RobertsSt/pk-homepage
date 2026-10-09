@@ -185,7 +185,7 @@ const guides = defineCollection({
       character: section,
       path: section,
       joining: z.object({ title: localized, text: localized, sororitiesUrl: z.url() }),
-      symbols: section,
+      symbols: section.extend({ example: reference('fraternities') }),
       life: section.extend({ photo: captioned(image) }),
       questions: z.array(z.object({ question: localized, answer: localized })).min(1),
       terms: z.array(z.object({ word: z.string(), text: localized })).min(1),

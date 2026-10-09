@@ -25,8 +25,8 @@ photo:
     lv: Korporāciju biedri deķeļos un krāsu lentēs nes valstu un korporāciju karogus pāri tiltam Rīgā; fonā Vecrīgas torņi
     en: Fraternity members in caps and colour sashes carry national and fraternity flags across a bridge in Riga, with the towers of the Old Town behind them
   caption:
-    lv: Korporāciju svētku gājiens Rīgā.
-    en: A festive fraternity procession in Riga.
+    lv: 58. Baltijas tautu komerša gājiens, Rīga, 2023
+    en: Procession of the 58th Baltic Nations’ Commers, Riga, 2023
 
 principles:
   title:
@@ -224,6 +224,8 @@ symbols:
     en: >-
       Every fraternity has insignia of its own. They are not ornament: the colours, the cap, the
       monogram and the coat of arms show which fraternity a person belongs to.
+  # The fraternity whose insignia illustrate the section: its file name in src/content/fraternities.
+  example: selonija
   items:
     - title:
         lv: Krāsas

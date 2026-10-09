@@ -34,13 +34,11 @@ export async function getFraternityPaths() {
   });
 }
 
-/** The fraternity that presides over P!K! this academic year, as the homepage names it. */
-export async function getPresiding() {
+/** The year P!K! was founded, as the homepage states it. */
+export async function getFoundedYear() {
   const home = await getEntry('home', 'home');
   if (!home) throw new Error('src/content/site/home.yaml is missing');
-  const fraternity = await getEntry(home.data.presiding.fraternity);
-  if (!fraternity) throw new Error(`home.yaml names an unknown presiding fraternity`);
-  return { fraternity, term: home.data.presiding.term, foundedYear: home.data.foundedYear };
+  return home.data.foundedYear;
 }
 
 /** How to reach P!K!: shown on the homepage and at the foot of every page. */

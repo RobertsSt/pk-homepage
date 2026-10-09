@@ -6,7 +6,7 @@
  * at the foot of the page, with the sources of what is not in it.
  */
 import { Image } from 'astro:assets';
-import { render } from 'astro:content';
+import { getEntry, render } from 'astro:content';
 import SectionNav from '@/components/SectionNav.astro';
 import SectionTitle from '@/components/SectionTitle.astro';
 import { Shield } from '@/components/Shield';
@@ -18,7 +18,7 @@ import { findInNavigation, getTextPage } from '@/lib/content';
 import { displayHost } from '@/lib/format';
 import { loadGuide } from '@/lib/guide';
 import { fraternitiesUrl, fraternityUrl } from '@/lib/routes';
-import { getFraternities, getPresiding } from '@/lib/site';
+import { getFoundedYear, getFraternities } from '@/lib/site';
 
 interface Props {
   locale: Locale;
@@ -28,11 +28,11 @@ interface Props {
 const { locale, slug } = Astro.props;
 const t = useTranslations(locale);
 
-const [guide, original, fraternities, presiding] = await Promise.all([
+const [guide, original, fraternities, foundedYear] = await Promise.all([
   loadGuide(locale, slug),
   getTextPage(locale, slug),
   getFraternities(),
-  getPresiding(),
+  getFoundedYear(),
 ]);
 const { Content } = await render(original.entry);
 const place = findInNavigation(slug);
@@ -40,8 +40,8 @@ const place = findInNavigation(slug);
 const members = fraternities.filter((fraternity) => fraternity.data.membership === 'pk');
 const oldest = fraternities.reduce((a, b) => (a.data.founded <= b.data.founded ? a : b));
 
-// The insignia are shown on one fraternity, and each year that is another one.
-const example = presiding.fraternity;
+// The insignia are shown on one fraternity, the one the content names.
+const example = await getEntry(guide.symbols.example);
 const insignia = (['arms', 'zirkel', 'cap', 'star'] as const).map((key) => ({
   label: t(`heraldry.${key}`),
   image: example.data.heraldry[key],
@@ -134,7 +134,7 @@ const latvian = locale === 'lv' ? undefined : 'lv';
         style="--reveal-order:1"
       >
         <dt class={caption}>{t('stats.founded')}</dt>
-        <dd class={figure}>{presiding.foundedYear}</dd>
+        <dd class={figure}>{foundedYear}</dd>
       </div>
       <div
         class="border-rule flex flex-col-reverse justify-end border-t py-10 sm:border-t-0 sm:pl-8"
@@ -328,8 +328,7 @@ const latvian = locale === 'lv' ? undefined : 'lv';
         </div>
         <figcaption class="text-ink-soft mt-4 text-[0.8rem] tracking-wide">
           <a class="link" href={fraternityUrl(locale, example.id)}>
-            {t('guide.example', { name: example.data.name, term: presiding.term })}{' '}
-            <span aria-hidden="true">→</span>
+            {t('guide.example', { name: example.data.name })} <span aria-hidden="true">→</span>
           </a>
         </figcaption>
       </figure>

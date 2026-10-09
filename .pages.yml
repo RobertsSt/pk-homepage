@@ -115,7 +115,7 @@ content:
             type: select
             required: true
             options:
-              values:
+              values: &memberFraternities
                 - { name: fraternitas-arctica, label: Fraternitas Arctica }
                 - { name: selonija, label: Selonija }
                 - { name: lettgallia, label: Lettgallia }
@@ -406,9 +406,22 @@ content:
               message: Adresei jāsākas ar https://
       - name: symbols
         label: Krāsas un simboli
-        description: Piemēram lapa pati rāda prezidējošā konventa simboliku; to maina sadaļā “Sākumlapa”.
         type: object
-        fields: *guideSection
+        fields:
+          - name: title
+            label: Sadaļas virsraksts
+            component: bilingual
+          - name: intro
+            label: Sadaļas ievads
+            component: bilingualLong
+          - name: example
+            label: Piemēra korporācija
+            description: Tās krāsas, vapeni, cirķeli un deķeli lapa rāda kā piemēru.
+            type: select
+            required: true
+            options:
+              values: *memberFraternities
+          - *guideEntries
       - name: life
         label: Dzīve korporācijā
         type: object

@@ -98,8 +98,8 @@ that do not assign an undocumented date to them.
 
 “Kas ir studentu korporācijas?” is the page a newcomer reads first, so it is laid out as a guide: the
 four principles, what sets a fraternity apart, the path from fox to philister, the insignia, life in a
-fraternity, questions and a glossary. The insignia are shown on the fraternity that presides this
-year, so the example changes with the presidium and no fraternity is singled out.
+fraternity, questions and a glossary. The insignia are shown on one fraternity, which the content
+names (`symbols.example`); Roberts chose Selonija on 2026-10-09.
 
 The sections are content, in `src/content/guides/*.yaml`, edited under “Skaidrojošās lapas” in Pages
 CMS. Two rules keep the page honest:
@@ -178,7 +178,11 @@ credits page is built from it, and files under CC BY-SA require that credit to b
 
 ## Until launch: WordPress stays the source for Latvian text
 
-The WordPress site is still being edited, so the import is built to be run again:
+Launched on 2026-10-09: WordPress has been removed, and since then the Latvian files in `src/content`
+are the source and are edited here or in the editing tool. What follows describes how the texts were
+brought over. The import script has nothing left to read and is to be deleted (see the checklist).
+
+While the WordPress site was still being edited, the import was built to be run again:
 
 - `npm run import:wordpress` rewrites every Latvian file and image from WordPress.
 - What WordPress does not hold lives in `scripts/import-overrides.json` and is merged in on every run:
@@ -222,9 +226,10 @@ day; after that WordPress is retired and the import script is deleted.
    arrived as one clean commit with the rest of the file intact. Not yet tried: uploading a picture,
    editing a long text, the forms for YAML files. Editors are invited after the switch. See "Editing
    tool" below.
-6. **Launch.** The site is published to a trial folder, `https://pk.lv/jauna/`, by the same workflow that
-   will publish the real one, automatically and every night. Still to do: check the server rules there,
-   the final import, the switch, WordPress archived. See "Publishing to pk.lv" below.
+6. **Launch.** Done on 2026-10-09: `https://pk.lv` is the new site, published by the `Deploy` workflow
+   after every passing check and every night. WordPress and the trial folder are gone; the 2016 copy at
+   `/old/` stays. Still to do: invite the editors, retire the import script, remove the WordPress
+   database. See "Publishing to pk.lv" below.
 
 Work happens on a branch and reaches `main` through a pull request that passes `npm run verify`.
 Milestones 1 to 3 arrived together in the first pull request. The accessibility and speed passes follow
@@ -393,33 +398,29 @@ Trial folder:
 - [x] Old addresses checked in the trial folder (2026-10-09): all 38, with and without the closing
       slash, answer "moved permanently" and land on a page that answers.
 
-The switch. The steps from the GitHub settings to the `Deploy` run are done in one sitting; pk.lv is
-away for about five minutes.
+The switch, done on 2026-10-09.
 
 - [x] Final `npm run import:wordpress` (2026-10-09, after the last merge): WordPress held nothing the
       site did not already have. To be run again only if WordPress is edited before the switch.
-- [ ] A backup downloaded to a computer: the WordPress files (the folders `WordPress`, `wp-admin`,
-      `wp-content`, `wp-includes` and the loose files beside them) and its database. A backup that
-      stays on the server goes when the server's files go.
-- [ ] A new FTP account whose folder is exactly the one pk.lv is served from: `pk.lv`, with nothing
+- [x] A backup of the WordPress files and database downloaded to a computer (Roberts, 2026-10-09).
+- [x] A new FTP account whose folder is exactly the one pk.lv is served from: `pk.lv`, with nothing
       after it. Not the account's home, and not `public_html`, which is another site (spk.lv).
-- [ ] A moment when no workflow is running and the day's nightly run is over, so that nothing is
-      published halfway through.
-- [ ] In GitHub, the secrets `FTP_USERNAME` and `FTP_PASSWORD` changed to the new account and the
-      variable `DEPLOY_BASE_PATH` changed to `/`. From here on `Deploy` refuses to publish for as long
-      as WordPress still answers at pk.lv, so a run that starts too early changes nothing.
-- [ ] `Deploy` run by hand with "Only list what would be uploaded" ticked. It proves that the new
-      account can log in, and changes nothing.
-- [ ] WordPress moved out of the folder pk.lv is served from, to a folder beside it that the web cannot
-      reach: the folders `WordPress`, `wp-admin`, `wp-content`, `wp-includes` and the loose WordPress
-      files, hidden ones such as `.htaccess` included. What stays: `jauna`, `old`, `.well-known` (the
-      certificate is renewed through it) and `cgi-bin`. The new site needs the name `WordPress` for
-      the old addresses, and a leftover `index.php` would be served in place of the new homepage.
-- [ ] `Deploy` run by hand. Its last step confirms that pk.lv serves the new build.
-- [ ] Checked on pk.lv in both languages: home, one text page, one fraternity page, three old addresses
-      under `/WordPress/`, a missing address, http and www, and `/old/`. And in a browser that knew the
-      WordPress site: typing pk.lv must end on the homepage, not on an error.
-- [ ] The trial folder `jauna` and its FTP account removed.
+- [x] In GitHub, the secrets `FTP_USERNAME` and `FTP_PASSWORD` changed to the new account and the
+      variable `DEPLOY_BASE_PATH` changed to `/`. `Deploy` refuses to publish for as long as WordPress
+      still answers at pk.lv, so a run that started too early would have changed nothing.
+- [x] `Deploy` run by hand with "Only list what would be uploaded" ticked, to prove that the new
+      account can log in.
+- [x] WordPress taken out of the folder pk.lv is served from: the folders `WordPress`, `wp-admin`,
+      `wp-content`, `wp-includes` and the loose WordPress files. Roberts deleted them rather than keep
+      them beside the folder; the downloaded backup is the only copy. What stays: `old` and
+      `.well-known` (the certificate is renewed through it).
+- [x] `Deploy` run by hand (2026-10-09, 15:21 UTC). Its last step confirmed that pk.lv serves the new
+      build.
+- [x] Checked on pk.lv from outside (2026-10-09): all 72 pages in a browser (each answers, loads every
+      file and picture, is open to search engines and names its own address), every link between them,
+      the 37 old addresses in both spellings, `/WordPress/` serving the homepage, a missing address,
+      http and www, the calendar, and `/old/`. No WordPress file answers any more.
+- [x] The trial folder `jauna` and its FTP account removed.
 - [ ] Editors invited to the editing tool; the check for translations that have fallen behind changed to
       compare when the two files were last edited; the import script deleted.
-- [ ] After a few weeks: the WordPress archive and database removed.
+- [ ] After a few weeks: the WordPress database removed (cPanel, MySQL Databases).

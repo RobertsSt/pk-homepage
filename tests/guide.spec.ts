@@ -54,16 +54,15 @@ for (const { path, contents, section, fullText, lastWords, sources } of guides) 
   });
 }
 
-test('the insignia are shown on the fraternity that presides this year', async ({ page }) => {
-  await page.goto('/');
-  // The homepage names the presiding fraternity beside the academic year.
-  const presiding = (await page.locator('dd:has(svg)').first().innerText()).trim();
+test('the insignia are shown on one fraternity, and lead to its page', async ({ page }) => {
   await page.goto('/kas-ir-studentu-korporacijas/');
   const example = page.locator('#simboli figure');
-  await expect(example).toContainText(presiding);
-  await expect(example.locator('img')).toHaveCount(4);
+  // The card names the fraternity above its mottos; the content chooses which one it is.
+  const name = (await example.locator('p').first().innerText()).trim();
+  expect(name).not.toBe('');
+  await expect(example.getByRole('img', { name: new RegExp(`^${name}:`) })).toHaveCount(5);
   await example.getByRole('link').click();
-  await expect(page.locator('main h1')).toHaveText(presiding);
+  await expect(page.locator('main h1')).toHaveText(name);
 });
 
 test('Latvian terms are marked as Latvian on the English guide', async ({ page }) => {
