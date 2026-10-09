@@ -34,11 +34,13 @@ principles:
     en: Four basic principles
   intro:
     lv: >-
-      Dr. iur. V. Sinaiskis (Fraternitas Arctica) korporācijas uzbūves pamatā saskata četrus
-      principus. Visi četri ir vienādi svarīgi un savstarpēji saistīti.
+      Latviešu korporācijas balstās uz četriem principiem, kas gadsimtu gaitā izveidojušies studentu
+      organizācijās: brālību, godu, vecākumu un audzināšanu. Visi četri ir vienādi svarīgi un
+      savstarpēji saistīti.
     en: >-
-      Dr. iur. V. Sinaiskis of Fraternitas Arctica sees four principles at the foundation of a
-      fraternity. All four are equally important and bound up with one another.
+      Latvian fraternities rest on four principles that took shape in student organisations over the
+      centuries: brotherhood, honour, seniority and upbringing. All four are equally important and
+      bound up with one another.
   items:
     - title:
         lv: Brālība
@@ -52,18 +54,6 @@ principles:
           used among fraternity members, fraternitas (brotherhood) and commilito (comrade in arms),
           show how old the idea is.
     - title:
-        lv: Vecākums
-        en: Seniority
-      text:
-        lv: >-
-          Savstarpēja cieņa un draudzība starp vecāko un jaunāko. Vecākumu nosaka tas, cik ilgi
-          cilvēks pieder korporācijai, nevis viņa gadi. Goda lietās vecākumam nav nozīmes: tur
-          visiem ir vienādas tiesības.
-        en: >-
-          Respect and friendship between the older and the younger. Seniority is set by how long a
-          member has belonged to the fraternity, not by his age. In matters of honour it has no
-          bearing: there all have equal rights.
-    - title:
         lv: Gods
         en: Honour
       text:
@@ -76,17 +66,29 @@ principles:
           equals. The fraternities have kept this principle and hold honour in high regard; the
           comment of honour binds every member.
     - title:
-        lv: Rituss
-        en: Ritus
+        lv: Vecākums
+        en: Seniority
       text:
         lv: >-
-          Kārtība, kas vada korporācijas un tās locekļu rīcību iekšējos sarīkojumos. Katram ritusam
-          ir sava nozīme: Zemes tēvs, piemēram, apliecina uzticību saviem principiem, tautībai,
-          tēvzemei un korporācijai.
+          Savstarpēja cieņa un draudzība starp vecāko un jaunāko. Vecākumu nosaka tas, cik ilgi
+          cilvēks pieder korporācijai, nevis viņa gadi. Goda lietās vecākumam nav nozīmes: tur
+          visiem ir vienādas tiesības.
         en: >-
-          The order that governs the conduct of a fraternity and its members at internal occasions.
-          Each ritual has its meaning: the Landesvater (Zemes tēvs), for example, is a profession of
-          faith in one’s principles, nation, fatherland and fraternity.
+          Respect and friendship between the older and the younger. Seniority is set by how long a
+          member has belonged to the fraternity, not by his age. In matters of honour it has no
+          bearing: there all have equal rights.
+    - title:
+        lv: Audzināšana
+        en: Upbringing
+      text:
+        lv: >-
+          Korporācija audzina savos locekļos dziļu pienākuma sajūtu, raksturu un stāju un gatavo
+          valstij un sabiedrībai spējīgus darbiniekus. Tā veicina interesi par zinātni un mākslu,
+          garīgo un fizisko attīstību.
+        en: >-
+          A fraternity instils in its members a deep sense of duty, character and bearing, and
+          prepares capable people for the state and for society. It fosters an interest in science
+          and the arts, and the growth of mind and body.
 
 character:
   title:
@@ -422,8 +424,18 @@ terms:
 sources:
   - title: Prezidiju Konvents. Kas ir studentu korporācijas?
     note:
-      lv: Pilnais teksts šīs lapas beigās; no tā ņemti principi, korporācijas iezīmes un lielākā daļa skaidrojumu.
-      en: The complete text at the foot of this page; the principles, the traits and most of the explanations are taken from it.
+      lv: Pilnais teksts šīs lapas beigās; no tā ņemti principu skaidrojumi, korporācijas iezīmes un lielākā daļa pārējā.
+      en: The complete text at the foot of this page; the explanations of the principles, the traits and most of the rest are taken from it.
+  - title: Lettgallia. Vēl par studentu korporācijām.
+    note:
+      lv: Četri principi (brālība, gods, vecākums, audzināšana), kā tos nosauc Lettgallia.
+      en: The four principles (brotherhood, honour, seniority, upbringing) as Lettgallia names them.
+    url: http://www.lettgallia.org/korporacijas.shtml
+  - title: Fraternitas Lettica. Korporācijas mērķi.
+    note:
+      lv: Par audzināšanu; tāpat P!K! mērķi šajā vietnē.
+      en: On upbringing; likewise the aims of P!K! on this site.
+    url: https://www.lettica.lv/parmums/merki
   - title: Latvijas Universitāte. Korporācijas un akadēmiskās vienības.
     note:
       lv: Par viesu vakariem, mūža organizāciju un studenšu korporācijām.
