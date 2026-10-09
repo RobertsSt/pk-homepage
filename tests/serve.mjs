@@ -5,6 +5,9 @@
  * 404 page.
  *
  *   node tests/serve.mjs [port]
+ *
+ * A test that needs a server of its own (see returning-visitor.spec.ts) takes
+ * `serve` from here and answers with it.
  */
 import { createReadStream, existsSync, statSync } from 'node:fs';
 import { createServer } from 'node:http';
@@ -35,16 +38,21 @@ function resolve(urlPath) {
   return existsSync(candidate) && statSync(candidate).isFile() ? candidate : undefined;
 }
 
-if (!existsSync(path.join(ROOT, 'index.html'))) {
-  console.error('dist/ is missing or empty: run `npm run build` first.');
-  process.exit(1);
-}
-
-createServer((request, response) => {
+/** Answers one request from dist/. */
+export function serve(request, response) {
   const { pathname } = new URL(request.url ?? '/', 'http://localhost');
   const file = resolve(pathname) ?? path.join(ROOT, '404.html');
   response.writeHead(resolve(pathname) ? 200 : 404, {
     'Content-Type': TYPES[path.extname(file)] ?? 'application/octet-stream',
   });
   createReadStream(file).pipe(response);
-}).listen(PORT, () => console.log(`Serving dist/ at http://localhost:${PORT}`));
+}
+
+// Started as a program, not taken in by a test: serve until stopped.
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  if (!existsSync(path.join(ROOT, 'index.html'))) {
+    console.error('dist/ is missing or empty: run `npm run build` first.');
+    process.exit(1);
+  }
+  createServer(serve).listen(PORT, () => console.log(`Serving dist/ at http://localhost:${PORT}`));
+}

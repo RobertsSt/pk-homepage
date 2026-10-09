@@ -23,6 +23,8 @@ const page = await loadHomepage(locale);
 <Layout locale={locale}>
   {/* Half of the headline is set in italic, so here that font is fetched early too. */}
   <link slot="head" rel="preload" as="font" type="font/woff2" href={italicFont} crossorigin />
+  {/* What a page that shows the homepage adds to its head; see src/pages/WordPress. */}
+  <slot name="head" slot="head" />
   <Hero page={page} />
   <Facts page={page} />
   <About page={page} />

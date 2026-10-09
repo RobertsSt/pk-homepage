@@ -1,0 +1,38 @@
+---
+/**
+ * The address the WordPress site had its homepage at.
+ *
+ * Every other old address is forwarded to its new page. This one cannot be:
+ * while WordPress was here, pk.lv itself answered "moved permanently to
+ * /WordPress/", and a browser keeps such an answer for good. Forwarding
+ * /WordPress/ back to the homepage would send every returning visitor round in
+ * a circle until the browser gave up with "too many redirects".
+ *
+ * So the homepage is served here as well, naming the real homepage as its
+ * canonical address, and a few lines of script put the browser right.
+ */
+import Home from '@/components/home/Home.astro';
+
+const home = import.meta.env.BASE_URL;
+---
+
+<Home locale="lv">
+  <script slot="head" is:inline define:vars={{ home }}>
+    // Fetching the homepage afresh replaces the old "moved" answer in the
+    // browser's memory; then the visitor is taken to the homepage's own
+    // address. Once per visit only, so that a browser that will not forget
+    // is left on this page, which is complete as it is.
+    try {
+      if (!sessionStorage.getItem('pk-homecoming')) {
+        sessionStorage.setItem('pk-homecoming', '1');
+        fetch(home, { cache: 'reload' })
+          .then(function (response) {
+            if (response.ok && !response.redirected) location.replace(home);
+          })
+          .catch(function () {});
+      }
+    } catch {
+      // Storage is closed to the page: stay here.
+    }
+  </script>
+</Home>

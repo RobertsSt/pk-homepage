@@ -32,8 +32,11 @@ const to = (path) => `${base.replace(/\/$/, '')}${path}`;
 // links and search results keep working. The build writes each one as a small
 // redirect page, which any static host can serve; on the hosting itself the
 // server rules below answer first, with a proper "moved permanently".
+//
+// The old homepage, /WordPress/, is the one exception: it is a page of its own
+// (src/pages/WordPress), because forwarding it would trap returning visitors
+// in a circle. Do not add it here.
 const redirects = {
-  '/WordPress': to('/'),
   '/WordPress/studentu-korporacijas': to('/studentu-korporacijas/'),
   ...Object.fromEntries(
     contentNames('./src/content/pages/lv/', '.md').map((slug) => [`/WordPress/${slug}`, to(`/${slug}/`)]),
@@ -118,6 +121,8 @@ export default defineConfig({
     preact(),
     sitemap({
       i18n: { defaultLocale: 'lv', locales: { lv: 'lv-LV', en: 'en' } },
+      // The old homepage address shows the homepage; search engines are given the real one.
+      filter: (page) => !page.includes('/WordPress/'),
     }),
     hostFiles,
   ],

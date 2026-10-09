@@ -146,6 +146,16 @@ answers "moved permanently" in one step and drops whatever followed a `?`, and a
 page, which does the same on a host that ignores the rules (the preview). Addresses of pictures under
 `/WordPress/wp-content/uploads/` are not carried over; they end at the "page not found" page.
 
+The old homepage, `/WordPress/` itself, is the one address that is not redirected. While WordPress
+stood at pk.lv, the address pk.lv answered "moved permanently to /WordPress/" without saying for how
+long, and Chrome and its relatives keep such an answer for good. Sending `/WordPress/` back to the
+homepage would pass every returning visitor back and forth until the browser stopped with "too many
+redirects"; this was reproduced on 2026-10-09 before the switch. So `/WordPress/` serves the homepage
+itself (`src/pages/WordPress`), names `/` as its canonical address, and a few lines of script fetch
+the real homepage afresh, which replaces what the browser remembers, and then move the visitor there.
+A test plays the returning visitor (`tests/returning-visitor.spec.ts`). The page can go once nobody's
+browser can still remember WordPress, which is a matter of years, not weeks.
+
 ## Where content lives
 
 | Content                                              | Location                                | Language                    |
@@ -275,8 +285,8 @@ in the branch `accessibility-and-speed`, the English texts in `english-texts`.
    a consent banner as well. Nothing is built until that is decided.
 8. The archive at `pk.lv/old/`. A copy of the site as it was before WordPress, made in December 2016:
    news, press releases, photo galleries, about 390 pages. Nothing on WordPress or on the new site
-   links to it, and none of it has been carried over. Roberts plans to delete it with WordPress; a copy
-   should be kept off the server first, because that history exists nowhere else.
+   links to it, and none of it has been carried over. Decided on 2026-10-09: it stays where it is for
+   now and is not removed with WordPress. It is plain HTML, so it needs nothing from WordPress.
 
 ## English wording
 
@@ -365,7 +375,8 @@ The site is published in two steps, so that the first upload cannot touch the li
 1. **Trial folder.** Done. An FTP account that can only see the folder `jauna`, and `DEPLOY_BASE_PATH` set
    to `/jauna/`. The site is at `https://pk.lv/jauna/`, marked as not to be indexed.
 2. **The switch.** WordPress is moved out of the folder pk.lv is served from, the FTP account is given
-   that folder, and `DEPLOY_BASE_PATH` becomes `/`.
+   that folder, and `DEPLOY_BASE_PATH` becomes `/`. To go back, the same steps are undone: WordPress is
+   moved in again and the two settings are put back.
 
 ## Launch checklist
 
@@ -379,23 +390,33 @@ Trial folder:
 - [x] What is in the folder pk.lv is served from: seen.
 - [x] The server rules checked in the trial folder (2026-10-08): http and www are forwarded once and
       without a loop, and a missing address shows our own page.
-- [ ] Old addresses checked in the trial folder once the rules for them are published:
-      `https://pk.lv/jauna/WordPress/lettonia/` must answer 301, not a page that forwards.
+- [x] Old addresses checked in the trial folder (2026-10-09): all 38, with and without the closing
+      slash, answer "moved permanently" and land on a page that answers.
 
-The switch:
+The switch. The steps from the GitHub settings to the `Deploy` run are done in one sitting; pk.lv is
+away for about five minutes.
 
-- [ ] Final `npm run import:wordpress`, reviewed as a pull request.
-- [ ] A full backup of files and database made in cPanel and downloaded to a computer. A backup that
-      stays on the server is deleted with the server's files. It has to include the folder `old`.
+- [x] Final `npm run import:wordpress` (2026-10-09, after the last merge): WordPress held nothing the
+      site did not already have. To be run again only if WordPress is edited before the switch.
+- [ ] A backup downloaded to a computer: the WordPress files (the folders `WordPress`, `wp-admin`,
+      `wp-content`, `wp-includes` and the loose files beside them) and its database. A backup that
+      stays on the server goes when the server's files go.
+- [ ] A new FTP account whose folder is exactly the one pk.lv is served from: `pk.lv`, with nothing
+      after it. Not the account's home, and not `public_html`, which is another site (spk.lv).
+- [ ] A moment when no workflow is running and the day's nightly run is over, so that nothing is
+      published halfway through.
+- [ ] In GitHub, the secrets `FTP_USERNAME` and `FTP_PASSWORD` changed to the new account and the
+      variable `DEPLOY_BASE_PATH` changed to `/`.
 - [ ] WordPress moved out of the folder pk.lv is served from, to a folder beside it that the web cannot
-      reach: the loose WordPress files, hidden ones such as `.htaccess` included, and the folders
-      `WordPress`, `wp-admin`, `wp-content`, `wp-includes` and `old`. The new site needs the name
-      `WordPress` for the pages that forward old addresses.
-- [ ] A new FTP account whose folder is the one pk.lv is served from; its name and password put into the
-      GitHub secrets; `DEPLOY_BASE_PATH` changed to `/`; `Deploy` run by hand.
+      reach: the folders `WordPress`, `wp-admin`, `wp-content`, `wp-includes` and the loose WordPress
+      files, hidden ones such as `.htaccess` included. What stays: `jauna`, `old`, `.well-known` (the
+      certificate is renewed through it) and `cgi-bin`. The new site needs the name `WordPress` for
+      the old addresses, and a leftover `index.php` would be served in place of the new homepage.
+- [ ] `Deploy` run by hand. Its last step confirms that pk.lv serves the new build.
 - [ ] Checked on pk.lv in both languages: home, one text page, one fraternity page, three old addresses
-      under `/WordPress/`, a missing address, and http and www.
-- [ ] The trial folder and its FTP account removed.
+      under `/WordPress/`, a missing address, http and www, and `/old/`. And in a browser that knew the
+      WordPress site: typing pk.lv must end on the homepage, not on an error.
+- [ ] The trial folder `jauna` and its FTP account removed.
 - [ ] Editors invited to the editing tool; the check for translations that have fallen behind changed to
       compare when the two files were last edited; the import script deleted.
 - [ ] After a few weeks: the WordPress archive and database removed.
