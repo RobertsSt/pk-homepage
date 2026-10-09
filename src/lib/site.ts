@@ -34,25 +34,30 @@ export async function getFraternityPaths() {
   });
 }
 
-/** The year P!K! was founded, as the homepage states it. */
-export async function getFoundedYear() {
+async function getHome() {
   const home = await getEntry('home', 'home');
   if (!home) throw new Error('src/content/site/home.yaml is missing');
-  return home.data.foundedYear;
+  return home.data;
+}
+
+/** The year P!K! was founded, as the homepage states it. */
+export async function getFoundedYear() {
+  return (await getHome()).foundedYear;
 }
 
 /** How to reach P!K!: shown on the homepage and at the foot of every page. */
 export async function getContact() {
-  const home = await getEntry('home', 'home');
-  if (!home) throw new Error('src/content/site/home.yaml is missing');
-  return home.data.contact;
+  return (await getHome()).contact;
+}
+
+/** The accent colour of every page: a colour of the fraternity that presides. */
+export async function getAccent() {
+  return (await getHome()).presiding.accent;
 }
 
 /** Everything the homepage shows, with text already resolved to one language. */
 export async function loadHomepage(locale: Locale) {
-  const [homeEntry, fraternities] = await Promise.all([getEntry('home', 'home'), getFraternities()]);
-  if (!homeEntry) throw new Error('src/content/site/home.yaml is missing');
-  const home = homeEntry.data;
+  const [home, fraternities] = await Promise.all([getHome(), getFraternities()]);
 
   const presiding = fraternities.find((f) => f.id === home.presiding.fraternity.id);
   if (!presiding)

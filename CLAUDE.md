@@ -50,6 +50,9 @@ check:translations` lists English texts whose Latvian source has changed, by the
 - The Latvian files in `src/content` are the source since launch; edit them directly.
 - Fraternities are shown in seniority order (`order`). Their colours are read top to bottom and `band` is
   the stripe direction; both are identity, not decoration, so never reorder or restyle them.
+- The accent colour (`text-accent`, `var(--color-accent)`) is content: `presiding.accent` in `home.yaml`,
+  which `Layout.astro` writes onto every page. It changes with the presidium; never write a fraternity's
+  colour into a style.
 - Heraldry is scanned on white and mixed into the paper (`.on-paper`). Whatever fades in as one piece
   around it must be a `.sheet`, which paints its own paper; otherwise the white shows while it moves.
 - Dates and times are Riga wall-clock strings (`src/lib/calendar/dates.ts`); do not use the local time zone

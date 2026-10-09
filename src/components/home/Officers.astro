@@ -28,16 +28,28 @@ const { t } = page;
           style={`--reveal-order:${index}`}
         >
           <div class="aspect-square overflow-hidden">
-            <Image
-              src={officer.photo}
-              alt={`${officer.role}: ${officer.name}`}
-              widths={[320, 480, 720]}
-              sizes="(min-width: 64rem) 20rem, (min-width: 40rem) 30vw, 92vw"
-              class="h-full w-full object-cover transition duration-700 ease-out group-hover:scale-105"
-            />
+            {officer.photo ? (
+              <Image
+                src={officer.photo}
+                alt={`${officer.role}: ${officer.name}`}
+                widths={[320, 480, 720]}
+                sizes="(min-width: 64rem) 20rem, (min-width: 40rem) 30vw, 92vw"
+                class="h-full w-full object-cover transition duration-700 ease-out group-hover:scale-105"
+              />
+            ) : (
+              // No portrait yet: a silhouette keeps its place. It says nothing the name below
+              // does not, so it is kept from screen readers.
+              <svg class="bg-paper-deep text-rule h-full w-full" viewBox="0 0 240 240" aria-hidden="true">
+                <ellipse cx="120" cy="96" rx="37" ry="43" fill="currentColor" />
+                <path
+                  d="M97 126c0 20-9 30-31 38-27 10-42 34-44 76h196c-2-42-17-66-44-76-22-8-31-18-31-38z"
+                  fill="currentColor"
+                />
+              </svg>
+            )}
           </div>
           <div class="px-6 pt-6 pb-8 text-center">
-            <p class="bg-wine/10 text-wine inline-block rounded-full px-3.5 py-1 text-[0.68rem] font-semibold tracking-[0.18em] uppercase">
+            <p class="bg-accent/10 text-accent inline-block rounded-full px-3.5 py-1 text-[0.68rem] font-semibold tracking-[0.18em] uppercase">
               {officer.role}
             </p>
             <h3 class="font-display mt-4 text-[1.55rem] leading-tight">

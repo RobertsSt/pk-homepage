@@ -299,7 +299,7 @@
 }
 .history-contents a[aria-current],
 .history-contents li a:hover {
-  color: var(--color-wine);
+  color: var(--color-accent);
 }
 .history-contents a[aria-current] .history-nav-index {
   border-bottom: 1px solid;
@@ -322,7 +322,7 @@
   display: flex;
   justify-content: space-between;
   gap: 1rem;
-  color: var(--color-wine);
+  color: var(--color-accent);
   font-size: 0.7rem;
   font-weight: 500;
   letter-spacing: 0.12em;
@@ -380,7 +380,7 @@
   transition: transform 200ms;
 }
 .history-founders a:hover {
-  color: var(--color-wine);
+  color: var(--color-accent);
 }
 .history-founders a:hover svg {
   transform: translateY(-2px);
@@ -393,13 +393,13 @@
   align-items: center;
   gap: 1.5rem;
   margin-top: 2rem;
-  border-left: 2px solid var(--color-wine);
+  border-left: 2px solid var(--color-accent);
   padding: 1rem 1.5rem;
   background: var(--color-paper-deep);
 }
 .history-note-number {
   flex-shrink: 0;
-  color: var(--color-wine);
+  color: var(--color-accent);
   font-family: var(--font-display);
   font-size: clamp(2.8rem, 6vw, 4.5rem);
   line-height: 1;
@@ -454,7 +454,7 @@
 }
 .history-terms summary:hover,
 .history-archive summary:hover {
-  color: var(--color-wine);
+  color: var(--color-accent);
 }
 .history-plus {
   font-family: var(--font-sans);

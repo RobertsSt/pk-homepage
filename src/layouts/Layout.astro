@@ -10,7 +10,7 @@ import { localeNames, locales, type Locale } from '@/i18n/config';
 import { useTranslations } from '@/i18n/ui';
 import { localizedUrl } from '@/i18n/urls';
 import { creditsUrl, homeUrl, pageUrl } from '@/lib/routes';
-import { getContact } from '@/lib/site';
+import { getAccent, getContact } from '@/lib/site';
 
 interface Props {
   locale: Locale;
@@ -26,6 +26,7 @@ interface Props {
 const { locale, path = '', title, description, indexable = true } = Astro.props;
 const t = useTranslations(locale);
 const contact = await getContact();
+const accent = await getAccent();
 
 const fullTitle = title ? `${title} — P!K!` : t('site.title');
 const canonical = new URL(localizedUrl(locale, path), Astro.site);
@@ -39,7 +40,7 @@ const isPreview = import.meta.env.BASE_URL !== '/';
 ---
 
 <!doctype html>
-<html lang={locale}>
+<html lang={locale} style={`--color-accent:${accent}`}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />

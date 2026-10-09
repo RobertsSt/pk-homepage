@@ -253,7 +253,7 @@ export function Calendar({ events, colors, locale, strings, builtOn, subscribeUr
                       ) : (
                         <span
                           aria-hidden="true"
-                          class={`mr-3 size-2.5 rounded-full ${event.kind === 'meeting' ? 'bg-wine' : 'bg-ink/25'}`}
+                          class={`mr-3 size-2.5 rounded-full ${event.kind === 'meeting' ? 'bg-accent' : 'bg-ink/25'}`}
                         />
                       )}
                       <span

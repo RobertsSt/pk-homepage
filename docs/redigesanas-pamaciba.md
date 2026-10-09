@@ -63,8 +63,13 @@ Sadaļā **Sākumlapa**:
 
 1. Laukā **Prezidējošais konvents** izvēlieties korporāciju un ierakstiet akadēmisko gadu, piemēram,
    2026/2027.
-2. Laukā **P!K! amatpersonas** nomainiet vārdus, uzrunas, e-pastus un fotogrāfijas. Fotogrāfijai
-   vislabāk der kvadrāts, vismaz 720 × 720 pikseļi.
+2. Turpat laukā **Akcenta krāsa** ierakstiet kādu no šīs korporācijas krāsām, piemēram, #2e3880
+   (krāsas ir redzamas sadaļā **Korporācijas**, laukā **Krāsas**). Šajā krāsā visā vietnē ir saites,
+   uzraksti un atzīmes, tāpēc tai jābūt tumšai: ja korporācijas krāsas ir gaišas, ņemiet vienas
+   krāsas tumšāku toni. Pārāk gaišu krāsu vietne nepieņem, un lapa paliek tāda, kāda bija.
+3. Laukā **P!K! amatpersonas** nomainiet vārdus, uzrunas, e-pastus un fotogrāfijas. Fotogrāfijai
+   vislabāk der kvadrāts, vismaz 720 × 720 pikseļi. Kamēr fotogrāfijas nav, lauku atstājiet tukšu:
+   tās vietā lapā ir siluets.
 
 ## Attēli
 
