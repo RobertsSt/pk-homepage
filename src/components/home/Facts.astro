@@ -11,6 +11,18 @@ const { t, members, presiding } = page;
 
 const figure = 'font-display text-[clamp(3.5rem,7vw,6rem)] leading-none';
 const caption = 'text-ink-soft mt-3 max-w-[17rem] text-sm leading-snug';
+
+/*
+ * The name of the presiding fraternity stands beside two short numbers and is as tall as they
+ * are whenever it fits. It changes with every presidium, from "Latvia" to "Fraternitas
+ * Metropolitana", so its size is worked out from the name: one word to a line, the lines
+ * together no taller than a figure, the longest word no wider than the room left by the shield.
+ * Over a whole word a letter of the display face takes 0.5 em, and in no fraternity's name more
+ * than 0.55, so 0.56 is allowed for each; the shield is 0.62 em wide and stands 1 rem away.
+ */
+const words = presiding.data.name.split(' ');
+const longestWord = Math.max(...words.map((word) => word.length));
+const nameSize = `min(${(1 / words.length).toFixed(3)}em, (100cqi - 1rem - 0.62em) / ${(longestWord * 0.56).toFixed(2)})`;
 ---
 
 <section class="shell">
@@ -31,18 +43,22 @@ const caption = 'text-ink-soft mt-3 max-w-[17rem] text-sm leading-snug';
         {page.foundedYear}
       </dd>
     </div>
+    {/* A container, so that the name can be measured against the width inside the padding. */}
     <div
-      class="border-rule flex flex-col-reverse justify-end border-t py-10 sm:border-t-0 sm:pl-8"
+      class="border-rule @container flex flex-col-reverse justify-end border-t py-10 sm:border-t-0 sm:pl-8"
       data-reveal
       style="--reveal-order:2"
     >
       <dt class={caption}>{t('stats.presiding', { term: page.term })}</dt>
-      <dd class:list={[figure, 'flex items-center gap-4']}>
-        {presiding.data.name}
+      <dd class:list={[figure, 'flex min-h-[1em] items-center gap-4']}>
+        {/* As wide as its longest word, so a name of two words stands on two lines. */}
+        <span class="w-min" style={`font-size:${nameSize}`}>
+          {presiding.data.name}
+        </span>
         <Shield
           colors={presiding.data.colors}
           band={presiding.data.band}
-          className="text-ink/65 h-[0.72em] w-auto"
+          className="text-ink/65 h-[0.72em] w-auto flex-none"
         />
       </dd>
     </div>

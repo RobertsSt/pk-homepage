@@ -144,6 +144,17 @@ content:
             pattern:
               regex: '^\d{4}/\d{4}$'
               message: Rakstiet divus gadus ar slīpsvītru, piemēram, 2025/2026
+          - name: accent
+            label: Akcenta krāsa
+            description: >-
+              Krāsa, kurā visā vietnē ir saites, uzraksti un atzīmes: kāda no prezidējošās korporācijas
+              krāsām, rakstīta kā #rrggbb. Tai jābūt tumšai, citādi tekstu uz gaišā fona nevar izlasīt;
+              gaišas krāsas vietā ņemiet tās tumšāku toni. Pārāk gaišu krāsu vietne nepieņem.
+            type: string
+            required: true
+            pattern:
+              regex: '^#[0-9a-fA-F]{6}$'
+              message: 'Krāsa jāraksta kā # un seši cipari vai burti a–f, piemēram, #2e3880'
       - name: officers
         label: P!K! amatpersonas
         type: object
@@ -174,9 +185,10 @@ content:
               message: Tā neizskatās pēc e-pasta adreses
           - name: photo
             label: Fotogrāfija
-            description: Vislabāk kvadrātveida, vismaz 720 × 720 pikseļi.
+            description: >-
+              Vislabāk kvadrātveida, vismaz 720 × 720 pikseļi. Ja fotogrāfijas vēl nav, atstājiet
+              tukšu: tās vietā būs siluets.
             type: image
-            required: true
             options:
               media: images
       - name: history

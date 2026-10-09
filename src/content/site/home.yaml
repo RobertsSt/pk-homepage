@@ -1,4 +1,6 @@
 # Homepage content. When the presidium changes, update `presiding` and `officers`.
+# `accent` is the colour of links and labels on every page: a colour of the presiding fraternity,
+# dark enough to read on the paper. An officer without a `photo` is shown as a silhouette.
 
 name:
   lv: Prezidiju Konvents
@@ -35,31 +37,29 @@ about:
     en: 58th Baltic Nations’ Commers, Riga, 2023
 
 presiding:
-  fraternity: latvia
-  term: 2025/2026
+  fraternity: ventonia
+  term: 2026/2027
+  accent: '#2e3880'
 
 officers:
-  - name: Niks Gurtiņš
-    honorific: taut!
+  - name: Kristaps Šēnfelds
+    honorific: fil!
     role:
       lv: Seniors
       en: Senior
-    email: prezidijs@latvus.lv
-    photo: '@/assets/site/officers/senior.jpg'
-  - name: Rūdolfs Rubenis
+    email: ventonia.prezidijs@gmail.com
+  - name: Raitis Silamednis
     honorific: fil!
     role:
       lv: Viceseniors
       en: Vice-Senior
-    email: prezidijs@latvus.lv
-    photo: '@/assets/site/officers/vice-senior.jpg'
-  - name: Agnis Salmiņš
-    honorific: taut!
+    email: ventonia.prezidijs@gmail.com
+  - name: Armands Lore
+    honorific: com!
     role:
       lv: Sekretārs
       en: Secretary
-    email: prezidijs@latvus.lv
-    photo: '@/assets/site/officers/secretary.jpg'
+    email: ventonia.prezidijs@gmail.com
 
 history:
   teaser:

@@ -30,7 +30,7 @@ const t = useTranslations(locale);
           aria-current={link.page === slug ? 'page' : undefined}
           class:list={[
             'font-display block py-3 text-[1.2rem] leading-snug transition-colors',
-            link.page === slug ? 'text-wine' : 'hover:text-wine',
+            link.page === slug ? 'text-accent' : 'hover:text-accent',
           ]}
         >
           {link.label[locale]}

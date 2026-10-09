@@ -1,8 +1,15 @@
 import { defineCollection, reference, type ImageFunction } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
+import { readableOnPaper } from './lib/contrast';
 
 const hexColor = z.string().regex(/^#[0-9a-f]{6}$/i);
+
+/** The colour of links, labels and markers: it has to be dark enough to read on the paper. */
+const accentColor = hexColor.refine(readableOnPaper, {
+  error:
+    'is too pale to read on the page. Choose a darker colour of the presiding fraternity, or a deeper shade of one',
+});
 
 /** A string that exists in both site languages. */
 const localized = z.object({ lv: z.string(), en: z.string() });
@@ -109,6 +116,7 @@ const home = defineCollection({
       presiding: z.object({
         fraternity: reference('fraternities'),
         term: z.string(),
+        accent: accentColor,
       }),
       officers: z.array(
         z.object({
@@ -116,7 +124,8 @@ const home = defineCollection({
           honorific: z.string(),
           role: localized,
           email: z.email(),
-          photo: image(),
+          // A new presidium is often announced before its portraits are taken.
+          photo: optional(image()),
         }),
       ),
       history: z.object({

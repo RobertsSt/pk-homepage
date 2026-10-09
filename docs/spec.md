@@ -28,6 +28,7 @@ Out of scope for the first version: news or blog posts, member login, forms, sea
 | Area          | Decision                                                                                                  | Reason                                                                                            |
 | ------------- | --------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
 | Design        | Draft B: paper and ink, serif headings, the fraternities' colours as the only strong colour.              | Chosen by Roberts on 2026-10-07 from two drafts; About, officers, contact and footer follow A.    |
+| Accent        | One colour of the presiding fraternity, kept with the presidium in `home.yaml` (`presiding.accent`).      | It changes with each presidium, so it is content; a colour too pale to read fails the build.      |
 | Framework     | Astro 7 with static output. Preact only for the calendar.                                                 | Pages are plain HTML built ahead of time: fast, readable by search engines, nothing running live. |
 | Styling       | Tailwind CSS 4. Fonts are built from their sources, cut down to the letters the site shows.               | A custom look without a component kit; no requests to Google Fonts; a third of the font weight.   |
 | Motion        | CSS for entrances, scroll reveals and page transitions; a short script of our own for scroll effects.     | No animation library to load; content is never left hidden if a script fails.                     |
@@ -123,6 +124,12 @@ Each row gives what the list gave on WordPress and on the site before it: the na
 four insignia, and the address, phone, e-mail and website. The row as a whole leads to the
 fraternity's page; the contacts are links of their own on top of it (`tests/list.spec.ts`).
 
+The insignia are scans on white, mixed into the paper behind them (`.on-paper`). A row that fades in
+is a group of its own while it moves, and a scan inside it then has no paper to mix with: for that
+second every insignia stood in a white box (found on 2026-10-09). So the element that arrives as one
+piece (the row here, the cell on a fraternity's page, the card in the guide) is a `.sheet`, which
+paints its own paper. `tests/visible.spec.ts` checks every page for heraldry that lies on anything else.
+
 ## Speed
 
 Measured with Lighthouse on a simulated mid-range phone on slow 4G, before and after the pass of
@@ -170,20 +177,27 @@ browser can still remember WordPress, which is a matter of years, not weeks.
 
 ## Where content lives
 
-| Content                                              | Location                                | Language                    |
-| ---------------------------------------------------- | --------------------------------------- | --------------------------- |
-| Facts about each fraternity                          | `src/content/fraternities/<name>.yaml`  | Shared by both languages    |
-| Long text about each fraternity                      | `src/content/fraternity-texts/{lv,en}/` | One file per language       |
-| History story chapters and term explanations         | `src/content/histories/*.yaml`          | Both languages side by side |
-| Guide sections, questions, glossary and sources      | `src/content/guides/*.yaml`             | Both languages side by side |
-| Text pages                                           | `src/content/pages/{lv,en}/`            | One file per language       |
-| Homepage: officers, About photo, milestones, contact | `src/content/site/home.yaml`            | Both languages side by side |
-| Menu                                                 | `src/data/navigation.ts`                | Both languages side by side |
-| Button and label text                                | `src/i18n/ui.ts`                        | Both languages side by side |
-| Images, referred to in content as `@/assets/…`       | `src/assets/`                           | n/a                         |
-| Source, author and licence of outside images         | `src/data/image-credits.json`           | n/a                         |
+| Content                                               | Location                                | Language                    |
+| ----------------------------------------------------- | --------------------------------------- | --------------------------- |
+| Facts about each fraternity                           | `src/content/fraternities/<name>.yaml`  | Shared by both languages    |
+| Long text about each fraternity                       | `src/content/fraternity-texts/{lv,en}/` | One file per language       |
+| History story chapters and term explanations          | `src/content/histories/*.yaml`          | Both languages side by side |
+| Guide sections, questions, glossary and sources       | `src/content/guides/*.yaml`             | Both languages side by side |
+| Text pages                                            | `src/content/pages/{lv,en}/`            | One file per language       |
+| Homepage: presidium, About photo, milestones, contact | `src/content/site/home.yaml`            | Both languages side by side |
+| Menu                                                  | `src/data/navigation.ts`                | Both languages side by side |
+| Button and label text                                 | `src/i18n/ui.ts`                        | Both languages side by side |
+| Images, referred to in content as `@/assets/…`        | `src/assets/`                           | n/a                         |
+| Source, author and licence of outside images          | `src/data/image-credits.json`           | n/a                         |
 
 Fraternities are always listed in seniority order (the `order` field), as on the current site.
+
+Everything that follows the presidium is in one place, `presiding` and `officers` in `home.yaml`: the
+fraternity, the academic year, the accent colour of the whole site, and the officers. A portrait is
+optional, because a new presidium is named before its photographs are taken; a silhouette keeps the
+place until then. On the homepage the presiding fraternity's name stands beside two numbers and is
+sized from its own length, so that "Fraternitas Metropolitana" fits where "Latvia" did
+(`tests/home.spec.ts`).
 
 Every image that does not come from the WordPress site must have an entry in `image-credits.json`. The
 credits page is built from it, and files under CC BY-SA require that credit to be shown.
