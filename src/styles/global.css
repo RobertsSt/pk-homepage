@@ -739,7 +739,21 @@
     background: linear-gradient(to right, var(--c1) 0 33.34%, var(--c2) 33.34% 66.67%, var(--c3) 66.67%);
   }
 
-  /* Heraldry is scanned on white; multiply lets the paper show through. */
+  /*
+   * Heraldry is scanned on white; multiply lets the paper show through. For
+   * that the paper has to be in the same group as the picture. An element that
+   * fades or moves is a group of its own, and a picture multiplied inside it
+   * finds nothing to mix with: its white shows for as long as the motion lasts.
+   * So whatever arrives as one piece and holds heraldry is a `.sheet`. It
+   * paints its own paper, and it is a group at rest as well, so that heraldry
+   * on something that is not a sheet looks wrong at once and not for a moment.
+   * `--tint` is how much of the deep paper is mixed in: 0% is the page itself.
+   */
+  .sheet {
+    isolation: isolate;
+    background-color: color-mix(in srgb, var(--color-paper-deep) var(--tint, 0%), var(--color-paper));
+  }
+
   .on-paper {
     mix-blend-mode: multiply;
   }

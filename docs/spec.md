@@ -123,6 +123,12 @@ Each row gives what the list gave on WordPress and on the site before it: the na
 four insignia, and the address, phone, e-mail and website. The row as a whole leads to the
 fraternity's page; the contacts are links of their own on top of it (`tests/list.spec.ts`).
 
+The insignia are scans on white, mixed into the paper behind them (`.on-paper`). A row that fades in
+is a group of its own while it moves, and a scan inside it then has no paper to mix with: for that
+second every insignia stood in a white box (found on 2026-10-09). So the element that arrives as one
+piece (the row here, the cell on a fraternity's page, the card in the guide) is a `.sheet`, which
+paints its own paper. `tests/visible.spec.ts` checks every page for heraldry that lies on anything else.
+
 ## Speed
 
 Measured with Lighthouse on a simulated mid-range phone on slow 4G, before and after the pass of

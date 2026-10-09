@@ -25,6 +25,39 @@ for (const { name, path } of PAGES) {
   });
 }
 
+/**
+ * Heraldry is a scan on white, mixed into the paper behind it. While its row
+ * fades in, the row is all it can be mixed with, so the row has to be paper
+ * itself (`.sheet` in global.css); otherwise the white shows until the row has
+ * arrived. Returns the pictures whose nearest group has no solid ground.
+ */
+const onBareWhite = () => {
+  const solid = (colour: string) => {
+    const alpha = /(?:\/|rgba\([^)]*,)\s*([\d.]+)(%?)\s*\)$/.exec(colour);
+    return !alpha || Number(alpha[1]) === (alpha[2] ? 100 : 1);
+  };
+  return [...document.querySelectorAll<HTMLElement>('.on-paper')]
+    .filter((picture) => {
+      for (let element = picture.parentElement; element; element = element.parentElement) {
+        const style = getComputedStyle(element);
+        if (style.isolation === 'isolate') return !solid(style.backgroundColor);
+      }
+      return true;
+    })
+    .map((picture) => picture.getAttribute('alt') ?? picture.className);
+};
+
+test('heraldry never shows the white it was scanned on', async ({ page }) => {
+  let pictures = 0;
+  for (const { path } of PAGES) {
+    await page.goto(path);
+    pictures += await page.locator('.on-paper').count();
+    expect(await page.evaluate(onBareWhite), path).toEqual([]);
+  }
+  // The list, the fraternities' own pages and the guide all show heraldry.
+  expect(pictures).toBeGreaterThan(100);
+});
+
 test('a long article can be read as soon as its page opens', async ({ page }) => {
   await page.goto('/pk-vesture/');
   await expect(page.locator('.history-intro')).toHaveCSS('opacity', '1');
