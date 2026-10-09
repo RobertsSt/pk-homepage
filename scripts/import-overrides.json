@@ -317,6 +317,32 @@
     }
   },
   "textFixes": {
+    "fraternity-texts/lv/selonija.md": [
+      [
+        "1918.  g. 18. novembri seloņi",
+        "1918\\. g. 18. novembri seloņi"
+      ],
+      [
+        "\n1919.  g. 29. novembri Selonijas Generālsapulce",
+        "\n\n1918\\. g. 29. novembri Selonijas Generālsapulce"
+      ],
+      [
+        "\n1920.  g. Selonija piedalījās",
+        "\n\n1920\\. g. Selonija piedalījās"
+      ],
+      [
+        "\n1921.  g. Selonija iegūst",
+        "\n\n1923\\. g. Selonija iegūst"
+      ],
+      [
+        "\n1922.  g. S!F!P!B! iepērk",
+        "\n\n1927\\. g. S!F!P!B! iepērk"
+      ],
+      [
+        "\n1923.  g. 31. augusta sanāksmē",
+        "\n\n1946\\. g. 31. augusta sanāksmē"
+      ]
+    ],
     "fraternity-texts/lv/ventonia.md": [
       [
         "Dibināšanas datums – 1997. gada 21. novembris",
