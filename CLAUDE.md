@@ -23,6 +23,9 @@ Read [docs/spec.md](docs/spec.md) first: it holds the decisions, the milestones 
   visitors in a redirect loop: try a change in the trial folder first. Before that, try it on this
   machine: macOS has Apache (`/usr/sbin/httpd`), which reads the file when pointed at `dist/` with
   `AllowOverride All`.
+- `/WordPress/` is a page on purpose (`src/pages/WordPress`), not a redirect: browsers remember the old
+  "pk.lv has moved to /WordPress/" for good, and redirecting it home again traps them in a loop. Never
+  point an old address back at an address that used to redirect to it.
 - The tab and home-screen icons in `public/` are drawn from the crest by `npm run build:icons`.
 - Only one dev server can run per project. If Roberts already has one open (`npx astro dev status`), use
   it at http://localhost:4321 and never stop it. Otherwise `npx astro dev --background` starts one and
