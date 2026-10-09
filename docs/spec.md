@@ -108,8 +108,20 @@ CMS. Two rules keep the page honest:
   The guide shortens that text; it does not replace it.
 - A statement that is not in that text names its source in the list at the foot of the page. The
   sources used are Latvian and of standing: the University of Latvia, Latvijas Vēstnesis, LSM, the Tēzaurs
-  dictionary, a University of Latvia thesis on heraldry and the sororities' own union. Wikipedia was
-  read to compare, not cited.
+  dictionary, a University of Latvia thesis on heraldry, the sororities' own union and the websites of
+  two fraternities, Lettgallia and Fraternitas Lettica. Wikipedia was read to compare, not cited.
+
+The four principles are named as Lettgallia names them: brotherhood, honour, seniority and upbringing
+(decided with Roberts on 2026-10-09). The imported text takes its four from Dr. iur. V. Sinaiskis of
+Fraternitas Arctica and calls the fourth "rituss", a word that no Latvian dictionary has and that
+members do not use; that text is unchanged in the section that opens, and the explanations of the
+first three principles are still drawn from it.
+
+## The list of fraternities
+
+Each row gives what the list gave on WordPress and on the site before it: the name, every motto, the
+four insignia, and the address, phone, e-mail and website. The row as a whole leads to the
+fraternity's page; the contacts are links of their own on top of it (`tests/list.spec.ts`).
 
 ## Speed
 

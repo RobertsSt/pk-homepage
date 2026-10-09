@@ -1,9 +1,11 @@
 ---
+import { Image } from 'astro:assets';
 import PageHeader from '@/components/PageHeader.astro';
 import { Shield } from '@/components/Shield';
 import type { Locale } from '@/i18n/config';
 import { useTranslations } from '@/i18n/ui';
 import Layout from '@/layouts/Layout.astro';
+import { displayHost } from '@/lib/format';
 import { FRATERNITIES_SLUG, fraternityUrl, shieldTransitionName } from '@/lib/routes';
 import { getFraternities } from '@/lib/site';
 
@@ -20,6 +22,9 @@ const groups = [
   { heading: t('list.outside'), items: all.filter((f) => f.data.membership === 'outside') },
 ];
 const intro = t('list.intro', { count: groups[0]!.items.length });
+
+const emblems = ['arms', 'zirkel', 'cap', 'star'] as const;
+const newTab = t('a11y.newTab');
 ---
 
 <Layout locale={locale} path={FRATERNITIES_SLUG} title={t('fraternities.title')} description={intro}>
@@ -38,42 +43,87 @@ const intro = t('list.intro', { count: groups[0]!.items.length });
           </h2>
         )}
         <ol class="border-rule border-t">
-          {group.items.map((fraternity, index) => (
-            <li data-reveal style={`--reveal-order:${index % 6}`}>
-              <a
-                href={fraternityUrl(locale, fraternity.id)}
-                class="group border-rule hover:bg-paper-deep/60 grid grid-cols-[1.75rem_3rem_minmax(0,1fr)_1.25rem] items-center gap-x-4 border-b py-5 transition-colors sm:px-3 lg:grid-cols-[3rem_4.5rem_minmax(0,1.2fr)_minmax(0,1fr)_5rem_1.5rem] lg:gap-x-8"
-              >
-                <span class="text-ink-soft text-[0.72rem] font-semibold tracking-[0.18em] tabular-nums">
-                  {String(index + 1).padStart(2, '0')}
+          {group.items.map(({ id, data }, index) => (
+            // The whole row leads to the fraternity's page: its name is the link, stretched over the
+            // row and lifted above the insignia, which would otherwise lie on top of it (their blend
+            // mode gives them a layer of their own). The contacts are links themselves and lie above
+            // the stretched link.
+            <li
+              class="group border-rule hover:bg-paper-deep/60 relative grid grid-cols-[3rem_minmax(0,1fr)_1.25rem] items-center gap-x-4 gap-y-5 border-b py-6 transition-colors sm:px-3 lg:grid-cols-[3rem_4.5rem_minmax(0,1.1fr)_auto_minmax(0,0.85fr)_1.5rem] lg:gap-x-8"
+              data-reveal
+              style={`--reveal-order:${index % 6}`}
+            >
+              <p class="text-ink-soft col-span-3 flex gap-3 text-[0.72rem] font-semibold tracking-[0.18em] tabular-nums lg:col-span-1 lg:flex-col lg:gap-1.5">
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <span class="font-normal tracking-[0.08em]">
+                  {t('fraternities.founded', { year: data.founded.getUTCFullYear() })}
                 </span>
-                <Shield
-                  colors={fraternity.data.colors}
-                  band={fraternity.data.band}
-                  className="text-ink/65 h-12 w-auto transition-transform duration-500 ease-out group-hover:scale-110 group-hover:-rotate-3 lg:h-16"
-                  style={{ viewTransitionName: shieldTransitionName(fraternity.id) }}
-                />
-                <span>
-                  <span class="font-display block text-[1.45rem] leading-tight lg:text-[2rem]">
-                    {fraternity.data.name}
-                  </span>
-                  <span class="font-display text-ink-soft mt-1 block text-[1.05rem] leading-snug italic lg:hidden">
-                    {fraternity.data.mottos[0]}
-                  </span>
-                </span>
-                <span class="font-display text-ink-soft hidden text-[1.2rem] leading-snug italic lg:block">
-                  {fraternity.data.mottos[0]}
-                </span>
-                <span class="text-ink-soft hidden text-sm tabular-nums lg:block">
-                  {fraternity.data.founded.getUTCFullYear()}
-                </span>
-                <span
-                  class="text-xl transition-transform duration-300 group-hover:translate-x-1"
-                  aria-hidden="true"
+              </p>
+              <Shield
+                colors={data.colors}
+                band={data.band}
+                className="text-ink/65 h-12 w-auto transition-transform duration-500 ease-out group-hover:scale-110 group-hover:-rotate-3 lg:h-16"
+                style={{ viewTransitionName: shieldTransitionName(id) }}
+              />
+              <div>
+                <a
+                  href={fraternityUrl(locale, id)}
+                  class="font-display block text-[1.45rem] leading-tight after:absolute after:inset-0 after:z-1 lg:text-[2rem]"
                 >
-                  →
-                </span>
-              </a>
+                  {data.name}
+                </a>
+                <ul class="font-display text-ink-soft mt-1.5 text-[1.05rem] leading-snug italic">
+                  {data.mottos.map((motto) => (
+                    <li>{motto}</li>
+                  ))}
+                </ul>
+              </div>
+              <span
+                class="text-xl transition-transform duration-300 group-hover:translate-x-1 lg:order-last"
+                aria-hidden="true"
+              >
+                →
+              </span>
+              <ul
+                class="col-span-3 flex items-center gap-3 lg:col-span-1"
+                aria-label={`${data.name}: ${t('fraternity.insignia').toLowerCase()}`}
+              >
+                {emblems.map((key) => (
+                  <li class="grid size-14 flex-none place-items-center lg:size-[4.5rem]">
+                    <Image
+                      src={data.heraldry[key]}
+                      alt={t(`heraldry.${key}`)}
+                      height={144}
+                      class="on-paper h-auto max-h-14 w-auto max-w-full lg:max-h-[4.5rem]"
+                    />
+                  </li>
+                ))}
+              </ul>
+              {/* Lines 24px high: the least a finger needs to hit one link and not the next. */}
+              <address class="text-ink-soft relative z-10 col-span-3 text-sm leading-6 not-italic lg:col-span-1">
+                {data.address && <span class="block">{data.address}</span>}
+                {data.phone && (
+                  <a class="hover:text-ink block w-fit" href={`tel:${data.phone}`}>
+                    {data.phone}
+                  </a>
+                )}
+                {data.email && (
+                  <a class="hover:text-ink block w-fit break-all" href={`mailto:${data.email}`}>
+                    {data.email}
+                  </a>
+                )}
+                {data.website && (
+                  <a
+                    class="text-ink hover:text-wine block w-fit"
+                    href={data.website}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {displayHost(data.website)} <span aria-hidden="true">↗</span>
+                    <span class="sr-only"> ({newTab})</span>
+                  </a>
+                )}
+              </address>
             </li>
           ))}
         </ol>
