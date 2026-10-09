@@ -74,6 +74,20 @@ jobs:
               ;;
           esac
 
+      # At the switch from WordPress the settings above are changed first and
+      # WordPress is moved out of the folder second. A run that slipped in
+      # between, by hand or after the nightly checks, would lay the new site's
+      # files among WordPress's. So nothing is published to the site's own
+      # address while WordPress still answers there.
+      - name: Check that WordPress has left the folder
+        if: ${{ !inputs.dry-run && env.BASE_PATH == '/' }}
+        run: |
+          answer="$(curl --silent --max-time 20 --output /dev/null --write-out '%{http_code}' "${SITE_URL}/wp-login.php" || true)"
+          if [ "$answer" = 200 ]; then
+            echo "::error::WordPress still answers at ${SITE_URL}/wp-login.php. Move it out of the folder pk.lv is served from, then run this workflow again."
+            exit 1
+          fi
+
       # After a CI run, publish exactly the commit that run checked.
       - uses: actions/checkout@v7
         with:

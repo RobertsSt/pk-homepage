@@ -406,7 +406,10 @@ away for about five minutes.
 - [ ] A moment when no workflow is running and the day's nightly run is over, so that nothing is
       published halfway through.
 - [ ] In GitHub, the secrets `FTP_USERNAME` and `FTP_PASSWORD` changed to the new account and the
-      variable `DEPLOY_BASE_PATH` changed to `/`.
+      variable `DEPLOY_BASE_PATH` changed to `/`. From here on `Deploy` refuses to publish for as long
+      as WordPress still answers at pk.lv, so a run that starts too early changes nothing.
+- [ ] `Deploy` run by hand with "Only list what would be uploaded" ticked. It proves that the new
+      account can log in, and changes nothing.
 - [ ] WordPress moved out of the folder pk.lv is served from, to a folder beside it that the web cannot
       reach: the folders `WordPress`, `wp-admin`, `wp-content`, `wp-includes` and the loose WordPress
       files, hidden ones such as `.htaccess` included. What stays: `jauna`, `old`, `.well-known` (the
