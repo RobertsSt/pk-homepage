@@ -64,8 +64,8 @@ docs/spec.md         Decisions, milestones, open questions
 
 - Until launch, Latvian text is edited in WordPress and brought over with `npm run import:wordpress`.
   Hand edits to imported Latvian files are overwritten by the next import.
-- The history story chapters in `src/content/histories/`, English text and
-  `src/content/site/home.yaml` are edited here. An English text names, in `translatedFrom`,
+- The history story chapters in `src/content/histories/`, the guide pages in `src/content/guides/`,
+  English text and `src/content/site/home.yaml` are edited here. An English text names, in `translatedFrom`,
   the date (`wpModified`) of the Latvian text it was translated from; `npm run check:translations` lists
   the ones whose Latvian text has changed since.
 - People who do not work with the code edit content through Pages CMS, which is configured in

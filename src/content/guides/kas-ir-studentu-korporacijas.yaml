@@ -1,0 +1,454 @@
+# The page "Kas ir studentu korporācijas?". It is written for this site; the
+# complete text imported from WordPress is shown at the foot of the page and
+# lives in src/content/pages. A statement that is not in that text names its
+# source in `sources`; keep the two in step when a section changes.
+
+name: Kas ir studentu korporācijas?
+title:
+  lv: Kas ir studentu korporācijas?
+  en: What is a student fraternity?
+kicker:
+  lv: Akadēmiska mūža organizācija
+  en: A lifelong academic organisation
+intro:
+  lv: >-
+    Studentu korporācija ir akadēmiska mūža organizācija, ko veido studenti un studijas beigušie jeb
+    filistri. Tā nav tikai kopīgs sadzīves veids: korporācijai ir sava ideoloģija un stingri
+    principi, kas veidojušies vairāku gadsimtu gaitā.
+  en: >-
+    A student fraternity is a lifelong academic organisation made up of students and of those who
+    have completed their studies, the philisters. It is more than a shared way of life: a fraternity
+    has an ideology of its own and firm principles that took shape over several centuries.
+photo:
+  src: '@/assets/site/parade-wide.webp'
+  alt:
+    lv: Korporāciju biedri deķeļos un krāsu lentēs nes valstu un korporāciju karogus pāri tiltam Rīgā; fonā Vecrīgas torņi
+    en: Fraternity members in caps and colour sashes carry national and fraternity flags across a bridge in Riga, with the towers of the Old Town behind them
+  caption:
+    lv: Korporāciju svētku gājiens Rīgā.
+    en: A festive fraternity procession in Riga.
+
+principles:
+  title:
+    lv: Četri pamatprincipi
+    en: Four basic principles
+  intro:
+    lv: >-
+      Dr. iur. V. Sinaiskis (Fraternitas Arctica) korporācijas uzbūves pamatā saskata četrus
+      principus. Visi četri ir vienādi svarīgi un savstarpēji saistīti.
+    en: >-
+      Dr. iur. V. Sinaiskis of Fraternitas Arctica sees four principles at the foundation of a
+      fraternity. All four are equally important and bound up with one another.
+  items:
+    - title:
+        lv: Brālība
+        en: Brotherhood
+      text:
+        lv: >-
+          Tās mērķis ir saprašanās un saaugšana kopīgam ideālam. Buršu sabiedrībā lietotie vārdi
+          fraternitas (brālība) un commilitonis (cīņas biedrs) rāda, cik šī ideja ir sena.
+        en: >-
+          Its aim is mutual understanding and growing together towards a common ideal. The words
+          used among fraternity members, fraternitas (brotherhood) and commilito (comrade in arms),
+          show how old the idea is.
+    - title:
+        lv: Vecākums
+        en: Seniority
+      text:
+        lv: >-
+          Savstarpēja cieņa un draudzība starp vecāko un jaunāko. Vecākumu nosaka tas, cik ilgi
+          cilvēks pieder korporācijai, nevis viņa gadi. Goda lietās vecākumam nav nozīmes: tur
+          visiem ir vienādas tiesības.
+        en: >-
+          Respect and friendship between the older and the younger. Seniority is set by how long a
+          member has belonged to the fraternity, not by his age. In matters of honour it has no
+          bearing: there all have equal rights.
+    - title:
+        lv: Gods
+        en: Honour
+      text:
+        lv: >-
+          Sabiedrība, kas ievēro goda kodeksu, goda lietas savā starpā kārto kā starp līdzīgiem.
+          Korporācijas šo principu ir saglabājušas un goda jēdzienu vērtē augstu; goda komāns ir
+          saistošs visiem buršiem.
+        en: >-
+          A society that keeps a code of honour settles matters of honour among its members as among
+          equals. The fraternities have kept this principle and hold honour in high regard; the
+          comment of honour binds every member.
+    - title:
+        lv: Rituss
+        en: Ritus
+      text:
+        lv: >-
+          Kārtība, kas vada korporācijas un tās locekļu rīcību iekšējos sarīkojumos. Katram ritusam
+          ir sava nozīme: Zemes tēvs, piemēram, apliecina uzticību saviem principiem, tautībai,
+          tēvzemei un korporācijai.
+        en: >-
+          The order that governs the conduct of a fraternity and its members at internal occasions.
+          Each ritual has its meaning: the Landesvater (Zemes tēvs), for example, is a profession of
+          faith in one’s principles, nation, fatherland and fraternity.
+
+character:
+  title:
+    lv: Kas korporāciju atšķir
+    en: What sets a fraternity apart
+  intro:
+    lv: Piecas iezīmes, kas korporāciju atšķir no citām studentu organizācijām.
+    en: Five traits that set a fraternity apart from other student organisations.
+  items:
+    - title:
+        lv: Uz mūžu
+        en: For life
+      text:
+        lv: >-
+          Korporācija ir mūža organizācija: tās piederīgie paliek uzticīgi cits citam visu mūžu.
+          Tāpēc piederēt var tikai vienai korporācijai.
+        en: >-
+          A fraternity is an organisation for life: those who belong to it remain loyal to one
+          another to the end. That is why a person can belong to only one fraternity.
+    - title:
+        lv: Izlase
+        en: By selection
+      text:
+        lv: >-
+          Korporācijā nevar vienkārši iestāties. Jaunus locekļus uzņem ar vairākuma piekrišanu un
+          nelielā skaitā, lai korporācijas garu un draudzību varētu ieaudzināt labāk. Kopā uzņemtie
+          veido coetus.
+        en: >-
+          One cannot simply join. New members are admitted with the consent of the majority and in
+          small numbers, so that the spirit of the fraternity and friendship can be better
+          instilled. Those admitted together form a coetus.
+    - title:
+        lv: Kārtība
+        en: Order
+      text:
+        lv: >-
+          Korporācijas darbību nosaka komāni, tās rakstītie likumi, un ūzusi, nerakstītās paražas.
+          Korporācijas dzīve norit komānu ietvaros, un to nosaka konventa lēmumi.
+        en: >-
+          A fraternity’s activity is governed by comments, its written laws, and by its unwritten
+          customs. Its life runs within the comments and is determined by the decisions of the
+          convent.
+    - title:
+        lv: Interna sadzīve
+        en: A life kept within
+      text:
+        lv: >-
+          Korporācijas sadzīve ir interna: par tās norisēm plašākā sabiedrībā nerunā. Pašas
+          korporācijas nav slepenas; to nosaukumi, krāsas un adreses ir atrodamas šajā vietnē.
+        en: >-
+          The life of a fraternity is internal: what happens there is not spoken of in society at
+          large. The fraternities themselves are no secret; their names, colours and addresses are
+          on this site.
+    - title:
+        lv: Bez politikas konventā
+        en: No politics in the convent
+      text:
+        lv: >-
+          Par politiskiem un reliģiskiem jautājumiem konventā nediskutē; piederība partijai vai
+          reliģiskai grupai ir katra personīga lieta. Vienlaikus korporācijām ir stingri izteikta
+          nacionāla stāja.
+        en: >-
+          Political and religious questions are not debated in the convent; membership of a party or
+          a religious group is each member’s private affair. At the same time the fraternities take
+          a firmly national stance.
+
+path:
+  title:
+    lv: Ceļš korporācijā
+    en: The path through a fraternity
+  intro:
+    lv: >-
+      Biedru pakāpes studentu sabiedrībās radās pēc amatu cunfšu parauga. Katrai pakāpei ir savs
+      nosaukums.
+    en: >-
+      The ranks of membership came to student societies from the craft guilds. Each rank has a name
+      of its own.
+  items:
+    - title:
+        lv: Fuksis
+        en: Fox
+      text:
+        lv: >-
+          Jaunuzņemtais loceklis; dažās korporācijās viņu sauc par zēnu vai krustdēlu. Pēc
+          uzņemšanas viņš ir līdzvērtīgs sabiedrības loceklis, kam korporācijas likumu noteiktā ceļā
+          vēl jāiegūst korporanta audzināšana.
+        en: >-
+          A newly admitted member; some fraternities have their own word for him. From admission he
+          is an equal member of the society, who still has to acquire the upbringing of a fraternity
+          member in the way its laws prescribe.
+    - title:
+        lv: Krāsnesis
+        en: Colour-bearer
+      text:
+        lv: >-
+          Loceklis, kam ir tiesības nēsāt savas korporācijas krāsas: krāsu lenti un deķeli. Savā
+          starpā burši ir komiltoņi, cīņas biedri.
+        en: >-
+          A member entitled to wear the colours of his fraternity: the colour sash and the cap.
+          Among themselves the members are commilitones, comrades in arms.
+    - title:
+        lv: Filistrs
+        en: Philister
+      text:
+        lv: >-
+          Studijas beidzis korporācijas loceklis. Filistri paliek savā korporācijā uz mūžu un
+          apvienojas filistru biedrībā.
+        en: >-
+          A member who has completed his studies. Philisters stay with their fraternity for life and
+          come together in its philisters’ society.
+
+joining:
+  title:
+    lv: Kā iepazīt korporāciju
+    en: Getting to know a fraternity
+  text:
+    lv: >-
+      Katra semestra sākumā korporācijas rīko viesu vakarus, kuros gaidīts ikviens interesents. To
+      datumus meklē korporāciju mājaslapās un sociālajos tīklos; saites ir katras korporācijas lapā.
+      Studenšu korporācijas apvieno Studenšu Prezidiju Konvents (S!P!K!).
+    en: >-
+      At the start of every semester the fraternities hold guest evenings, to which anyone
+      interested is welcome. The dates are on the fraternities’ websites and social media; the links
+      are on each fraternity’s page. Sororities are united by their own Presidium Convent, S!P!K!.
+  sororitiesUrl: https://www.spk.lv/
+
+symbols:
+  title:
+    lv: Krāsas un simboli
+    en: Colours and symbols
+  intro:
+    lv: >-
+      Katrai korporācijai ir sava simbolika. Tā nav rota: krāsas, deķelis, cirķelis un vapenis rāda,
+      kurai korporācijai cilvēks pieder.
+    en: >-
+      Every fraternity has insignia of its own. They are not ornament: the colours, the cap, the
+      monogram and the coat of arms show which fraternity a person belongs to.
+  items:
+    - title:
+        lv: Krāsas
+        en: Colours
+      text:
+        lv: Trīs krāsas, ko lasa no augšas uz leju. Tās nēsā uz krāsu lentes un deķeļa, un tās ir arī korporācijas karogā.
+        en: Three colours, read from top to bottom. They are worn on the colour sash and the cap, and they are on the fraternity’s flag.
+    - title:
+        lv: Deķelis
+        en: Cap
+      text:
+        lv: Galvassega korporācijas krāsās. Tās virspusē izšūta deķeļa zvaigzne, kas katrai korporācijai ir sava.
+        en: A cap in the fraternity’s colours. Its top carries an embroidered ornament, the cap star, different for every fraternity.
+    - title:
+        lv: Cirķelis
+        en: Monogram
+      text:
+        lv: Pazīšanās zīme, kurā savīti korporācijas burti un ko noslēdz izsaukuma zīme.
+        en: >-
+          The fraternity’s mark, the Zirkel: its letters woven into one sign that ends in an exclamation mark.
+    - title:
+        lv: Vapenis
+        en: Coat of arms
+      text:
+        lv: Korporācijas ģerbonis, viena no tās nozīmīgākajām regālijām. Tajā parasti redzamas krāsas, cirķelis un rapieri.
+        en: One of the fraternity’s most important regalia. It usually shows the colours, the monogram and rapiers.
+    - title:
+        lv: Devīze
+        en: Motto
+      text:
+        lv: Īss teikums, bieži latīniski, kas pasaka, par ko korporācija iestājas.
+        en: A short sentence, often in Latin, that says what the fraternity stands for.
+
+life:
+  title:
+    lv: Dzīve korporācijā
+    en: Life in a fraternity
+  intro:
+    lv: >-
+      Korporācijā satiekas studiju biedri un dažādu jomu speciālisti, kas studijas jau beiguši. Kopā
+      viņi mācās, sporto un svin.
+    en: >-
+      A fraternity brings together fellow students and specialists from many fields who have already
+      graduated. Together they learn, train and celebrate.
+  photo:
+    src: '@/assets/site/fencing.jpg'
+    alt:
+      lv: Divi paukotāji maskās un aizsargtērpos krusto rapierus brīvā dabā; divi vīrieši baltos kreklos un deķeļos vēro cīņu
+      en: Two fencers in masks and padded jackets cross rapiers outdoors while two men in white shirts and caps look on
+    caption:
+      lv: Paukošanas nodarbība.
+      en: A fencing practice.
+  items:
+    - title:
+        lv: Literārie vakari
+        en: Literary evenings
+      text:
+        lv: Referāti un sarunas par zinātni, sabiedrību un kultūru; pēc referāta nereti seko debates.
+        en: Papers and talks on science, society and culture, often followed by a debate.
+    - title:
+        lv: Paukošana
+        en: Fencing
+      text:
+        lv: Akadēmiskā paukošana ir sena buršu tradīcija, ko korporācijas kopj regulārās nodarbībās.
+        en: Academic fencing is an old student tradition that the fraternities keep up in regular practice.
+    - title:
+        lv: Dziesma
+        en: Song
+      text:
+        lv: Korporāciju vīri dzied kopā. 1925. gadā viņi dibināja P!K! vīru kori, kurā dzied tikai burši.
+        en: Fraternity men sing together. In 1925 they founded the P!K! Men’s Choir, in which only fraternity members sing.
+    - title:
+        lv: Komerši
+        en: Commerses
+      text:
+        lv: Komeršs ir svinīgi korporācijas svētki. Baltijas tautu komeršā tiekas Latvijas, Igaunijas un baltvāciešu korporācijas.
+        en: A commers is a fraternity’s festive celebration. At the Baltic Nations’ Commers the fraternities of Latvia, Estonia and the Baltic Germans meet.
+    - title:
+        lv: Sports
+        en: Sport
+      text:
+        lv: Kopīgi treniņi un sacensības, no basketbola un futbola līdz korporāciju sporta spēlēm.
+        en: Training and competitions together, from basketball and football to the fraternities’ sports games.
+    - title:
+        lv: 18. novembris
+        en: 18 November
+      text:
+        lv: >-
+          Valsts svētku rītā korporācijas klusā gājienā dodas no Latvijas Universitātes uz Rīgas Brāļu
+          kapiem, kur atdusas Latvijas Brīvības cīņās kritušie. Kopš 1992. gada gājienu rīko P!K!.
+        en: >-
+          On the morning of the national day the fraternities walk in silence from the University of
+          Latvia to the Brethren Cemetery in Riga, where those who fell in Latvia’s War of
+          Independence lie. P!K! has organised the procession since 1992.
+
+questions:
+  - question:
+      lv: Vai korporācijas ir slepenas organizācijas?
+      en: Are fraternities secret societies?
+    answer:
+      lv: >-
+        Nē. Korporācijas ir atklāti zināmas akadēmiskas organizācijas, un Prezidiju Konvents ir
+        oficiāli reģistrēta biedrība. Interna ir korporācijas sadzīve: par tās norisēm ārpus
+        korporācijas nerunā.
+      en: >-
+        No. Fraternities are openly known academic organisations, and the Presidium Convent is an
+        officially registered association. What is internal is a fraternity’s own life: it is not
+        spoken of outside the fraternity.
+  - question:
+      lv: Vai korporācijas nodarbojas ar politiku?
+      en: Are fraternities political?
+    answer:
+      lv: >-
+        Nē. Korporācijas ir nepolitiskas, konservatīvi un patriotiski orientētas akadēmiskas
+        organizācijas. Piederība partijai ir katra personīga lieta, taču korporants nevar piederēt
+        organizācijām, kuru mērķi ir pretrunā korporāciju principiem.
+      en: >-
+        No. Fraternities are non-political academic organisations of a conservative and patriotic
+        outlook. Membership of a party is each member’s private affair, but a fraternity member may
+        not belong to organisations whose aims run counter to the principles of the fraternities.
+  - question:
+      lv: Vai var piederēt vairākām korporācijām?
+      en: Can one belong to more than one fraternity?
+    answer:
+      lv: Nē. Korporācijai pieder uz mūžu, un šajā uzticībā ar citu korporāciju nedalās.
+      en: No. One belongs to a fraternity for life, and that loyalty is not shared with another.
+  - question:
+      lv: Kas notiek pēc studiju beigām?
+      en: What happens after graduation?
+    answer:
+      lv: >-
+        Loceklis kļūst par filistru un paliek savā korporācijā. Tāpēc korporācijā studenti ikdienā
+        satiek dažādu paaudžu un profesiju cilvēkus.
+      en: >-
+        The member becomes a philister and stays with his fraternity. That is why students in a
+        fraternity meet people of different generations and professions every day.
+  - question:
+      lv: Vai ir arī studenšu korporācijas?
+      en: Are there fraternities for women?
+    answer:
+      lv: Jā. Studenšu korporācijas apvieno Studenšu Prezidiju Konvents (S!P!K!), un par tām var uzzināt vietnē spk.lv.
+      en: Yes. The sororities are united by their own Presidium Convent, S!P!K!; more about them is at spk.lv.
+  - question:
+      lv: Kāda ir Prezidiju Konventa loma?
+      en: What does the Presidium Convent do?
+    answer:
+      lv: >-
+        P!K! apvieno Latvijas studentu korporācijas: pieņem tām saistošus lēmumus, izšķir strīdus
+        un vada korporāciju savstarpējo dzīvi. Katrai korporācijai ir viena balss, un ik semestri
+        prezidē cita korporācija.
+      en: >-
+        P!K! unites Latvia’s student fraternities: it adopts decisions that bind them, settles
+        disputes and guides their common life. Each fraternity has one vote, and a different
+        fraternity presides every semester.
+
+terms:
+  - word: Buršs
+    text:
+      lv: Studentu korporācijas biedrs. Vārds nāk no bursas, viduslaiku studentu kopmītnes.
+      en: A member of a student fraternity. The word comes from the bursa, the students’ hall of the medieval university.
+  - word: Konvents
+    text:
+      lv: Korporācijas locekļu kopa un tās sapulce; arī korporācijas mītne.
+      en: The body of a fraternity’s members and its meeting; also its quarters. In English, the convent.
+  - word: Komāns
+    text:
+      lv: Korporācijas iekšējās un ārējās sadzīves noteikumu kopojums. Korporāciju savstarpējās attiecības nosaka Apvienoto Korporāciju Komāns (A!K!K!).
+      en: The body of rules of a fraternity’s internal and external life, the comment. Relations between fraternities are governed by the Comment of the United Fraternities (A!K!K!).
+  - word: Ūzuss
+    text:
+      lv: Nerakstīts likums, paraža.
+      en: An unwritten law, a custom.
+  - word: Coetus
+    text:
+      lv: Kopā uzņemto jauno locekļu vienība.
+      en: The group of new members admitted together.
+  - word: Komeršs
+    text:
+      lv: Svinīgi studentu korporācijas svētki.
+      en: A festive celebration of a student fraternity, the commers.
+  - word: Kartelis
+    text:
+      lv: Divu korporāciju atzīšanas un draudzības līgums.
+      en: An agreement of recognition and friendship between two fraternities, the cartel.
+  - word: Zemes tēvs
+    text:
+      lv: Ceremonija, kurā burši apliecina uzticību saviem principiem, tautībai, tēvzemei un korporācijai.
+      en: The Landesvater, a ceremony in which members profess their faith in their principles, nation, fatherland and fraternity.
+  - word: Honoritāte
+    text:
+      lv: Goda prāts; īpašība, bez kuras korporācija nevar pastāvēt.
+      en: A sense of honour, the quality without which a fraternity cannot exist.
+
+sources:
+  - title: Prezidiju Konvents. Kas ir studentu korporācijas?
+    note:
+      lv: Pilnais teksts šīs lapas beigās; no tā ņemti principi, korporācijas iezīmes un lielākā daļa skaidrojumu.
+      en: The complete text at the foot of this page; the principles, the traits and most of the explanations are taken from it.
+  - title: Latvijas Universitāte. Korporācijas un akadēmiskās vienības.
+    note:
+      lv: Par viesu vakariem, mūža organizāciju un studenšu korporācijām.
+      en: On guest evenings, lifelong membership and sororities.
+    url: https://www.lu.lv/studijas/arpus-studijam/organizacijas/korporacijas-un-akademiskas-vienibas/
+  - title: Baltijas studentu korporācijas satiekas Rīgā. Latvijas Vēstnesis, 06.07.2001., Nr. 105.
+    note:
+      lv: Par korporāciju nepolitisko raksturu un komeršiem.
+      en: On the non-political character of the fraternities and on commerses.
+    url: https://www.vestnesis.lv/ta/id/26069
+  - title: Studentu korporācijas tradicionālajā gājienā piemin Latvijas Brīvības cīņās kritušos. LSM.lv, 18.11.2013.
+    note:
+      lv: Par 18. novembra gājienu.
+      en: On the procession of 18 November.
+    url: https://www.lsm.lv/raksts/zinas/latvija/studentu-korporacijas-tradicionalaja-gajiena-piemin-latvijas-brivibas-cinas-kritusos.a70152/
+  - title: Tēzaurs.lv. Latviešu valodas skaidrojošā vārdnīca.
+    note:
+      lv: Vārdu „buršs”, „krāsnesis”, „filistrs”, „konvents”, „komāns” un „komeršs” skaidrojumi.
+      en: Definitions of “buršs”, “krāsnesis”, “filistrs”, “konvents”, “komāns” and “komeršs”.
+    url: https://tezaurs.lv/
+  - title: Vāveris, M. Latvijas Universitātes latviešu studentu un studenšu korporāciju heraldiskā simbolika 20. gs. 20.–30. gadi. Bakalaura darbs. Latvijas Universitāte, 2012.
+    note:
+      lv: Par vapeņiem un to raksturīgajiem elementiem.
+      en: On coats of arms and their characteristic elements.
+    url: https://dspace.lu.lv/handle/7/13670
+  - title: Studenšu Prezidiju Konvents (S!P!K!).
+    note:
+      lv: Par studenšu korporāciju apvienību.
+      en: On the union of sororities.
+    url: https://www.spk.lv/

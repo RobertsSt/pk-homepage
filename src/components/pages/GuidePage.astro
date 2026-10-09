@@ -1,0 +1,480 @@
+---
+/**
+ * A subject explained in short sections: principles, the path of a member,
+ * insignia, life in a fraternity, questions and a glossary. The sections are
+ * content (src/content/guides); the complete text they are drawn from follows
+ * at the foot of the page, with the sources of what is not in it.
+ */
+import { Image } from 'astro:assets';
+import { render } from 'astro:content';
+import SectionNav from '@/components/SectionNav.astro';
+import SectionTitle from '@/components/SectionTitle.astro';
+import { Shield } from '@/components/Shield';
+import ShieldRow from '@/components/ShieldRow.astro';
+import type { Locale } from '@/i18n/config';
+import { useTranslations } from '@/i18n/ui';
+import Layout from '@/layouts/Layout.astro';
+import { findInNavigation, getTextPage } from '@/lib/content';
+import { displayHost } from '@/lib/format';
+import { loadGuide } from '@/lib/guide';
+import { fraternitiesUrl, fraternityUrl } from '@/lib/routes';
+import { getFraternities, getPresiding } from '@/lib/site';
+
+interface Props {
+  locale: Locale;
+  slug: string;
+}
+
+const { locale, slug } = Astro.props;
+const t = useTranslations(locale);
+
+const [guide, original, fraternities, presiding] = await Promise.all([
+  loadGuide(locale, slug),
+  getTextPage(locale, slug),
+  getFraternities(),
+  getPresiding(),
+]);
+const { Content } = await render(original.entry);
+const place = findInNavigation(slug);
+
+const members = fraternities.filter((fraternity) => fraternity.data.membership === 'pk');
+const oldest = fraternities.reduce((a, b) => (a.data.founded <= b.data.founded ? a : b));
+
+// The insignia are shown on one fraternity, and each year that is another one.
+const example = presiding.fraternity;
+const insignia = (['arms', 'zirkel', 'cap', 'star'] as const).map((key) => ({
+  label: t(`heraldry.${key}`),
+  image: example.data.heraldry[key],
+}));
+
+const sections = [
+  { id: 'principi', title: guide.principles.title },
+  { id: 'iezimes', title: guide.character.title },
+  { id: 'cels', title: guide.path.title },
+  { id: 'simboli', title: guide.symbols.title },
+  { id: 'dzive', title: guide.life.title },
+  { id: 'jautajumi', title: t('guide.questions') },
+  { id: 'vardnica', title: t('guide.terms') },
+];
+const number = (id: string) =>
+  String(sections.findIndex((section) => section.id === id) + 1).padStart(2, '0');
+
+const figure = 'font-display text-[clamp(3.5rem,7vw,6rem)] leading-none tabular-nums';
+const caption = 'text-ink-soft mt-3 max-w-[17rem] text-sm leading-snug';
+const lead = 'mt-6 max-w-[34rem] text-[1.05rem] leading-[1.75]';
+const newTab = t('a11y.newTab');
+// Latvian words keep their language when the page around them is English.
+const latvian = locale === 'lv' ? undefined : 'lv';
+---
+
+<Layout locale={locale} path={slug} title={guide.title} description={guide.intro}>
+  <div class="reading-progress" aria-hidden="true"></div>
+
+  <header class="shell grid items-end gap-x-16 gap-y-12 pt-14 pb-16 lg:grid-cols-12 lg:pt-20 lg:pb-20">
+    <div class="lg:col-span-7">
+      <p class="kicker" data-enter>
+        {guide.kicker}
+      </p>
+      <h1
+        class="font-display mt-6 text-[clamp(2.6rem,6.2vw,5.4rem)] leading-[0.97] font-normal tracking-[-0.028em]"
+        data-enter="lines"
+      >
+        <span class="line-mask">
+          <span>{guide.title}</span>
+        </span>
+      </h1>
+      <p
+        class="text-ink-soft mt-8 max-w-[38rem] text-[1.15rem] leading-[1.7]"
+        data-enter
+        style="--reveal-order:2"
+      >
+        {guide.intro}
+      </p>
+      <nav class="mt-10" aria-label={t('guide.contents')} data-enter style="--reveal-order:3">
+        <ol class="border-rule grid gap-x-8 border-t text-[0.92rem] sm:grid-cols-2">
+          {sections.map((section) => (
+            <li class="border-rule border-b">
+              <a href={`#${section.id}`} class="hover:text-wine flex gap-4 py-2.5 transition-colors">
+                <span class="text-ink-soft tabular-nums" aria-hidden="true">
+                  {number(section.id)}
+                </span>
+                {section.title}
+              </a>
+            </li>
+          ))}
+        </ol>
+      </nav>
+    </div>
+    <figure class="lg:col-span-5" data-enter style="--reveal-order:2">
+      <div class="framed mr-4">
+        <div class="overflow-hidden">
+          <Image
+            src={guide.photo.src}
+            alt={guide.photo.alt}
+            widths={[480, 800, 1200]}
+            sizes="(min-width: 64rem) 34rem, 92vw"
+            class="aspect-[4/3] w-full object-cover"
+            loading="eager"
+          />
+        </div>
+      </div>
+      <figcaption class="text-ink-soft mt-8 text-[0.8rem] tracking-wide">{guide.photo.caption}</figcaption>
+    </figure>
+  </header>
+
+  <section class="shell">
+    <dl class="border-rule grid border-y sm:grid-cols-3">
+      <div class="border-rule flex flex-col-reverse justify-end py-10 sm:border-r sm:pr-8" data-reveal>
+        <dt class={caption}>{t('guide.oldest', { name: oldest.data.name })}</dt>
+        <dd class={figure}>{oldest.data.founded.getUTCFullYear()}</dd>
+      </div>
+      <div
+        class="border-rule flex flex-col-reverse justify-end border-t py-10 sm:border-t-0 sm:border-r sm:px-8"
+        data-reveal
+        style="--reveal-order:1"
+      >
+        <dt class={caption}>{t('stats.founded')}</dt>
+        <dd class={figure}>{presiding.foundedYear}</dd>
+      </div>
+      <div
+        class="border-rule flex flex-col-reverse justify-end border-t py-10 sm:border-t-0 sm:pl-8"
+        data-reveal
+        style="--reveal-order:2"
+      >
+        <dt class={caption}>{t('stats.fraternities')}</dt>
+        <dd class={figure}>{members.length}</dd>
+      </div>
+    </dl>
+  </section>
+
+  <section id="principi" class="on-ink mt-20 py-20 lg:mt-28 lg:py-28" aria-labelledby="principi-title">
+    <div class="shell">
+      <div class="grid gap-x-10 gap-y-6 lg:grid-cols-12">
+        <div class="lg:col-span-5">
+          <p class="kicker" data-reveal>
+            {number('principi')}
+          </p>
+          <div id="principi-title">
+            <SectionTitle text={guide.principles.title} class="mt-6" />
+          </div>
+        </div>
+        <p class:list={[lead, 'text-paper/75 self-end lg:col-span-6 lg:col-start-7']} data-reveal>
+          {guide.principles.intro}
+        </p>
+      </div>
+      <ol class="border-paper/20 mt-14 grid border-t border-l sm:grid-cols-2 lg:grid-cols-4">
+        {guide.principles.items.map((item, index) => (
+          <li
+            class="border-paper/20 border-r border-b p-7 lg:p-8"
+            data-reveal
+            style={`--reveal-order:${index}`}
+          >
+            <p class="font-display text-brass text-[2.6rem] leading-none tabular-nums" aria-hidden="true">
+              {index + 1}
+            </p>
+            <h3 class="font-display mt-6 text-[1.75rem] leading-tight">{item.title}</h3>
+            <p class="text-paper/75 mt-4 text-[0.98rem] leading-[1.7]">{item.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section id="iezimes" class="shell py-20 lg:py-28" aria-labelledby="iezimes-title">
+    <div class="grid gap-x-10 gap-y-12 lg:grid-cols-12">
+      <div class="lg:col-span-4">
+        <p class="kicker" data-reveal>
+          {number('iezimes')}
+        </p>
+        <div id="iezimes-title">
+          <SectionTitle text={guide.character.title} class="mt-6" />
+        </div>
+        <p class:list={[lead, 'text-ink-soft']} data-reveal>
+          {guide.character.intro}
+        </p>
+      </div>
+      <dl class="border-rule border-t lg:col-span-7 lg:col-start-6">
+        {guide.character.items.map((item, index) => (
+          <div
+            class="border-rule grid gap-x-8 gap-y-2 border-b py-6 sm:grid-cols-[13rem_1fr]"
+            data-reveal
+            style={`--reveal-order:${index}`}
+          >
+            <dt class="font-display text-[1.5rem] leading-snug">{item.title}</dt>
+            <dd class="text-ink-soft leading-[1.7]">{item.text}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <section id="cels" class="bg-paper-deep/60 py-20 lg:py-28" aria-labelledby="cels-title">
+    <div class="shell">
+      <div class="grid gap-x-10 gap-y-6 lg:grid-cols-12">
+        <div class="lg:col-span-5">
+          <p class="kicker" data-reveal>
+            {number('cels')}
+          </p>
+          <div id="cels-title">
+            <SectionTitle text={guide.path.title} class="mt-6" />
+          </div>
+        </div>
+        <p class:list={[lead, 'text-ink-soft self-end lg:col-span-6 lg:col-start-7']} data-reveal>
+          {guide.path.intro}
+        </p>
+      </div>
+      <ol class="mt-14 grid gap-x-10 gap-y-12 lg:grid-cols-3">
+        {guide.path.items.map((item, index) => (
+          <li data-reveal style={`--reveal-order:${index}`}>
+            <p class="flex items-center gap-4" aria-hidden="true">
+              <span class="border-ink font-display grid size-11 flex-none place-items-center rounded-full border text-lg">
+                {index + 1}
+              </span>
+              <span class="bg-rule h-px flex-1"></span>
+            </p>
+            <h3 class="font-display mt-6 text-[1.9rem] leading-tight">{item.title}</h3>
+            <p class="text-ink-soft mt-3 leading-[1.7]">{item.text}</p>
+          </li>
+        ))}
+      </ol>
+
+      <div class="border-ink mt-16 grid gap-x-10 gap-y-8 border p-7 lg:grid-cols-12 lg:p-10" data-reveal>
+        <div class="lg:col-span-8">
+          <h3 class="font-display text-[1.9rem] leading-tight">{guide.joining.title}</h3>
+          <p class="text-ink-soft mt-4 max-w-[40rem] leading-[1.7]">{guide.joining.text}</p>
+        </div>
+        <ul class="flex flex-wrap items-center gap-x-8 gap-y-4 lg:col-span-4 lg:flex-col lg:items-start lg:justify-center">
+          <li>
+            <a class="btn" href={fraternitiesUrl(locale)}>
+              {t('fraternities.all')} <span aria-hidden="true">→</span>
+            </a>
+          </li>
+          <li>
+            <a class="link text-sm" href={guide.joining.sororitiesUrl} target="_blank" rel="noreferrer">
+              {t('guide.sororities')}: {displayHost(guide.joining.sororitiesUrl)}{' '}
+              <span aria-hidden="true">↗</span>
+              <span class="sr-only"> ({newTab})</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="simboli" class="shell py-20 lg:py-28" aria-labelledby="simboli-title">
+    <div class="grid gap-x-10 gap-y-6 lg:grid-cols-12">
+      <div class="lg:col-span-5">
+        <p class="kicker" data-reveal>
+          {number('simboli')}
+        </p>
+        <div id="simboli-title">
+          <SectionTitle text={guide.symbols.title} class="mt-6" />
+        </div>
+      </div>
+      <p class:list={[lead, 'text-ink-soft self-end lg:col-span-6 lg:col-start-7']} data-reveal>
+        {guide.symbols.intro}
+      </p>
+    </div>
+
+    <div class="mt-14 grid gap-x-10 gap-y-14 lg:grid-cols-12">
+      <dl class="border-rule border-t lg:col-span-6">
+        {guide.symbols.items.map((item, index) => (
+          <div
+            class="border-rule grid gap-x-8 gap-y-2 border-b py-5 sm:grid-cols-[9rem_1fr]"
+            data-reveal
+            style={`--reveal-order:${index}`}
+          >
+            <dt class="font-display text-[1.4rem] leading-snug">{item.title}</dt>
+            <dd class="text-ink-soft leading-[1.7]">{item.text}</dd>
+          </div>
+        ))}
+      </dl>
+
+      <figure class="lg:col-span-5 lg:col-start-8" data-reveal>
+        <div class="border-rule bg-paper-deep/50 border p-6 sm:p-8">
+          <div class="flex items-center gap-6">
+            <Shield
+              colors={example.data.colors}
+              band={example.data.band}
+              title={`${example.data.name}: ${t('heraldry.shield').toLowerCase()}`}
+              className="text-ink/65 h-24 w-auto flex-none"
+            />
+            <div>
+              <p class="font-display text-[2rem] leading-none">{example.data.name}</p>
+              <ul class="font-display text-ink-soft mt-3 space-y-0.5 text-[1.05rem] leading-snug italic">
+                {example.data.mottos.map((motto) => (
+                  <li>{motto}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          <ul class="border-rule mt-8 grid grid-cols-2 border-t border-l sm:grid-cols-4">
+            {insignia.map((item) => (
+              <li class="border-rule flex flex-col items-center border-r border-b px-3 pt-5 pb-4">
+                <span class="grid h-24 w-full place-items-center">
+                  <Image
+                    src={item.image}
+                    alt={`${example.data.name}: ${item.label.toLowerCase()}`}
+                    height={192}
+                    class="on-paper h-auto max-h-24 w-auto max-w-full"
+                  />
+                </span>
+                <span class="text-ink-soft mt-4 text-center text-[0.62rem] font-semibold tracking-[0.16em] uppercase">
+                  {item.label}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <figcaption class="text-ink-soft mt-4 text-[0.8rem] tracking-wide">
+          <a class="link" href={fraternityUrl(locale, example.id)}>
+            {t('guide.example', { name: example.data.name, term: presiding.term })}{' '}
+            <span aria-hidden="true">→</span>
+          </a>
+        </figcaption>
+      </figure>
+    </div>
+
+    <div class="mt-16" data-reveal>
+      <ShieldRow fraternities={members} locale={locale} label={t('guide.allColours')} />
+    </div>
+  </section>
+
+  <section id="dzive" class="on-ink py-20 lg:py-28" aria-labelledby="dzive-title">
+    <div class="shell grid items-start gap-x-16 gap-y-14 lg:grid-cols-12">
+      <figure class="lg:col-span-5" data-reveal="clip">
+        <Image
+          src={guide.life.photo.src}
+          alt={guide.life.photo.alt}
+          widths={[480, 800, 1200]}
+          sizes="(min-width: 64rem) 34rem, 92vw"
+          class="aspect-[4/5] w-full object-cover"
+        />
+        <figcaption class="text-paper/60 mt-4 text-[0.8rem] tracking-wide">
+          {guide.life.photo.caption}
+        </figcaption>
+      </figure>
+      <div class="lg:col-span-7">
+        <p class="kicker" data-reveal>
+          {number('dzive')}
+        </p>
+        <div id="dzive-title">
+          <SectionTitle text={guide.life.title} class="mt-6" />
+        </div>
+        <p class:list={[lead, 'text-paper/75']} data-reveal>
+          {guide.life.intro}
+        </p>
+        <ul class="border-paper/20 mt-12 grid gap-x-10 border-t sm:grid-cols-2">
+          {guide.life.items.map((item, index) => (
+            <li class="border-paper/20 border-b py-6" data-reveal style={`--reveal-order:${index % 2}`}>
+              <h3 class="font-display text-[1.5rem] leading-snug">{item.title}</h3>
+              <p class="text-paper/75 mt-2 text-[0.98rem] leading-[1.7]">{item.text}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="jautajumi" class="shell py-20 lg:py-28" aria-labelledby="jautajumi-title">
+    <div class="grid gap-x-10 gap-y-10 lg:grid-cols-12">
+      <div class="lg:col-span-4">
+        <p class="kicker" data-reveal>
+          {number('jautajumi')}
+        </p>
+        <div id="jautajumi-title">
+          <SectionTitle text={t('guide.questions')} class="mt-6" />
+        </div>
+      </div>
+      <div class="border-rule border-t lg:col-span-7 lg:col-start-6">
+        {guide.questions.map((item) => (
+          <details class="disclosure border-rule border-b">
+            <summary>
+              <h3 class="font-display text-[1.4rem] leading-snug">{item.question}</h3>
+              <span class="plus" aria-hidden="true">
+                +
+              </span>
+            </summary>
+            <p class="text-ink-soft max-w-[40rem] pr-8 pb-7 leading-[1.7]">{item.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="vardnica" class="bg-paper-deep/60 py-20 lg:py-28" aria-labelledby="vardnica-title">
+    <div class="shell">
+      <p class="kicker" data-reveal>
+        {number('vardnica')}
+      </p>
+      <div id="vardnica-title">
+        <SectionTitle text={t('guide.terms')} class="mt-6" />
+      </div>
+      <dl class="mt-12 grid gap-x-12 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+        {guide.terms.map((term) => (
+          <div class="border-rule border-t pt-5" data-reveal>
+            <dt class="font-display text-[1.5rem] leading-snug" lang={latvian}>
+              {term.word}
+            </dt>
+            <dd class="text-ink-soft mt-2 text-[0.98rem] leading-[1.65]">{term.text}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <div class="shell grid gap-x-10 gap-y-16 py-20 lg:grid-cols-12 lg:py-28">
+    <div class="lg:col-span-8">
+      <section aria-labelledby="pilnais-teksts">
+        <h2 id="pilnais-teksts" class="font-display text-[2.2rem] leading-tight">
+          {t('guide.fullText')}
+        </h2>
+        <p class="text-ink-soft mt-3">{t('guide.fullTextHint')}</p>
+        <details class="disclosure border-rule mt-8 border-y">
+          <summary>
+            <span class="font-display text-[1.4rem] leading-snug">{t('guide.readFullText')}</span>
+            <span class="plus" aria-hidden="true">
+              +
+            </span>
+          </summary>
+          <div class="prose max-w-[42rem] pb-10" lang={original.translated ? undefined : 'lv'}>
+            <Content />
+          </div>
+        </details>
+      </section>
+
+      <section class="mt-16" aria-labelledby="avoti">
+        <h2 id="avoti" class="font-display text-[2.2rem] leading-tight">
+          {t('guide.sources')}
+        </h2>
+        <ol class="border-rule mt-6 border-t text-[0.95rem]">
+          {guide.sources.map((source) => (
+            <li class="border-rule border-b py-4">
+              {/* The works are Latvian, whatever the language of the page. */}
+              <p lang={latvian}>
+                {source.url ? (
+                  <a class="link" href={source.url} target="_blank" rel="noreferrer">
+                    {source.title} <span aria-hidden="true">↗</span>
+                    <span class="sr-only" lang={locale}>
+                      {' '}
+                      ({newTab})
+                    </span>
+                  </a>
+                ) : (
+                  source.title
+                )}
+              </p>
+              <p class="text-ink-soft mt-1.5">{source.note}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+    </div>
+
+    {place && (
+      <aside class="lg:col-span-3 lg:col-start-10">
+        <SectionNav locale={locale} group={place.group} slug={slug} class="lg:sticky lg:top-28" />
+      </aside>
+    )}
+  </div>
+</Layout>

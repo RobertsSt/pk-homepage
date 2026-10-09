@@ -20,7 +20,9 @@ Read [docs/spec.md](docs/spec.md) first: it holds the decisions, the milestones 
   not meant to be seen.
 - `.htaccess` and `robots.txt` are written by the build (`astro.config.mjs`), not kept in `public/`,
   because they depend on the address the site is built for. A mistake in the rewrite rules can lock
-  visitors in a redirect loop: try a change in the trial folder first.
+  visitors in a redirect loop: try a change in the trial folder first. Before that, try it on this
+  machine: macOS has Apache (`/usr/sbin/httpd`), which reads the file when pointed at `dist/` with
+  `AllowOverride All`.
 - The tab and home-screen icons in `public/` are drawn from the crest by `npm run build:icons`.
 - Only one dev server can run per project. If Roberts already has one open (`npx astro dev status`), use
   it at http://localhost:4321 and never stop it. Otherwise `npx astro dev --background` starts one and
@@ -47,7 +49,8 @@ Read [docs/spec.md](docs/spec.md) first: it holds the decisions, the milestones 
   the stripe direction; both are identity, not decoration, so never reorder or restyle them.
 - Dates and times are Riga wall-clock strings (`src/lib/calendar/dates.ts`); do not use the local time zone
   of the machine.
-- `src/lib/calendar/feed.ts` is server-only. Client components import types and `dates.ts`/`labels.ts` only.
+- `src/lib/calendar/feed.ts` is server-only. Client components import types and
+  `dates.ts`/`labels.ts`/`links.ts` only.
 - Content refers to a picture as `@/assets/…` (quoted in YAML, because of the `@`), never by a relative
   path: the editing tool has one picture library and writes that prefix.
 - `.pages.yml` is the editing tool's view of the content and must match `src/content.config.ts`: a new
@@ -62,6 +65,12 @@ Read [docs/spec.md](docs/spec.md) first: it holds the decisions, the milestones 
   content any other way, or the watchdog in `Layout.astro` cannot rescue it, and never make a reveal wait
   for a share of the element's own height: that left long articles invisible once.
 - A new kind of page goes into `tests/pages.ts`, so the visibility and accessibility tests cover it.
+- Long texts are prose. A paragraph that begins with four spaces becomes a box of code, and one that
+  begins with a number and a full stop ("1922. gadā") a numbered list; `npm test` fails on both
+  (`src/lib/markdown-traps.ts`). Write `1922\. gadā`.
+- A text page with a layout of its own keeps the complete imported text on the page, in a section that
+  opens: the two histories (`src/content/histories`) and the guide (`src/content/guides`). On a guide,
+  a statement that is not in that text names its source in `sources`.
 - Accessibility target is WCAG 2.2 AA. A sign used as an icon (→, ↗) is wrapped in `aria-hidden`; a link
   that opens a new tab says so in an `sr-only` span; every photograph has a description (`alt`), which for
   imported content lives in `scripts/import-overrides.json`.

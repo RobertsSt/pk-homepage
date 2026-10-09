@@ -1,11 +1,30 @@
 import { getCollection, getEntry } from 'astro:content';
 import { navigation, type NavGroup, type NavLink } from '@/data/navigation';
 import { defaultLocale, type Locale } from '@/i18n/config';
+import type { HistorySlug } from './history';
 
 /** Slugs of every text page. The Latvian set decides which pages exist. */
 export async function getTextPageSlugs(): Promise<string[]> {
   const pages = await getCollection('pages', ({ id }) => id.startsWith(`${defaultLocale}/`));
   return pages.map((page) => page.id.slice(defaultLocale.length + 1));
+}
+
+/** The two histories are told as stories; see `src/content/histories`. */
+const HISTORY_SLUGS: readonly HistorySlug[] = ['pk-vesture', 'vesture'];
+
+/**
+ * One route per text page, with the kind of page it is: a history told in
+ * chapters, a guide in short sections, or the text as it was written.
+ */
+export async function getTextPagePaths() {
+  const guides = new Set((await getCollection('guides')).map((guide) => guide.id));
+  return (await getTextPageSlugs()).map((slug) => {
+    const history = HISTORY_SLUGS.find((name) => name === slug);
+    const props = history
+      ? ({ kind: 'history', slug: history } as const)
+      : ({ kind: guides.has(slug) ? 'guide' : 'text', slug } as const);
+    return { params: { slug }, props };
+  });
 }
 
 /** A text page in the wanted language, or the Latvian one while it awaits translation. */

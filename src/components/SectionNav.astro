@@ -1,0 +1,41 @@
+---
+/**
+ * The other pages of the same menu group, with this page marked. Shown beside
+ * or under a page so that a reader can carry on within the section.
+ */
+import type { NavGroup } from '@/data/navigation';
+import type { Locale } from '@/i18n/config';
+import { useTranslations } from '@/i18n/ui';
+import { pageUrl } from '@/lib/routes';
+
+interface Props {
+  locale: Locale;
+  group: NavGroup;
+  /** The page being shown. */
+  slug: string;
+  class?: string;
+}
+
+const { locale, group, slug, class: className } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<nav class={className} aria-label={t('page.inSection')}>
+  <p class="kicker">{t('page.inSection')}</p>
+  <ul class="border-rule mt-5 border-t">
+    {group.links.map((link) => (
+      <li class="border-rule border-b">
+        <a
+          href={pageUrl(locale, link.page)}
+          aria-current={link.page === slug ? 'page' : undefined}
+          class:list={[
+            'font-display block py-3 text-[1.2rem] leading-snug transition-colors',
+            link.page === slug ? 'text-wine' : 'hover:text-wine',
+          ]}
+        >
+          {link.label[locale]}
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>

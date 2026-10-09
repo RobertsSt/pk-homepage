@@ -157,4 +157,40 @@ const histories = defineCollection({
   }),
 });
 
-export const collections = { fraternities, fraternityTexts, pages, home, histories };
+/** A heading, a sentence under it and a row of short entries. */
+const section = z.object({
+  title: localized,
+  intro: localized,
+  items: z.array(z.object({ title: localized, text: localized })).min(1),
+});
+
+/** A photograph with its description and the line printed under it. */
+const captioned = (image: ImageFunction) => photo(image).extend({ caption: localized });
+
+/**
+ * A page that explains a subject in short sections, written for this site.
+ * The complete text imported from WordPress stays in `pages` under the same
+ * name and is shown in full at the foot of the page.
+ */
+const guides = defineCollection({
+  loader: glob({ base: './src/content/guides', pattern: '*.yaml' }),
+  schema: ({ image }) =>
+    z.object({
+      name: z.string(),
+      title: localized,
+      kicker: localized,
+      intro: localized,
+      photo: captioned(image),
+      principles: section,
+      character: section,
+      path: section,
+      joining: z.object({ title: localized, text: localized, sororitiesUrl: z.url() }),
+      symbols: section,
+      life: section.extend({ photo: captioned(image) }),
+      questions: z.array(z.object({ question: localized, answer: localized })).min(1),
+      terms: z.array(z.object({ word: z.string(), text: localized })).min(1),
+      sources: z.array(z.object({ title: z.string(), note: localized, url: optional(z.url()) })).min(1),
+    }),
+});
+
+export const collections = { fraternities, fraternityTexts, pages, home, histories, guides };
