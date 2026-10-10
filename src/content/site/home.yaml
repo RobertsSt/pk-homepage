@@ -48,18 +48,21 @@ officers:
       lv: Seniors
       en: Senior
     email: ventonia.prezidijs@gmail.com
+    photo: '@/assets/site/officers/kristaps-senfelds.jpg'
   - name: Raitis Silamednis
     honorific: fil!
     role:
       lv: Viceseniors
       en: Vice-Senior
     email: ventonia.prezidijs@gmail.com
+    photo: '@/assets/site/officers/raitis-silamednis.jpg'
   - name: Armands Lore
     honorific: com!
     role:
       lv: Sekretārs
       en: Secretary
     email: ventonia.prezidijs@gmail.com
+    photo: '@/assets/site/officers/armands-lore.jpg'
 
 history:
   teaser:
